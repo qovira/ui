@@ -16,9 +16,7 @@
   name="Scale"
   play={async ({ canvas }) => {
     // AC: Heading renders with font-display without the call site specifying it.
-    await expect(canvas.getByRole("heading", { level: 1, name: "Heading 1" })).toHaveClass(
-      "font-display",
-    );
+    await expect(canvas.getByRole("heading", { level: 1, name: "Heading 1" })).toHaveClass("font-display");
     // The H4 exception: Figtree, not Fraunces.
     await expect(canvas.getByRole("heading", { level: 4 })).toHaveClass("font-sans");
   }}

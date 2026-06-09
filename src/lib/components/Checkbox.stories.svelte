@@ -34,13 +34,7 @@
       <label class="inline-flex items-center gap-2 text-body font-sans text-text">
         <Checkbox bind:checked />Accept terms
       </label>
-      <button
-        type="button"
-        class="text-small font-sans text-link"
-        onclick={() => (checked = false)}
-      >
-        Reset
-      </button>
+      <button type="button" class="text-small font-sans text-link" onclick={() => (checked = false)}> Reset </button>
     </div>
   {/snippet}
 </Story>
@@ -50,10 +44,7 @@
   name="States"
   play={async ({ canvas }) => {
     await expect(canvas.getByRole("checkbox", { name: "Checked" })).toBeChecked();
-    await expect(canvas.getByRole("checkbox", { name: "Indeterminate" })).toHaveAttribute(
-      "aria-checked",
-      "mixed",
-    );
+    await expect(canvas.getByRole("checkbox", { name: "Indeterminate" })).toHaveAttribute("aria-checked", "mixed");
     await expect(canvas.getByRole("checkbox", { name: "Disabled" })).toBeDisabled();
   }}
 >

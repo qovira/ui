@@ -41,11 +41,7 @@
     // The first option is highlighted on open; ArrowDown moves to the second,
     // proving keyboard nav, and Enter commits it.
     await userEvent.keyboard("{ArrowDown}");
-    await waitFor(() =>
-      expect(canvas.getByRole("option", { name: "Claude Opus" })).toHaveAttribute(
-        "data-highlighted",
-      ),
-    );
+    await waitFor(() => expect(canvas.getByRole("option", { name: "Claude Opus" })).toHaveAttribute("data-highlighted"));
     await userEvent.keyboard("{Enter}");
     await waitFor(() => expect(canvas.queryByRole("listbox")).not.toBeInTheDocument());
     await expect(onValueChange).toHaveBeenLastCalledWith("claude");
@@ -64,22 +60,8 @@
 >
   {#snippet template()}
     <div id="select-single-host" class="bg-surface text-text flex flex-col gap-3 p-6">
-      <Select
-        aria-label="Model"
-        items={models}
-        bind:value={single}
-        placeholder="Select a model"
-        {onValueChange}
-        {onOpenChange}
-        portalTo="#select-single-host"
-      />
-      <button
-        type="button"
-        class="text-small font-sans text-link self-start"
-        onclick={() => (single = undefined)}
-      >
-        Reset
-      </button>
+      <Select aria-label="Model" items={models} bind:value={single} placeholder="Select a model" {onValueChange} {onOpenChange} portalTo="#select-single-host" />
+      <button type="button" class="text-small font-sans text-link self-start" onclick={() => (single = undefined)}> Reset </button>
       <p data-testid="value" class="text-small font-sans text-text-muted">
         {JSON.stringify(single ?? null)}
       </p>
@@ -105,14 +87,7 @@
 >
   {#snippet template()}
     <div id="select-multi-host" class="bg-surface text-text flex flex-col gap-3 p-6">
-      <Select
-        aria-label="Models"
-        type="multiple"
-        items={models}
-        bind:value={multi}
-        placeholder="Select models"
-        portalTo="#select-multi-host"
-      />
+      <Select aria-label="Models" type="multiple" items={models} bind:value={multi} placeholder="Select models" portalTo="#select-multi-host" />
       <p data-testid="multi" class="text-small font-sans text-text-muted">
         {JSON.stringify(multi)}
       </p>
@@ -167,12 +142,7 @@
 >
   {#snippet template()}
     <div id="select-day-host" class="bg-surface text-text p-6">
-      <Select
-        aria-label="Model"
-        items={models}
-        placeholder="Select a model"
-        portalTo="#select-day-host"
-      />
+      <Select aria-label="Model" items={models} placeholder="Select a model" portalTo="#select-day-host" />
     </div>
   {/snippet}
 </Story>

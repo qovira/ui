@@ -34,13 +34,7 @@
       <label class="inline-flex items-center gap-2 text-body font-sans text-text">
         <Switch bind:checked />Email notifications
       </label>
-      <button
-        type="button"
-        class="text-small font-sans text-link"
-        onclick={() => (checked = false)}
-      >
-        Reset
-      </button>
+      <button type="button" class="text-small font-sans text-link" onclick={() => (checked = false)}> Reset </button>
     </div>
   {/snippet}
 </Story>

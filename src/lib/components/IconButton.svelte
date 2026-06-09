@@ -23,16 +23,7 @@
     class?: string;
   }
 
-  let {
-    icon,
-    label,
-    variant = "secondary",
-    size = "md",
-    loading = false,
-    disabled = false,
-    class: klass,
-    ...rest
-  }: Props = $props();
+  let { icon, label, variant = "secondary", size = "md", loading = false, disabled = false, class: klass, ...rest }: Props = $props();
 
   // Square hit target: `md` meets the 40px desktop floor, `touch` the 44px
   // touch floor (both named in the design's a11y guardrails). `focus-ring` is
@@ -48,17 +39,6 @@
   const classes = $derived(cn(BASE, SIZE[size], VARIANTS[variant], klass, "focus-ring"));
 </script>
 
-<button
-  class={classes}
-  {...rest}
-  disabled={inactive}
-  aria-label={label}
-  aria-busy={loading ? "true" : undefined}
->
-  <Icon
-    icon={loading ? SpinnerIcon : icon}
-    size={ICON_PX[size]}
-    decorative
-    class={loading ? "animate-spin" : ""}
-  />
+<button class={classes} {...rest} disabled={inactive} aria-label={label} aria-busy={loading ? "true" : undefined}>
+  <Icon icon={loading ? SpinnerIcon : icon} size={ICON_PX[size]} decorative class={loading ? "animate-spin" : ""} />
 </button>

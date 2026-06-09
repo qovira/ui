@@ -64,13 +64,7 @@
 
   // The listbox panel needs its own accessible name (it isn't the labelable
   // control): reuse the explicit aria-label, else point at the Field's label.
-  const listboxName = $derived(
-    ariaLabel
-      ? { "aria-label": ariaLabel }
-      : ctx?.labelId
-        ? { "aria-labelledby": ctx.labelId }
-        : {},
-  );
+  const listboxName = $derived(ariaLabel ? { "aria-label": ariaLabel } : ctx?.labelId ? { "aria-labelledby": ctx.labelId } : {});
 </script>
 
 <!-- Bits owns listbox behavior: roving focus, type-ahead, ARIA, portalling. The
@@ -85,20 +79,10 @@
     aria-label={ariaLabel}
     aria-invalid={ariaInvalid}
     aria-describedby={ariaDescribedby}
-    class={cn(
-      FIELD_CONTROL_BASE,
-      "flex h-10 items-center justify-between gap-2 text-left",
-      klass,
-      "focus-ring",
-    )}
+    class={cn(FIELD_CONTROL_BASE, "flex h-10 items-center justify-between gap-2 text-left", klass, "focus-ring")}
   >
     <Select.Value {placeholder} class="truncate data-[placeholder]:text-text-muted" />
-    <CaretUpDownIcon
-      size={18}
-      color="currentColor"
-      aria-hidden="true"
-      class="shrink-0 text-text-muted"
-    />
+    <CaretUpDownIcon size={18} color="currentColor" aria-hidden="true" class="shrink-0 text-text-muted" />
   </Select.Trigger>
   <Select.Portal {...portalTo ? { to: portalTo } : {}}>
     <Select.Content
@@ -125,12 +109,7 @@
             {#snippet children({ selected })}
               <span class="truncate">{item.label}</span>
               {#if selected}
-                <CheckIcon
-                  size={16}
-                  color="currentColor"
-                  aria-hidden="true"
-                  class="shrink-0 text-link"
-                />
+                <CheckIcon size={16} color="currentColor" aria-hidden="true" class="shrink-0 text-link" />
               {/if}
             {/snippet}
           </Select.Item>

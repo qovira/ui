@@ -53,9 +53,7 @@
           <Button {...props}>Filters</Button>
         {/snippet}
         <h3 class="text-h3 font-display text-text">Active filters</h3>
-        <p class="text-body mt-2 font-sans text-text-muted">
-          Refine the list by status, owner, or date.
-        </p>
+        <p class="text-body mt-2 font-sans text-text-muted">Refine the list by status, owner, or date.</p>
       </Popover>
     </div>
   {/snippet}
@@ -79,9 +77,7 @@
           <Button {...props}>Filters</Button>
         {/snippet}
         <h3 class="text-h3 font-display text-text">Active filters</h3>
-        <p class="text-body mt-2 font-sans text-text-muted">
-          Refine the list by status, owner, or date.
-        </p>
+        <p class="text-body mt-2 font-sans text-text-muted">Refine the list by status, owner, or date.</p>
       </Popover>
     </div>
   {/snippet}

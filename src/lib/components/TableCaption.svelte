@@ -13,9 +13,6 @@
 </script>
 
 <!-- The table's accessible name/summary. Muted, as secondary descriptive text. -->
-<caption
-  class={cn("caption-bottom px-4 py-2 text-left text-small text-text-muted", klass)}
-  {...rest}
->
+<caption class={cn("caption-bottom px-4 py-2 text-left text-small text-text-muted", klass)} {...rest}>
   {@render children()}
 </caption>

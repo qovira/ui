@@ -17,20 +17,11 @@
     children: Snippet;
   }
 
-  let {
-    sortable = false,
-    sort = "none",
-    onsort,
-    class: klass,
-    children,
-    ...rest
-  }: Props = $props();
+  let { sortable = false, sort = "none", onsort, class: klass, children, ...rest }: Props = $props();
 
   // aria-sort lives on the <th> (the column header), with the button as its
   // control — the correct sortable-header pattern.
-  const ariaSort = $derived(
-    sort === "asc" ? "ascending" : sort === "desc" ? "descending" : "none",
-  ) as "ascending" | "descending" | "none";
+  const ariaSort = $derived(sort === "asc" ? "ascending" : sort === "desc" ? "descending" : "none") as "ascending" | "descending" | "none";
 
   const cell = "px-4 py-3 text-left text-label font-sans uppercase text-text-muted";
 </script>
@@ -40,10 +31,7 @@
     <!-- focus-ring appended last so a consumer class can't merge it away. -->
     <button
       type="button"
-      class={cn(
-        "-mx-1 inline-flex items-center gap-1 rounded px-1 transition-colors duration-micro ease-qovira hover:text-text",
-        "focus-ring",
-      )}
+      class={cn("-mx-1 inline-flex items-center gap-1 rounded px-1 transition-colors duration-micro ease-qovira hover:text-text", "focus-ring")}
       onclick={onsort}
     >
       {@render children()}

@@ -48,15 +48,7 @@
 >
   {#snippet template()}
     <div id="combobox-single-host" class="bg-surface text-text flex flex-col gap-3 p-6">
-      <Combobox
-        aria-label="Framework"
-        items={frameworks}
-        bind:value={single}
-        placeholder="Search frameworks"
-        {onValueChange}
-        {onOpenChange}
-        portalTo="#combobox-single-host"
-      />
+      <Combobox aria-label="Framework" items={frameworks} bind:value={single} placeholder="Search frameworks" {onValueChange} {onOpenChange} portalTo="#combobox-single-host" />
       <p data-testid="value" class="text-small font-sans text-text-muted">
         {JSON.stringify(single ?? null)}
       </p>
@@ -82,12 +74,7 @@
 >
   {#snippet template()}
     <div id="combobox-empty-host" class="bg-surface text-text p-6">
-      <Combobox
-        aria-label="Framework"
-        items={frameworks}
-        placeholder="Search frameworks"
-        portalTo="#combobox-empty-host"
-      />
+      <Combobox aria-label="Framework" items={frameworks} placeholder="Search frameworks" portalTo="#combobox-empty-host" />
     </div>
   {/snippet}
 </Story>
@@ -106,14 +93,7 @@
 >
   {#snippet template()}
     <div id="combobox-multi-host" class="bg-surface text-text flex flex-col gap-3 p-6">
-      <Combobox
-        aria-label="Tags"
-        type="multiple"
-        items={frameworks}
-        bind:value={multi}
-        placeholder="Add tags"
-        portalTo="#combobox-multi-host"
-      />
+      <Combobox aria-label="Tags" type="multiple" items={frameworks} bind:value={multi} placeholder="Add tags" portalTo="#combobox-multi-host" />
       <p data-testid="tags" class="text-small font-sans text-text-muted">
         {JSON.stringify(multi)}
       </p>
@@ -130,12 +110,7 @@
 >
   {#snippet template()}
     <div class="bg-surface text-text p-6">
-      <Combobox
-        aria-label="Framework"
-        items={frameworks}
-        disabled
-        placeholder="Search frameworks"
-      />
+      <Combobox aria-label="Framework" items={frameworks} disabled placeholder="Search frameworks" />
     </div>
   {/snippet}
 </Story>
@@ -173,12 +148,7 @@
 >
   {#snippet template()}
     <div id="combobox-day-host" class="bg-surface text-text p-6">
-      <Combobox
-        aria-label="Framework"
-        items={frameworks}
-        placeholder="Search frameworks"
-        portalTo="#combobox-day-host"
-      />
+      <Combobox aria-label="Framework" items={frameworks} placeholder="Search frameworks" portalTo="#combobox-day-host" />
     </div>
   {/snippet}
 </Story>

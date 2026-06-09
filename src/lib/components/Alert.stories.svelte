@@ -32,9 +32,7 @@
       <Alert variant="info">A quiet heads-up about something in your workspace.</Alert>
       <Alert variant="success" title="Saved">Your reminder is set for Friday.</Alert>
       <Alert variant="warning">Your plan's usage is close to its monthly limit.</Alert>
-      <Alert variant="error" title="Send failed">
-        We couldn't reach your model — try again in a moment.
-      </Alert>
+      <Alert variant="error" title="Send failed">We couldn't reach your model — try again in a moment.</Alert>
     </div>
   {/snippet}
 </Story>
@@ -49,9 +47,7 @@
 >
   {#snippet template()}
     <div class="bg-surface text-text max-w-md p-6">
-      <Alert variant="error" role="alert" title="Offline">
-        We've lost your connection — changes won't save until it's back.
-      </Alert>
+      <Alert variant="error" role="alert" title="Offline">We've lost your connection — changes won't save until it's back.</Alert>
     </div>
   {/snippet}
 </Story>

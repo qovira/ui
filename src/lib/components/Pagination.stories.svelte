@@ -30,9 +30,7 @@
     await expect(canvas.getByRole("button", { name: "Go to previous page" })).toBeDisabled();
     // AC: navigation works and round-trips through bind:page.
     await userEvent.click(canvas.getByRole("button", { name: "Go to next page" }));
-    await waitFor(() =>
-      expect(canvas.getByRole("button", { name: "Page 2" })).toHaveAttribute("data-selected"),
-    );
+    await waitFor(() => expect(canvas.getByRole("button", { name: "Page 2" })).toHaveAttribute("data-selected"));
     await expect(canvas.getByTestId("page")).toHaveTextContent("2");
     // Jump directly to a visible page (with siblingCount 1, distant pages sit
     // behind an ellipsis).

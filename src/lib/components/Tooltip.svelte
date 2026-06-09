@@ -25,17 +25,7 @@
     onOpenChange?: (open: boolean) => void;
   }
 
-  let {
-    open = $bindable(false),
-    trigger,
-    children,
-    delayDuration = 300,
-    sideOffset = 6,
-    side,
-    class: klass,
-    portalTo,
-    onOpenChange,
-  }: Props = $props();
+  let { open = $bindable(false), trigger, children, delayDuration = 300, sideOffset = 6, side, class: klass, portalTo, onOpenChange }: Props = $props();
 </script>
 
 <!-- Bits owns behavior: it shows on hover AND keyboard focus, hides on blur /

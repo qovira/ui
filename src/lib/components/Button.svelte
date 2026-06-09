@@ -18,15 +18,7 @@
     children: Snippet;
   }
 
-  let {
-    variant = "secondary",
-    href,
-    loading = false,
-    disabled = false,
-    class: klass,
-    children,
-    ...rest
-  }: Props & (HTMLButtonAttributes | HTMLAnchorAttributes) = $props();
+  let { variant = "secondary", href, loading = false, disabled = false, class: klass, children, ...rest }: Props & (HTMLButtonAttributes | HTMLAnchorAttributes) = $props();
 
   // Shared shape from the theme's Button recipe; `text-button` carries no
   // font-family, so the wrapper pairs Figtree (font-sans) like the type
@@ -64,12 +56,7 @@
   </a>
   <!-- eslint-enable svelte/no-navigation-without-resolve -->
 {:else}
-  <button
-    class={classes}
-    {...rest as HTMLButtonAttributes}
-    disabled={inactive}
-    aria-busy={loading ? "true" : undefined}
-  >
+  <button class={classes} {...rest as HTMLButtonAttributes} disabled={inactive} aria-busy={loading ? "true" : undefined}>
     {@render body()}
   </button>
 {/if}

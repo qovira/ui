@@ -47,10 +47,7 @@
 <Story
   name="Disabled"
   play={async ({ canvas }) => {
-    await expect(canvas.getByRole("spinbutton", { name: /day/i })).toHaveAttribute(
-      "aria-disabled",
-      "true",
-    );
+    await expect(canvas.getByRole("spinbutton", { name: /day/i })).toHaveAttribute("aria-disabled", "true");
   }}
 >
   {#snippet template()}
@@ -93,11 +90,7 @@
 >
   {#snippet template()}
     <div id="datepicker-day-host" class="bg-surface text-text p-6">
-      <DatePicker
-        aria-label="Reminder"
-        value={new CalendarDate(2026, 6, 15)}
-        portalTo="#datepicker-day-host"
-      />
+      <DatePicker aria-label="Reminder" value={new CalendarDate(2026, 6, 15)} portalTo="#datepicker-day-host" />
     </div>
   {/snippet}
 </Story>

@@ -89,10 +89,7 @@
 <Story
   name="Disabled"
   play={async ({ canvas }) => {
-    await expect(canvas.getByRole("button", { name: "What is Qovira?" })).toHaveAttribute(
-      "aria-disabled",
-      "true",
-    );
+    await expect(canvas.getByRole("button", { name: "What is Qovira?" })).toHaveAttribute("aria-disabled", "true");
   }}
 >
   {#snippet template()}

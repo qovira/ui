@@ -8,13 +8,7 @@
     class?: string;
   }
 
-  let {
-    class: klass,
-    id,
-    "aria-invalid": invalidProp,
-    "aria-describedby": describedbyProp,
-    ...rest
-  }: Props = $props();
+  let { class: klass, id, "aria-invalid": invalidProp, "aria-describedby": describedbyProp, ...rest }: Props = $props();
 
   // Inherit the Field contract from context, but an explicit prop always wins
   // (so the control also works standalone, outside a Field).
@@ -25,10 +19,4 @@
   const ariaDescribedby = $derived(describedbyProp ?? ctx?.describedby);
 </script>
 
-<input
-  {...rest}
-  id={resolvedId}
-  aria-invalid={ariaInvalid}
-  aria-describedby={ariaDescribedby}
-  class={cn("flex h-10", FIELD_CONTROL_BASE, klass, "focus-ring")}
-/>
+<input {...rest} id={resolvedId} aria-invalid={ariaInvalid} aria-describedby={ariaDescribedby} class={cn("flex h-10", FIELD_CONTROL_BASE, klass, "focus-ring")} />

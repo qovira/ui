@@ -59,13 +59,7 @@
     ...(hourCycle ? { hourCycle } : {}),
   });
   // The segment group needs its own accessible name (it isn't a labelable input).
-  const groupName = $derived(
-    ariaLabel
-      ? { "aria-label": ariaLabel }
-      : ctx?.labelId
-        ? { "aria-labelledby": ctx.labelId }
-        : {},
-  );
+  const groupName = $derived(ariaLabel ? { "aria-label": ariaLabel } : ctx?.labelId ? { "aria-labelledby": ctx.labelId } : {});
 </script>
 
 <!-- Bits owns the segmented-entry behavior (per-segment focus, arrow stepping,
@@ -96,11 +90,7 @@
       {#each segments as { part, value: segValue }, i (i)}
         <DateField.Segment
           {part}
-          class={cn(
-            "focus-ring rounded-sm px-0.5 tabular-nums text-text",
-            "data-[placeholder]:text-text-muted",
-            part === "literal" && "px-0 text-text-muted",
-          )}
+          class={cn("focus-ring rounded-sm px-0.5 tabular-nums text-text", "data-[placeholder]:text-text-muted", part === "literal" && "px-0 text-text-muted")}
         >
           {segValue}
         </DateField.Segment>

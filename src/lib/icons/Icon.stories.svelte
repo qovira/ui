@@ -36,8 +36,4 @@
 <Story name="Large" args={{ icon: PlusIcon, label: "Add item", size: 24 }} />
 
 <!-- Same component in Daylight, so axe runs against it in both themes. -->
-<Story
-  name="Daylight"
-  args={{ icon: PlusIcon, label: "Add item", size: 24 }}
-  globals={{ theme: "daylight" }}
-/>
+<Story name="Daylight" args={{ icon: PlusIcon, label: "Add item", size: 24 }} globals={{ theme: "daylight" }} />

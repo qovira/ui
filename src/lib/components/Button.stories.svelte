@@ -120,9 +120,7 @@
 >
   {#snippet template()}
     <div class="bg-surface text-text p-6">
-      <Button variant="primary" type="submit" class="rounded-none" onclick={handleClick}>
-        Submit
-      </Button>
+      <Button variant="primary" type="submit" class="rounded-none" onclick={handleClick}>Submit</Button>
     </div>
   {/snippet}
 </Story>

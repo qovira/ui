@@ -46,10 +46,7 @@
     // AC: correct table + header semantics.
     await expect(canvas.getByRole("table")).toBeInTheDocument();
     await expect(canvas.getAllByRole("columnheader")).toHaveLength(3);
-    await expect(canvas.getByRole("columnheader", { name: "Role" })).toHaveAttribute(
-      "scope",
-      "col",
-    );
+    await expect(canvas.getByRole("columnheader", { name: "Role" })).toHaveAttribute("scope", "col");
     // A row per member, plus the header row.
     await expect(canvas.getAllByRole("row")).toHaveLength(members.length + 1);
     // Minimal sort: aria-sort starts "none", and activating the header cycles it.

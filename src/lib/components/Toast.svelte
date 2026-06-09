@@ -45,10 +45,7 @@
      toast re-enables its own interactions. -->
 <div
   role="status"
-  class={cn(
-    "pointer-events-auto flex items-center gap-2 rounded-md border border-border p-3 shadow-[var(--shadow-md)]",
-    TONE[toast.variant],
-  )}
+  class={cn("pointer-events-auto flex items-center gap-2 rounded-md border border-border p-3 shadow-[var(--shadow-md)]", TONE[toast.variant])}
   onmouseenter={() => (paused = true)}
   onmouseleave={() => (paused = false)}
   onfocusin={() => (paused = true)}
@@ -58,12 +55,7 @@
   <span class="text-small font-sans">{toast.message}</span>
   <!-- Inherits the toast's semantic text color via currentColor; meets the
        hit-target floor and keeps the focus ring. -->
-  <button
-    type="button"
-    aria-label="Dismiss"
-    class="ml-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md hover:bg-text/5 focus-ring"
-    onclick={ondismiss}
-  >
+  <button type="button" aria-label="Dismiss" class="ml-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md hover:bg-text/5 focus-ring" onclick={ondismiss}>
     <Icon icon={XIcon} decorative />
   </button>
 </div>

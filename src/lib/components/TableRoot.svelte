@@ -15,10 +15,7 @@
      Wrapped in a horizontal-scroll container so a wide table stays usable on
      narrow viewports without forcing the page to scroll. -->
 <div class="w-full overflow-x-auto">
-  <table
-    class={cn("w-full border-collapse text-left font-sans text-body text-text", klass)}
-    {...rest}
-  >
+  <table class={cn("w-full border-collapse text-left font-sans text-body text-text", klass)} {...rest}>
     {@render children()}
   </table>
 </div>

@@ -7,14 +7,7 @@
     class?: string;
   }
 
-  let {
-    checked = $bindable(false),
-    id,
-    class: klass,
-    "aria-invalid": invalidProp,
-    "aria-describedby": describedbyProp,
-    ...rest
-  }: Props = $props();
+  let { checked = $bindable(false), id, class: klass, "aria-invalid": invalidProp, "aria-describedby": describedbyProp, ...rest }: Props = $props();
 
   const field = getFieldContext();
   const ctx = $derived(field?.());
@@ -39,7 +32,5 @@
   )}
   {...rest}
 >
-  <Switch.Thumb
-    class="h-4 w-4 rounded-full bg-surface shadow-[var(--shadow-sm)] transition-transform data-[state=checked]:translate-x-5"
-  />
+  <Switch.Thumb class="h-4 w-4 rounded-full bg-surface shadow-[var(--shadow-sm)] transition-transform data-[state=checked]:translate-x-5" />
 </Switch.Root>

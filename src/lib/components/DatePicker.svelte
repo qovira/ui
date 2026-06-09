@@ -73,13 +73,7 @@
     ...(hourCycle ? { hourCycle } : {}),
   });
   // The segment group needs its own accessible name (it isn't a labelable input).
-  const groupName = $derived(
-    ariaLabel
-      ? { "aria-label": ariaLabel }
-      : ctx?.labelId
-        ? { "aria-labelledby": ctx.labelId }
-        : {},
-  );
+  const groupName = $derived(ariaLabel ? { "aria-label": ariaLabel } : ctx?.labelId ? { "aria-labelledby": ctx.labelId } : {});
 </script>
 
 <!-- Bits owns the whole picker: segmented entry, the collision-handled,
@@ -116,11 +110,7 @@
         {#each segments as { part, value: segValue }, i (i)}
           <DatePicker.Segment
             {part}
-            class={cn(
-              "focus-ring rounded-sm px-0.5 tabular-nums text-text",
-              "data-[placeholder]:text-text-muted",
-              part === "literal" && "px-0 text-text-muted",
-            )}
+            class={cn("focus-ring rounded-sm px-0.5 tabular-nums text-text", "data-[placeholder]:text-text-muted", part === "literal" && "px-0 text-text-muted")}
           >
             {segValue}
           </DatePicker.Segment>
@@ -137,26 +127,18 @@
   <DatePicker.Portal {...portalTo ? { to: portalTo } : {}}>
     <DatePicker.Content
       sideOffset={8}
-      class={cn(
-        "z-50 rounded-xl border border-border bg-surface-raised p-4 text-text shadow-[var(--shadow-lg)]",
-        "duration-overlay ease-qovira",
-        contentClass,
-      )}
+      class={cn("z-50 rounded-xl border border-border bg-surface-raised p-4 text-text shadow-[var(--shadow-lg)]", "duration-overlay ease-qovira", contentClass)}
     >
       <DatePicker.Calendar>
         {#snippet children({ months, weekdays })}
           <!-- A plain div, not DatePicker.Header: that renders a <header> (a
                banner landmark) which axe flags when nested. -->
           <div class="flex items-center justify-between pb-3">
-            <DatePicker.PrevButton
-              class="focus-ring inline-flex h-8 w-8 items-center justify-center rounded-md text-text hover:bg-surface disabled:opacity-50"
-            >
+            <DatePicker.PrevButton class="focus-ring inline-flex h-8 w-8 items-center justify-center rounded-md text-text hover:bg-surface disabled:opacity-50">
               <CaretLeftIcon size={18} color="currentColor" aria-hidden="true" />
             </DatePicker.PrevButton>
             <DatePicker.Heading class="text-body font-sans font-medium text-text" />
-            <DatePicker.NextButton
-              class="focus-ring inline-flex h-8 w-8 items-center justify-center rounded-md text-text hover:bg-surface disabled:opacity-50"
-            >
+            <DatePicker.NextButton class="focus-ring inline-flex h-8 w-8 items-center justify-center rounded-md text-text hover:bg-surface disabled:opacity-50">
               <CaretRightIcon size={18} color="currentColor" aria-hidden="true" />
             </DatePicker.NextButton>
           </div>
@@ -165,9 +147,7 @@
               <DatePicker.GridHead>
                 <DatePicker.GridRow class="flex">
                   {#each weekdays as day (day)}
-                    <DatePicker.HeadCell
-                      class="text-small w-9 pb-1 text-center font-sans font-normal text-text-muted"
-                    >
+                    <DatePicker.HeadCell class="text-small w-9 pb-1 text-center font-sans font-normal text-text-muted">
                       {day}
                     </DatePicker.HeadCell>
                   {/each}

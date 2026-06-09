@@ -8,13 +8,7 @@
     class?: string;
   }
 
-  let {
-    class: klass,
-    id,
-    "aria-invalid": invalidProp,
-    "aria-describedby": describedbyProp,
-    ...rest
-  }: Props = $props();
+  let { class: klass, id, "aria-invalid": invalidProp, "aria-describedby": describedbyProp, ...rest }: Props = $props();
 
   // Same Field-contract inheritance as Input; explicit props win.
   const field = getFieldContext();
@@ -24,10 +18,5 @@
   const ariaDescribedby = $derived(describedbyProp ?? ctx?.describedby);
 </script>
 
-<textarea
-  {...rest}
-  id={resolvedId}
-  aria-invalid={ariaInvalid}
-  aria-describedby={ariaDescribedby}
-  class={cn("flex min-h-20 py-2", FIELD_CONTROL_BASE, klass, "focus-ring")}
+<textarea {...rest} id={resolvedId} aria-invalid={ariaInvalid} aria-describedby={ariaDescribedby} class={cn("flex min-h-20 py-2", FIELD_CONTROL_BASE, klass, "focus-ring")}
 ></textarea>

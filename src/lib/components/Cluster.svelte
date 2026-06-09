@@ -15,15 +15,7 @@
     children: Snippet;
   }
 
-  let {
-    gap = 2,
-    align = "center",
-    justify = "start",
-    wrap = true,
-    class: klass,
-    children,
-    ...rest
-  }: Props = $props();
+  let { gap = 2, align = "center", justify = "start", wrap = true, class: klass, children, ...rest }: Props = $props();
 
   const ALIGN = {
     start: "items-start",
@@ -40,9 +32,6 @@
   } as const;
 </script>
 
-<div
-  class={cn("flex", wrap && "flex-wrap", GAP[gap], ALIGN[align], JUSTIFY[justify], klass)}
-  {...rest}
->
+<div class={cn("flex", wrap && "flex-wrap", GAP[gap], ALIGN[align], JUSTIFY[justify], klass)} {...rest}>
   {@render children()}
 </div>

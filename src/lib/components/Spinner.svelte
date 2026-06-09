@@ -13,13 +13,7 @@
     class?: string;
   }
 
-  let {
-    size = "md",
-    label = "Loading…",
-    showLabel = false,
-    class: klass,
-    ...rest
-  }: Props = $props();
+  let { size = "md", label = "Loading…", showLabel = false, class: klass, ...rest }: Props = $props();
 
   // The honey dot's diameter; the lamp-glow halo (a fixed-radius box-shadow) and
   // the pulse are the theme's.
@@ -32,7 +26,6 @@
      glow itself is aria-hidden), and the theme's global prefers-reduced-motion
      guard collapses lamp-glow-pulse to a static glow. -->
 <div role="status" class={cn("inline-flex items-center gap-2", klass)} {...rest}>
-  <span class={cn("rounded-full bg-accent lamp-glow lamp-glow-pulse", DOT[size])} aria-hidden="true"
-  ></span>
+  <span class={cn("rounded-full bg-accent lamp-glow lamp-glow-pulse", DOT[size])} aria-hidden="true"></span>
   <span class={showLabel ? "text-small font-sans text-text" : "sr-only"}>{label}</span>
 </div>

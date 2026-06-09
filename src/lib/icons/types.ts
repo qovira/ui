@@ -9,19 +9,7 @@ export type IconComponent = Component<IconComponentProps>;
 // via cn(), and every attribute that contributes an accessible name (or hides
 // the element, or changes its role) is excluded — those are driven solely by
 // the label/decorative decision below, so a caller can't quietly bypass it.
-type ForwardedAttrs = Omit<
-  IconComponentProps,
-  | "weight"
-  | "color"
-  | "size"
-  | "class"
-  | "role"
-  | "title"
-  | "aria-label"
-  | "aria-labelledby"
-  | "aria-describedby"
-  | "aria-hidden"
->;
+type ForwardedAttrs = Omit<IconComponentProps, "weight" | "color" | "size" | "class" | "role" | "title" | "aria-label" | "aria-labelledby" | "aria-describedby" | "aria-hidden">;
 
 /**
  * `<Icon>` forces an explicit accessible-name decision: an icon either carries

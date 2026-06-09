@@ -26,9 +26,7 @@
     await expect(canvas.getByRole("application")).toHaveAccessibleName(/Reminder date/);
     // AC: the selected date is marked (data-selected on the day button; the
     // gridcell carries aria-selected).
-    await expect(canvas.getByRole("button", { name: /June 15, 2026/ })).toHaveAttribute(
-      "data-selected",
-    );
+    await expect(canvas.getByRole("button", { name: /June 15, 2026/ })).toHaveAttribute("data-selected");
     // AC: clicking a day round-trips bind:value.
     await userEvent.click(canvas.getByRole("button", { name: /June 20, 2026/ }));
     await expect(canvas.getByTestId("value")).toHaveTextContent("2026-06-20");
@@ -61,10 +59,7 @@
 <Story
   name="Disabled"
   play={async ({ canvas }) => {
-    await expect(canvas.getByRole("button", { name: /June 15, 2026/ })).toHaveAttribute(
-      "aria-disabled",
-      "true",
-    );
+    await expect(canvas.getByRole("button", { name: /June 15, 2026/ })).toHaveAttribute("aria-disabled", "true");
   }}
 >
   {#snippet template()}

@@ -28,9 +28,7 @@
 
   const invalid = $derived(Boolean(error));
   // describedby points at whichever help/error text exists (both, if both do).
-  const describedby = $derived(
-    [description ? descId : null, error ? errorId : null].filter(Boolean).join(" ") || undefined,
-  );
+  const describedby = $derived([description ? descId : null, error ? errorId : null].filter(Boolean).join(" ") || undefined);
   const ctx = $derived<FieldContext>({
     id: controlId,
     labelId,
@@ -44,9 +42,7 @@
 </script>
 
 <div class={cn("flex flex-col gap-2", klass)}>
-  <label id={labelId} for={controlId} class="text-label font-sans uppercase text-text-muted"
-    >{label}</label
-  >
+  <label id={labelId} for={controlId} class="text-label font-sans uppercase text-text-muted">{label}</label>
   {@render children(ctx)}
   {#if description}
     <p id={descId} class="text-small font-sans text-text-muted">{description}</p>

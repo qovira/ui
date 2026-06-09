@@ -1,11 +1,7 @@
 <script lang="ts">
   import { Dialog, Portal } from "bits-ui";
   import type { Snippet } from "svelte";
-  import {
-    ToastStore,
-    registerActiveToastStore,
-    setToastStore,
-  } from "../internal/toast-store.svelte.js";
+  import { ToastStore, registerActiveToastStore, setToastStore } from "../internal/toast-store.svelte.js";
   import Toast from "./Toast.svelte";
 
   interface Props {
@@ -34,9 +30,7 @@
   <!-- Positioning only; click-through (each toast re-enables its own pointer
        events). Each toast carries role="status", its own polite live region, so
        it's announced on insert without nesting live regions here. -->
-  <div
-    class="pointer-events-none fixed bottom-4 right-4 z-50 flex w-full max-w-[360px] flex-col gap-2"
-  >
+  <div class="pointer-events-none fixed bottom-4 right-4 z-50 flex w-full max-w-[360px] flex-col gap-2">
     {#each store.toasts as toast (toast.id)}
       <Toast {toast} ondismiss={() => store.dismiss(toast.id)} />
     {/each}

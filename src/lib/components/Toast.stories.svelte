@@ -52,20 +52,15 @@
   play={async ({ canvas }) => {
     await userEvent.click(canvas.getByRole("button", { name: "Notify" }));
     await canvas.findByText("This will vanish shortly.");
-    await waitFor(
-      () => expect(canvas.queryByText("This will vanish shortly.")).not.toBeInTheDocument(),
-      {
-        timeout: 3000,
-      },
-    );
+    await waitFor(() => expect(canvas.queryByText("This will vanish shortly.")).not.toBeInTheDocument(), {
+      timeout: 3000,
+    });
   }}
 >
   {#snippet template()}
     <ToastProvider portalTo="#toast-host-auto">
       <div id="toast-host-auto" class="bg-surface text-text p-6">
-        <Button onclick={() => toast.info("This will vanish shortly.", { duration: 500 })}>
-          Notify
-        </Button>
+        <Button onclick={() => toast.info("This will vanish shortly.", { duration: 500 })}>Notify</Button>
       </div>
     </ToastProvider>
   {/snippet}
@@ -84,20 +79,15 @@
     await expect(message).toBeInTheDocument();
     // Leaving resumes the timer and it dismisses.
     await userEvent.unhover(message);
-    await waitFor(
-      () => expect(canvas.queryByText("Hover to keep me around.")).not.toBeInTheDocument(),
-      {
-        timeout: 3000,
-      },
-    );
+    await waitFor(() => expect(canvas.queryByText("Hover to keep me around.")).not.toBeInTheDocument(), {
+      timeout: 3000,
+    });
   }}
 >
   {#snippet template()}
     <ToastProvider portalTo="#toast-host-pause">
       <div id="toast-host-pause" class="bg-surface text-text p-6">
-        <Button onclick={() => toast.info("Hover to keep me around.", { duration: 800 })}>
-          Notify
-        </Button>
+        <Button onclick={() => toast.info("Hover to keep me around.", { duration: 800 })}>Notify</Button>
       </div>
     </ToastProvider>
   {/snippet}

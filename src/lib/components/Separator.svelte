@@ -19,9 +19,4 @@
   } as const;
 </script>
 
-<Separator.Root
-  {orientation}
-  {decorative}
-  class={cn("bg-border shrink-0", SHAPE[orientation], klass)}
-  {...rest}
-/>
+<Separator.Root {orientation} {decorative} class={cn("bg-border shrink-0", SHAPE[orientation], klass)} {...rest} />

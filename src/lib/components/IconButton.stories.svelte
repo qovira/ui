@@ -77,8 +77,4 @@
   }}
 />
 
-<Story
-  name="Daylight"
-  args={{ icon: PlusIcon, label: "Add item", variant: "primary" }}
-  globals={{ theme: "daylight" }}
-/>
+<Story name="Daylight" args={{ icon: PlusIcon, label: "Add item", variant: "primary" }} globals={{ theme: "daylight" }} />

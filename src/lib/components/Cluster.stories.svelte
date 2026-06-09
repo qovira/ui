@@ -14,12 +14,7 @@
   name="Default"
   play={async ({ canvas }) => {
     // AC: horizontal grouping with consistent gaps and wrap, theme spacing only.
-    await expect(canvas.getByTestId("cluster")).toHaveClass(
-      "flex",
-      "flex-wrap",
-      "gap-2",
-      "items-center",
-    );
+    await expect(canvas.getByTestId("cluster")).toHaveClass("flex", "flex-wrap", "gap-2", "items-center");
   }}
 >
   {#snippet template()}

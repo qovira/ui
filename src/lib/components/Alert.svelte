@@ -24,11 +24,7 @@
      ...rest for the rare urgent case (it wins, being spread after). Body copy is
      text-text (the brand's body color, never text-muted); the icon uses the
      theme's AA-verified semantic text color on its tint. -->
-<div
-  role="status"
-  class={cn("flex gap-3 rounded-md border border-border p-4", STATUS_TINT[variant], klass)}
-  {...rest}
->
+<div role="status" class={cn("flex gap-3 rounded-md border border-border p-4", STATUS_TINT[variant], klass)} {...rest}>
   <Icon icon={STATUS_ICON[variant]} decorative class={cn("mt-0.5", STATUS_TEXT[variant])} />
   <div class="min-w-0 flex-1 font-sans">
     {#if title}

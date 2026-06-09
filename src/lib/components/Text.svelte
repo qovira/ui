@@ -16,14 +16,7 @@
     children: Snippet;
   }
 
-  let {
-    variant = "body",
-    tone = "default",
-    as = "p",
-    class: klass,
-    children,
-    ...rest
-  }: Props = $props();
+  let { variant = "body", tone = "default", as = "p", class: klass, children, ...rest }: Props = $props();
 
   const ROLE = {
     body: "text-body",

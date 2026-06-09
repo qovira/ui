@@ -21,15 +21,7 @@
     onValueChange?: (value: string | string[]) => void;
   }
 
-  let {
-    items,
-    type = "single",
-    value = $bindable(),
-    disabled = false,
-    class: klass,
-    section,
-    onValueChange,
-  }: Props = $props();
+  let { items, type = "single", value = $bindable(), disabled = false, class: klass, section, onValueChange }: Props = $props();
 
   const listClass = $derived(cn("divide-y divide-border border-y border-border", klass));
 </script>

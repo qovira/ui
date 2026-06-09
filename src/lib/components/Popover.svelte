@@ -25,17 +25,7 @@
     onOpenChange?: (open: boolean) => void;
   }
 
-  let {
-    open = $bindable(false),
-    trigger,
-    children,
-    sideOffset = 8,
-    side,
-    align,
-    class: klass,
-    portalTo,
-    onOpenChange,
-  }: Props = $props();
+  let { open = $bindable(false), trigger, children, sideOffset = 8, side, align, class: klass, portalTo, onOpenChange }: Props = $props();
 </script>
 
 <!-- Bits owns behavior: anchoring, collision-aware positioning, focus
@@ -55,12 +45,7 @@
       {sideOffset}
       {...side ? { side } : {}}
       {...align ? { align } : {}}
-      class={cn(
-        "z-50 w-72 rounded-xl border border-border bg-surface-raised p-4 text-text shadow-[var(--shadow-lg)]",
-        "duration-overlay ease-qovira",
-        klass,
-        "focus-ring",
-      )}
+      class={cn("z-50 w-72 rounded-xl border border-border bg-surface-raised p-4 text-text shadow-[var(--shadow-lg)]", "duration-overlay ease-qovira", klass, "focus-ring")}
     >
       {@render children()}
     </Popover.Content>

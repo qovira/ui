@@ -17,12 +17,7 @@
      floating context. `focus-ring` last so a consumer class can't strip it. -->
 <DropdownMenu.SubContent
   {sideOffset}
-  class={cn(
-    "z-50 min-w-[10rem] rounded-xl border border-border bg-surface-raised p-1.5 text-text shadow-[var(--shadow-lg)]",
-    "duration-overlay ease-qovira",
-    klass,
-    "focus-ring",
-  )}
+  class={cn("z-50 min-w-[10rem] rounded-xl border border-border bg-surface-raised p-1.5 text-text shadow-[var(--shadow-lg)]", "duration-overlay ease-qovira", klass, "focus-ring")}
 >
   {@render children()}
 </DropdownMenu.SubContent>
