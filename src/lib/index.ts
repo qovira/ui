@@ -35,6 +35,10 @@ export { default as Text } from "./components/Text.svelte";
 export { default as Field } from "./components/Field.svelte";
 export { default as Input } from "./components/Input.svelte";
 export { default as Textarea } from "./components/Textarea.svelte";
+export { default as Checkbox } from "./components/Checkbox.svelte";
+export { default as Switch } from "./components/Switch.svelte";
+export { default as RadioGroup } from "./components/RadioGroup.svelte";
+export { default as RadioItem } from "./components/RadioItem.svelte";
 export type { FieldContext } from "./internal/field-context.js";
 
 // Iconography: the <Icon> wrapper and the curated Phosphor re-export set.
