@@ -27,5 +27,13 @@ export default tseslint.config(
       globals: { ...globals.node },
     },
   },
+  {
+    // The library and its stories run in the browser (and browser-mode tests),
+    // so component/source files get the browser globals (setTimeout, document, …).
+    files: ["src/**"],
+    languageOptions: {
+      globals: { ...globals.browser },
+    },
+  },
   prettier,
 );
