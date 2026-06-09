@@ -11,7 +11,7 @@ Guidance for Claude Code working in this repository.
 accessible UI primitives and composites. It layers on **`@qovira/theme`** (a
 peer dependency, separate published repo): the theme ships the tokens
 (color/type/spacing/radius/elevation/motion as Tailwind v4 utilities and the two
-themes), this package ships the *components* that compose them.
+themes), this package ships the _components_ that compose them.
 
 - **`@qovira/ui` defines no visual values of its own** — every color, font,
   radius, and shadow comes from `@qovira/theme`. A component that needs a token
@@ -50,7 +50,7 @@ components; `phosphor-svelte` backs `<Icon>`.
 - Stories: Svelte CSF (`*.stories.svelte`, `defineMeta`), co-located,
   `tags: ['autodocs']`, a11y `test: 'error'`. For any story rendering custom
   markup or multiple instances, use `{#snippet template()}…{/snippet}` (a bare
-  `<Story>` child renders *as the meta component's children*, which double-wraps
+  `<Story>` child renders _as the meta component's children_, which double-wraps
   compositions). Arg-only stories (`<Story args={…}/>`) are fine without it.
 - Visual regression: `*.visual.test.ts` (`vitest-browser-svelte` +
   `toMatchScreenshot`), both themes. **Baselines are generated in CI (Blacksmith)
@@ -97,6 +97,7 @@ button in **both** themes (neither white nor any dark text token clears 4.5:1 on
 the mid-red `--color-error`).
 
 **The fix (in `@qovira/theme`, then consume here):**
+
 1. Add dedicated, AA-verified destructive button tokens mirroring `--btn-primary`
    — e.g. `--btn-destructive`, `--btn-destructive-fg`, `--btn-destructive-hover`,
    `--btn-destructive-active` — with a contrast test for the fill/fg pair in

@@ -21,5 +21,11 @@ export { default as Separator } from "./components/Separator.svelte";
 export { default as Heading } from "./components/Heading.svelte";
 export { default as Text } from "./components/Text.svelte";
 
+// Form controls: Field owns the a11y contract; Input/Textarea consume it.
+export { default as Field } from "./components/Field.svelte";
+export { default as Input } from "./components/Input.svelte";
+export { default as Textarea } from "./components/Textarea.svelte";
+export type { FieldContext } from "./internal/field-context.js";
+
 // Iconography: the <Icon> wrapper and the curated Phosphor re-export set.
 export * from "./icons/index.js";
