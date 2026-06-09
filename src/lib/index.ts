@@ -32,6 +32,15 @@ export { default as ToastProvider } from "./components/ToastProvider.svelte";
 export { toast } from "./internal/toast-store.svelte.js";
 export type { ToastVariant, ToastOptions } from "./internal/toast-store.svelte.js";
 
+// Status & loading: hand-rolled, semantic tint + glyph (never color alone).
+// Spinner is the signature lamp-glow loader; Skeleton the warm-surface placeholder.
+export { default as Alert } from "./components/Alert.svelte";
+export { default as Badge } from "./components/Badge.svelte";
+export { default as Chip } from "./components/Chip.svelte";
+export { default as Spinner } from "./components/Spinner.svelte";
+export { default as Skeleton } from "./components/Skeleton.svelte";
+export type { StatusVariant, BadgeVariant, SpinnerSize } from "./components/status-variants.js";
+
 // Layout primitives.
 export { default as Container } from "./components/Container.svelte";
 export { default as Stack } from "./components/Stack.svelte";
