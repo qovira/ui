@@ -16,6 +16,11 @@ export { default as Modal } from "./components/Modal.svelte";
 export { default as ModalTitle } from "./components/ModalTitle.svelte";
 export { default as ModalDescription } from "./components/ModalDescription.svelte";
 
+// Feedback: ToastProvider mounts near the app root; `toast` raises them anywhere.
+export { default as ToastProvider } from "./components/ToastProvider.svelte";
+export { toast } from "./internal/toast-store.svelte.js";
+export type { ToastVariant, ToastOptions } from "./internal/toast-store.svelte.js";
+
 // Layout primitives.
 export { default as Container } from "./components/Container.svelte";
 export { default as Stack } from "./components/Stack.svelte";
