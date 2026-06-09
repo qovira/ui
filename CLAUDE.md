@@ -2,9 +2,6 @@
 
 Guidance for Claude Code working in this repository.
 
-> This file is still being filled in as the component library is built out. It
-> will be finalized in its own commit before the project's release PR.
-
 ## What this is
 
 `@qovira/ui` is Qovira's Svelte 5 / SvelteKit component library — styled,
@@ -74,6 +71,24 @@ pnpm run package       # svelte-package + clean + publint
 ```
 
 Visual baselines (`pnpm run test:visual`) run in CI, not locally.
+
+## Distribution & releases
+
+- Published to npm as **`@qovira/ui`** — public, **Apache-2.0** (`LICENSE`),
+  shipping `dist/` only (`files: ["dist"]`). `@qovira/theme` is a **peer** at
+  `^1`, so a token-only theme change doesn't force a release here.
+- **Independent semver, driven by [Changesets](https://github.com/changesets/changesets).**
+  Record each user-facing change with `pnpm changeset` (major = a removed/renamed
+  prop, a changed default, or a raised `@qovira/theme` peer range; minor = a new
+  component or additive prop; patch = a fix). The full semver contract and the
+  release flow live in the README's **Versioning & releases** section; the
+  contributor note is `.changeset/README.md`.
+- Releases are **tag-triggered** (`.github/workflows/release.yml`): the gate runs
+  on **Blacksmith**, then a single **GitHub-hosted** `publish` job ships to npm
+  via **Trusted Publishing** (tokenless OIDC, `id-token: write`) with a
+  **provenance** attestation — no `NPM_TOKEN`. This is the **one** sanctioned
+  exception to the Blacksmith-everywhere rule (`writing-workflows`): npm OIDC and
+  provenance don't work on self-hosted runners. Keep every other job on Blacksmith.
 
 ## ⚠️ Known issues / cross-repo tech debt
 
