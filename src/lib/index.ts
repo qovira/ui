@@ -5,3 +5,6 @@
 // Internal helpers (e.g. `internal/cn`) are intentionally NOT exported.
 
 export { default as Box } from "./components/Box.svelte";
+
+// Iconography: the <Icon> wrapper and the curated Phosphor re-export set.
+export * from "./icons/index.js";
