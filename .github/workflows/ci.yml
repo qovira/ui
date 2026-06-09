@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    # Blacksmith (writing-workflows): never ubuntu-latest. 4 vCPU — the Vitest
+    # Browser-Mode story suite is parallelizable, so the extra cores cut wall-clock.
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4 # reads packageManager from package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Vitest Browser Mode needs a real browser.
+      - run: pnpm exec playwright install --with-deps chromium
+
+      - name: Type & a11y check (.svelte)
+        run: pnpm run check # svelte-kit sync && svelte-check
+
+      - name: Typecheck (.ts)
+        run: pnpm run typecheck # tsc --noEmit
+
+      - name: Lint & format
+        run: pnpm run lint # eslint + prettier --check
+
+      - name: Test (unit + stories, with coverage)
+        run: pnpm exec vitest run --project unit --project storybook --coverage
