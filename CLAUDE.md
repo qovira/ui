@@ -55,6 +55,12 @@ components; `phosphor-svelte` backs `<Icon>`.
   crashes. `scripts/clean-package.mjs` strips stories/tests from `dist`.
 - Commits: Conventional Commits + a bare `Refs QOV-NN` footer (the release PR
   closes issues with magic words).
+- Contributor docs: `CONTRIBUTING.md` (issue-first workflow, the
+  theme-utilities-only scope, the cross-repo "extend the theme, don't hard-code"
+  rule, changesets) and `CODE_OF_CONDUCT.md` (Contributor Covenant) define the
+  external-contributor process; keep them in sync with these conventions. Note
+  the split: contributors don't need Conventional Commits or `QOV-NN` refs (both
+  maintainer-only) — that lives here, not in `CONTRIBUTING.md`.
 
 ## Gate (all must be green before an issue is Done)
 

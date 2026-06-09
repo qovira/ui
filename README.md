@@ -76,6 +76,7 @@ pnpm install
 pnpm dev        # run the dev host app
 pnpm check      # svelte-check (types + a11y + unused CSS)
 pnpm lint       # eslint + prettier --check
+pnpm test       # vitest run (unit + stories, in a real browser)
 pnpm package    # svelte-package → dist/ (the only published output) + publint
 ```
 
@@ -117,6 +118,14 @@ Versioning and the changelog are driven by
 > `@qovira/ui`'s **Trusted Publisher** to point at this repository and the
 > release workflow. No `NPM_TOKEN` secret is used — Trusted Publishing replaces
 > long-lived tokens entirely.
+
+## Contributing
+
+Contributions are welcome — read [CONTRIBUTING.md](./CONTRIBUTING.md) first, and
+please follow the [Code of Conduct](./CODE_OF_CONDUCT.md). Open an issue before
+sending a PR that adds a component or changes a component's API. Components are
+authored **only** in `@qovira/theme`'s semantic utilities — a missing token is a
+reason to extend the theme, never to hard-code a value here.
 
 ## License
 
