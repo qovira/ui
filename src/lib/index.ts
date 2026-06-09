@@ -6,5 +6,15 @@
 
 export { default as Box } from "./components/Box.svelte";
 
+// Layout primitives.
+export { default as Container } from "./components/Container.svelte";
+export { default as Stack } from "./components/Stack.svelte";
+export { default as Cluster } from "./components/Cluster.svelte";
+export { default as Separator } from "./components/Separator.svelte";
+
+// Typography primitives.
+export { default as Heading } from "./components/Heading.svelte";
+export { default as Text } from "./components/Text.svelte";
+
 // Iconography: the <Icon> wrapper and the curated Phosphor re-export set.
 export * from "./icons/index.js";

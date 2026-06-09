@@ -20,10 +20,11 @@ const config: StorybookConfig = {
   viteFinal: (viteConfig) =>
     mergeConfig(viteConfig, {
       plugins: [{ ...sveltePhosphorOptimize(), enforce: "post" as const }],
-      // Keep phosphor's .svelte icons OUT of the dep optimizer so vite-plugin-svelte
-      // compiles them on the project's Svelte (a prebundled copy ships a second
-      // runtime → cross-runtime crash on render), and dedupe Svelte for good measure.
-      optimizeDeps: { exclude: ["phosphor-svelte"] },
+      // Keep our Svelte-source deps (phosphor icons, Bits UI primitives) OUT of
+      // the dep optimizer so vite-plugin-svelte compiles them on the project's
+      // Svelte — a prebundled copy ships a second runtime and crashes on render —
+      // and dedupe Svelte for good measure.
+      optimizeDeps: { exclude: ["phosphor-svelte", "bits-ui"] },
       resolve: { dedupe: ["svelte"] },
     }),
 };
