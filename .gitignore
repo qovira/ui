@@ -9,9 +9,6 @@ coverage/
 # packed tarballs
 *.tgz
 
-# Visual-regression baselines and artifacts are generated in CI (Blacksmith),
-# never committed from local dev (fonts/anti-aliasing differ across machines).
-__screenshots__/
-**/*.visual.test.ts-snapshots/
+# Vitest Browser-Mode failure artifacts.
 .vitest-attachments/
 storybook-static/

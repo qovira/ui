@@ -49,14 +49,10 @@ components; `phosphor-svelte` backs `<Icon>`.
   markup or multiple instances, use `{#snippet template()}…{/snippet}` (a bare
   `<Story>` child renders _as the meta component's children_, which double-wraps
   compositions). Arg-only stories (`<Story args={…}/>`) are fine without it.
-- Visual regression: `*.visual.test.ts` (`vitest-browser-svelte` +
-  `toMatchScreenshot`), both themes. **Baselines are generated in CI (Blacksmith)
-  and gitignored — never committed from local dev** (fonts/AA differ).
 - Deps shipping `.svelte` source (`phosphor-svelte`, `bits-ui`) must stay in
   `optimizeDeps.exclude` (`.storybook/main.ts`) + `resolve.dedupe: ["svelte"]`,
   or the optimizer prebundles them on a second Svelte runtime and rendering
-  crashes. `scripts/clean-package.mjs` strips stories/tests/`__screenshots__`
-  from `dist`.
+  crashes. `scripts/clean-package.mjs` strips stories/tests from `dist`.
 - Commits: Conventional Commits + a bare `Refs QOV-NN` footer (the release PR
   closes issues with magic words).
 
@@ -69,8 +65,6 @@ pnpm run lint          # eslint . && prettier --check .
 pnpm test              # vitest run --project unit --project storybook
 pnpm run package       # svelte-package + clean + publint
 ```
-
-Visual baselines (`pnpm run test:visual`) run in CI, not locally.
 
 ## Distribution & releases
 
