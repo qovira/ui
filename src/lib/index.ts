@@ -42,6 +42,9 @@ export { default as RadioItem } from "./components/RadioItem.svelte";
 export { default as Select } from "./components/Select.svelte";
 export { default as Combobox } from "./components/Combobox.svelte";
 export type { ListboxItem } from "./components/listbox-types.js";
+export { default as Calendar } from "./components/Calendar.svelte";
+export { default as DateField } from "./components/DateField.svelte";
+export { default as DatePicker } from "./components/DatePicker.svelte";
 export type { FieldContext } from "./internal/field-context.js";
 
 // Iconography: the <Icon> wrapper and the curated Phosphor re-export set.
