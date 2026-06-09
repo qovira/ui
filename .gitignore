@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+/.svelte-kit
+/build
+*.log
+.DS_Store
+
+# packed tarballs
+*.tgz

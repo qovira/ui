@@ -1,0 +1,9 @@
+# pnpm settings (pnpm 11 no longer reads the package.json "pnpm" field).
+# Allow native/install build scripts for the toolchain: esbuild (Vite) and the
+# Tailwind v4 oxide engine both ship a postinstall the bundler needs.
+allowBuilds:
+  esbuild: true
+  "@tailwindcss/oxide": true
+minimumReleaseAgeExclude:
+  - "@qovira/theme@1.0.1"
+  - "@sveltejs/kit@2.64.0"
