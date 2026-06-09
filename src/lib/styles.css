@@ -1,0 +1,12 @@
+/*
+ * @qovira/ui style entry — resolved by `@import "@qovira/ui";` via the package's
+ * `style` export condition (parallel to `@import "@qovira/theme";`).
+ *
+ * @qovira/ui ships NO styles of its own. This file's only job is to register the
+ * library's component source with the consumer's Tailwind build: Tailwind v4 only
+ * emits a utility class it actually sees, and our components ship as uncompiled
+ * source under node_modules (which Tailwind ignores by default). The `@source`
+ * below is resolved relative to THIS file inside the package, so the consumer
+ * never writes a node_modules path — one clean import wires everything up.
+ */
+@source ".";

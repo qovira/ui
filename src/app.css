@@ -1,0 +1,6 @@
+/* Dev host app styles. This mirrors what a consumer writes (see README), minus
+   the `@source "@qovira/ui"` line — the dev app's components live in this repo's
+   own `src/`, which Tailwind already scans. A real consumer needs that line. */
+@import "tailwindcss";
+@import "@qovira/theme";
+@import "@qovira/theme/fonts";
