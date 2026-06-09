@@ -1,6 +1,6 @@
 {
   "name": "@qovira/ui",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Qovira's Svelte 5 component library — styled, accessible UI primitives and composites built on @qovira/theme's tokens.",
   "keywords": [
     "qovira",
