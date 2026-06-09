@@ -11,6 +11,11 @@ export { default as Button } from "./components/Button.svelte";
 export { default as IconButton } from "./components/IconButton.svelte";
 export type { ButtonVariant, IconButtonSize } from "./components/button-variants.js";
 
+// Overlays: Modal is the canonical Bits-wrapped pattern.
+export { default as Modal } from "./components/Modal.svelte";
+export { default as ModalTitle } from "./components/ModalTitle.svelte";
+export { default as ModalDescription } from "./components/ModalDescription.svelte";
+
 // Layout primitives.
 export { default as Container } from "./components/Container.svelte";
 export { default as Stack } from "./components/Stack.svelte";
