@@ -13,15 +13,13 @@
   const handleClick = fn();
 </script>
 
-<!-- The contrast-clean variants on brand, in both themes (this story + Daylight
-     below) so axe checks each one's contrast in each theme. `destructive` is
-     covered separately — its theme recipe is a known sub-AA near-miss (see the
-     Destructive story and CLAUDE.md). -->
+<!-- All five variants on brand, in both themes (this story + Daylight below) so
+     axe checks each one's contrast in each theme. -->
 <Story
   name="Variants"
   play={async ({ canvas }) => {
     // AC: variants render; each is a real <button>.
-    for (const name of ["Primary", "Key CTA", "Secondary", "Ghost"]) {
+    for (const name of ["Primary", "Key CTA", "Secondary", "Ghost", "Delete"]) {
       await expect(canvas.getByRole("button", { name })).toBeInTheDocument();
     }
   }}
@@ -32,6 +30,7 @@
       <Button variant="key">Key CTA</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="ghost">Ghost</Button>
+      <Button variant="destructive">Delete</Button>
     </div>
   {/snippet}
 </Story>
@@ -125,7 +124,7 @@
   {/snippet}
 </Story>
 
-<!-- The contrast-clean variants in Daylight, so axe runs each in both themes. -->
+<!-- All five variants in Daylight, so axe runs each in both themes. -->
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
     <div class="bg-surface text-text flex flex-wrap items-center gap-3 p-6">
@@ -133,34 +132,7 @@
       <Button variant="key">Key CTA</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="ghost">Ghost</Button>
+      <Button variant="destructive">Delete</Button>
     </div>
   {/snippet}
 </Story>
-
-<!-- KNOWN ISSUE — destructive's theme recipe (`bg-error text-white`) is 4.42:1,
-     just under WCAG AA's 4.5:1 for 14px/500 text. The fix belongs in @qovira/theme
-     (a dedicated AA destructive button token, both themes) — see CLAUDE.md. Until
-     then the variant ships as the theme documents it, with axe's color-contrast
-     rule relaxed for THIS variant only (every other variant stays enforced). Both
-     themes are shown so the visual lineup stays complete. -->
-{#snippet destructive()}
-  <div class="bg-surface text-text p-6">
-    <Button variant="destructive">Delete</Button>
-  </div>
-{/snippet}
-
-<Story
-  name="Destructive"
-  parameters={{ a11y: { config: { rules: [{ id: "color-contrast", enabled: false }] } } }}
-  play={async ({ canvas }) => {
-    await expect(canvas.getByRole("button", { name: "Delete" })).toBeInTheDocument();
-  }}
-  template={destructive}
-/>
-
-<Story
-  name="Destructive (Daylight)"
-  globals={{ theme: "daylight" }}
-  parameters={{ a11y: { config: { rules: [{ id: "color-contrast", enabled: false }] } } }}
-  template={destructive}
-/>

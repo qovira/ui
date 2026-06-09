@@ -1,5 +1,5 @@
 ---
-"@qovira/ui": minor
+"@qovira/ui": major
 ---
 
 Initial public release of `@qovira/ui` — Qovira's Svelte 5 component library

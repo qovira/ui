@@ -76,7 +76,10 @@ pnpm run package       # svelte-package + clean + publint
 
 - Published to npm as **`@qovira/ui`** — public, **Apache-2.0** (`LICENSE`),
   shipping `dist/` only (`files: ["dist"]`). `@qovira/theme` is a **peer** at
-  `^1`, so a token-only theme change doesn't force a release here.
+  `^1.0.2` — the floor is `1.0.2` because the destructive button's white-on-`error`
+  fill only clears WCAG AA from theme `1.0.2` (`--color-error` darkened to
+  `#cc4029`); don't lower it. A token-only theme change within that range doesn't
+  force a release here.
 - **Independent semver, driven by [Changesets](https://github.com/changesets/changesets).**
   Record each user-facing change with `pnpm changeset` (major = a removed/renamed
   prop, a changed default, or a raised `@qovira/theme` peer range; minor = a new
@@ -89,41 +92,3 @@ pnpm run package       # svelte-package + clean + publint
   **provenance** attestation — no `NPM_TOKEN`. This is the **one** sanctioned
   exception to the Blacksmith-everywhere rule (`writing-workflows`): npm OIDC and
   provenance don't work on self-hosted runners. Keep every other job on Blacksmith.
-
-## ⚠️ Known issues / cross-repo tech debt
-
-### Destructive Button fails WCAG AA contrast — fix belongs in `@qovira/theme`
-
-**Status:** shipped as the theme documents it, with axe's `color-contrast` rule
-relaxed for the destructive Button stories only (every other variant stays fully
-enforced). This needs a real fix by a session with access to **both** this repo
-and the `@qovira/theme` repo.
-
-**The problem.** The theme's documented destructive button recipe is
-`bg-error text-white`. On a real rendered button that's `#ffffff` on `#d6452e` =
-**4.42:1**, just under WCAG AA's 4.5:1 floor for the button's 14px / weight-500
-(normal) text. The theme's own contrast tests only AA-verify `error-text` on
-`error-tint` (the alert/badge pairing) — white-on-`error` as a **button fill**
-was never contrast-verified, and it doesn't pass.
-
-**Why it isn't fixed in `@qovira/ui`.** This package must not define its own
-colors, and no existing theme token yields an AA white-on-fill destructive
-button in **both** themes (neither white nor any dark text token clears 4.5:1 on
-the mid-red `--color-error`).
-
-**The fix (in `@qovira/theme`, then consume here):**
-
-1. Add dedicated, AA-verified destructive button tokens mirroring `--btn-primary`
-   — e.g. `--btn-destructive`, `--btn-destructive-fg`, `--btn-destructive-hover`,
-   `--btn-destructive-active` — with a contrast test for the fill/fg pair in
-   **both** themes (Daylight and Evening). A slightly darker red (luminance ≤
-   ~0.183) clears white-on-fill at 4.5:1.
-2. Release the theme and bump it here.
-3. In `src/lib/components/button-variants.ts`, change `VARIANTS.destructive` to
-   `bg-btn-destructive text-btn-destructive-fg hover:… active:…`.
-4. In `src/lib/components/Button.stories.svelte`, fold `destructive` back into the
-   `Variants`/`Daylight` lineups and **remove the `color-contrast` relaxation**
-   from the `Destructive` / `Destructive (Daylight)` stories.
-
-Approved as a deliberate, documented deviation on QOV-18 (the contrast re-check
-the design mandates surfaced it).
