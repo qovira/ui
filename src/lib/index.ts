@@ -21,6 +21,12 @@ export { default as Tooltip } from "./components/Tooltip.svelte";
 // namespace convention Bits uses for its own compound components).
 export * as Menu from "./components/menu.js";
 
+// Navigation & disclosure.
+export { default as Tabs } from "./components/Tabs.svelte";
+export { default as Accordion } from "./components/Accordion.svelte";
+export { default as Pagination } from "./components/Pagination.svelte";
+export type { TabItem, AccordionItem } from "./components/nav-types.js";
+
 // Feedback: ToastProvider mounts near the app root; `toast` raises them anywhere.
 export { default as ToastProvider } from "./components/ToastProvider.svelte";
 export { toast } from "./internal/toast-store.svelte.js";
