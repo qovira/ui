@@ -39,6 +39,9 @@ export { default as Checkbox } from "./components/Checkbox.svelte";
 export { default as Switch } from "./components/Switch.svelte";
 export { default as RadioGroup } from "./components/RadioGroup.svelte";
 export { default as RadioItem } from "./components/RadioItem.svelte";
+export { default as Select } from "./components/Select.svelte";
+export { default as Combobox } from "./components/Combobox.svelte";
+export type { ListboxItem } from "./components/listbox-types.js";
 export type { FieldContext } from "./internal/field-context.js";
 
 // Iconography: the <Icon> wrapper and the curated Phosphor re-export set.
