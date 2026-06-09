@@ -31,7 +31,13 @@
   const describedby = $derived(
     [description ? descId : null, error ? errorId : null].filter(Boolean).join(" ") || undefined,
   );
-  const ctx = $derived<FieldContext>({ id: controlId, labelId, invalid, describedby });
+  const ctx = $derived<FieldContext>({
+    id: controlId,
+    labelId,
+    labelText: label,
+    invalid,
+    describedby,
+  });
 
   // Getter keeps the contract reactive across the context boundary.
   setFieldContext(() => ctx);

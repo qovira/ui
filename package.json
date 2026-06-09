@@ -56,6 +56,7 @@
     "format": "prettier --write ."
   },
   "peerDependencies": {
+    "@internationalized/date": "^3.8",
     "@qovira/theme": "^1",
     "svelte": "^5",
     "tailwindcss": "^4"
@@ -68,6 +69,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@internationalized/date": "^3.8.2",
     "@qovira/theme": "^1.0.1",
     "@storybook/addon-a11y": "^10.4.2",
     "@storybook/addon-docs": "^10.4.2",
