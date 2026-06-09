@@ -23,6 +23,8 @@ export {
   TrashIcon,
   MagnifyingGlassIcon,
   SpinnerIcon,
+  // Identity — the Avatar's icon fallback when there are no initials.
+  UserIcon,
   // Directional carets — menus, selects, accordions, pagination.
   CaretDownIcon,
   CaretUpIcon,

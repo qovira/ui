@@ -41,6 +41,13 @@ export { default as Spinner } from "./components/Spinner.svelte";
 export { default as Skeleton } from "./components/Skeleton.svelte";
 export type { StatusVariant, BadgeVariant, SpinnerSize } from "./components/status-variants.js";
 
+// Data display: Avatar (Bits, with initials/icon fallback) and the calm,
+// compound Table — `Table.Root`, `Table.Row`, `Table.HeaderCell`, ….
+export { default as Avatar } from "./components/Avatar.svelte";
+export type { AvatarSize } from "./components/avatar-types.js";
+export * as Table from "./components/table.js";
+export type { TableSortDirection } from "./components/table-types.js";
+
 // Layout primitives.
 export { default as Container } from "./components/Container.svelte";
 export { default as Stack } from "./components/Stack.svelte";
