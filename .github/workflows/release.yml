@@ -1,0 +1,78 @@
+name: Release
+
+# Publish on a pushed version tag (e.g. v0.1.0). The tag is created after
+# `changeset version` has bumped package.json + written CHANGELOG.md on main —
+# see the README's "Versioning & releases" section.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # The full gate, on Blacksmith (writing-workflows): never publish something
+  # that doesn't pass type/lint/test/package. 4 vCPU — the Vitest Browser-Mode
+  # story suite is parallelizable, so the extra cores cut wall-clock.
+  verify:
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4 # reads packageManager from package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Vitest Browser Mode needs a real browser.
+      - run: pnpm exec playwright install --with-deps chromium
+
+      - name: Type & a11y check (.svelte)
+        run: pnpm run check
+
+      - name: Typecheck (.ts)
+        run: pnpm run typecheck
+
+      - name: Lint & format
+        run: pnpm run lint
+
+      - name: Test (unit + stories)
+        run: pnpm exec vitest run --project unit --project storybook
+
+      - name: Package (svelte-package + publint)
+        run: pnpm run package
+
+  # EXCEPTION to the Blacksmith-everywhere rule (writing-workflows): npm Trusted
+  # Publishing (OIDC) and provenance attestations work ONLY on GitHub-hosted
+  # runners. This is the ONLY job that may leave Blacksmith — kept as small as
+  # possible (just publish). There is NO NODE_AUTH_TOKEN / NPM_TOKEN: Trusted
+  # Publishing authenticates via the OIDC token minted by `id-token: write`.
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # mints the OIDC token for Trusted Publishing
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4 # pnpm 11 — has OIDC trusted-publishing support
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24 # ≥ npm's trusted-publishing floor
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - run: pnpm install --frozen-lockfile
+
+      # `prepack` runs `pnpm run package`, so the tarball is built fresh here and
+      # contains only dist/ (package.json `files`). --provenance attaches the
+      # build attestation; --access public publishes the scoped package publicly.
+      - run: pnpm publish --provenance --access public --no-git-checks

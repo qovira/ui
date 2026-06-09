@@ -82,6 +82,42 @@ pnpm package    # svelte-package → dist/ (the only published output) + publint
 `pnpm package` produces `dist/` — the uncompiled `.svelte` source plus generated
 `.svelte.d.ts` types — which is the only thing published to npm (`files: ["dist"]`).
 
+## Versioning & releases
+
+`@qovira/ui` follows **[semantic versioning](https://semver.org)**, independent
+of `@qovira/theme`. It declares the theme as a peer dependency with a compatible
+range (`@qovira/theme: ^1`), so a token-only change in the theme does **not**
+force a `@qovira/ui` release — the range already admits it.
+
+The contract — what each part of the version means for you, the consumer:
+
+| Bump      | What changed                                                                                                                             |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| **major** | A breaking change: a prop removed or renamed, a component's default behavior changed, or the required `@qovira/theme` peer range raised. |
+| **minor** | A backward-compatible addition: a new component, or an additive (optional) prop.                                                         |
+| **patch** | A backward-compatible bug fix, with no API change.                                                                                       |
+
+### Cutting a release
+
+Versioning and the changelog are driven by
+[Changesets](https://github.com/changesets/changesets). The flow:
+
+1. **As you work**, record each user-facing change with a changeset — `pnpm changeset`
+   prompts for the bump level (per the table above) and a summary, writing a file
+   under `.changeset/`. (See `.changeset/README.md`.)
+2. **To release**, run `pnpm version-packages` (`changeset version`) on `main`:
+   it consumes the pending changesets, bumps `package.json`, and updates
+   `CHANGELOG.md`. Commit that, then create and push a matching `vX.Y.Z` tag.
+3. **The tag triggers** [`.github/workflows/release.yml`](.github/workflows/release.yml):
+   the full gate runs on Blacksmith, then a single GitHub-hosted job publishes to
+   npm via **Trusted Publishing** (tokenless OIDC) with a **provenance
+   attestation**. Only `dist/` is in the published tarball (`files: ["dist"]`).
+
+> **One-time npm setup** (outside this repo): on npmjs.com, configure
+> `@qovira/ui`'s **Trusted Publisher** to point at this repository and the
+> release workflow. No `NPM_TOKEN` secret is used — Trusted Publishing replaces
+> long-lived tokens entirely.
+
 ## License
 
 Apache-2.0 © OMNILIUM ADVANCED CYBERNETICS SRL.
