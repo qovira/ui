@@ -15,6 +15,11 @@ export type { ButtonVariant, IconButtonSize } from "./components/button-variants
 export { default as Modal } from "./components/Modal.svelte";
 export { default as ModalTitle } from "./components/ModalTitle.svelte";
 export { default as ModalDescription } from "./components/ModalDescription.svelte";
+export { default as Popover } from "./components/Popover.svelte";
+export { default as Tooltip } from "./components/Tooltip.svelte";
+// Menu is compound — `Menu.Root`, `Menu.Item`, `Menu.Separator`, … (the
+// namespace convention Bits uses for its own compound components).
+export * as Menu from "./components/menu.js";
 
 // Feedback: ToastProvider mounts near the app root; `toast` raises them anywhere.
 export { default as ToastProvider } from "./components/ToastProvider.svelte";
