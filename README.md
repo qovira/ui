@@ -13,14 +13,15 @@ own.
 ## Install
 
 ```sh
-pnpm add @qovira/ui @qovira/theme
+pnpm add @qovira/ui @qovira/theme @internationalized/date
 ```
 
 `@qovira/ui` ships its components as **uncompiled Svelte source**, so your app's
 own Vite/Svelte toolchain compiles them and your Tailwind build processes their
-utility classes. It declares `svelte`, `tailwindcss`, and `@qovira/theme` as
-**peer dependencies** — you own the versions, and there is exactly one instance
-of each across your app and the library.
+utility classes. It declares `svelte`, `tailwindcss`, `@qovira/theme`, and
+`@internationalized/date` (the date primitive behind `Calendar`/`DateField`/
+`DatePicker`) as **peer dependencies** — you own the versions, and there is
+exactly one instance of each across your app and the library.
 
 ## Set up the styling pipeline
 

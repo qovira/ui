@@ -27,6 +27,12 @@ components; `phosphor-svelte` backs `<Icon>`.
 
 ## Conventions
 
+- **Keep `CLAUDE.md` and `README.md` current.** Both are documentation that must
+  track reality: when a change alters something either file describes (the stack,
+  conventions, the public component/prop surface, the gate, the versioning/release
+  flow), update the affected doc automatically in the **same** change — never
+  leave it as a follow-up. Stale docs silently mislead every future reader and
+  session.
 - Components authored **only** in `@qovira/theme` semantic utilities
   (`bg-surface`, `text-text`, `focus-ring`, `rounded-md`, `text-button`, …).
 - `cn()` (`src/lib/internal/cn.ts`, clsx + tailwind-merge) merges a consumer
