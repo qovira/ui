@@ -21,17 +21,17 @@ jobs:
   verify:
     runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       # engine-strict (.npmrc) makes pnpm 11's engines.node (>=22.13) a hard
       # error, and action-setup's self-installer runs under the runner's bundled
       # Node (v20) — setup-node order can't change that. standalone installs
       # @pnpm/exe (Node-bundled pnpm, no engines.node field), so the bootstrap
       # isn't gated on the runner's Node version.
-      - uses: pnpm/action-setup@v4 # reads packageManager from package.json
+      - uses: pnpm/action-setup@v6 # reads packageManager from package.json
         with:
           standalone: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: pnpm
@@ -68,14 +68,14 @@ jobs:
       contents: read
       id-token: write # mints the OIDC token for Trusted Publishing
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       # standalone @pnpm/exe (see verify): avoids the engine-strict bootstrap
       # failure on the publish runner's old default Node.
-      - uses: pnpm/action-setup@v4 # pnpm 11 — has OIDC trusted-publishing support
+      - uses: pnpm/action-setup@v6 # pnpm 11 — has OIDC trusted-publishing support
         with:
           standalone: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 24 # ≥ npm's trusted-publishing floor
           cache: pnpm
