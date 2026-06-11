@@ -130,4 +130,4 @@ reason to extend the theme, never to hard-code a value here.
 
 ## License
 
-Apache-2.0 © OMNILIUM ADVANCED CYBERNETICS SRL.
+[Apache-2.0](./LICENSE) © OMNILIUM ADVANCED CYBERNETICS SRL
