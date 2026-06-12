@@ -78,11 +78,6 @@ pnpm test              # vitest run --project unit --project storybook
 pnpm run package       # svelte-package + clean + publint
 ```
 
-**Green before `main`/PR.** The full gate above must pass before you push to
-`main` or open a PR — run it and confirm green first. Pushing not-yet-passing
-commits to a **feature branch** is fine; the gate is enforced at the `main`/PR
-boundary, not on every commit.
-
 ## Distribution & releases
 
 - Published to npm as **`@qovira/ui`** — public, **Apache-2.0** (`LICENSE`),
