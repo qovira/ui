@@ -36,7 +36,10 @@
   {#snippet template()}
     <div class="bg-surface text-text">
       <Container width="prose" data-testid="container">
-        <Text>Prose caps the measure at ~70 characters so long-form reading stays comfortable rather than stretching the full width of the viewport.</Text>
+        <Text
+          >Prose caps the measure at ~70 characters so long-form reading stays comfortable rather than stretching the
+          full width of the viewport.</Text
+        >
       </Container>
     </div>
   {/snippet}

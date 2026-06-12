@@ -72,11 +72,15 @@
   <!-- A plain div, not Calendar.Header: that renders a <header> (a banner
        landmark) which axe flags when nested. The parts work standalone. -->
   <div class="flex items-center justify-between pb-3">
-    <Calendar.PrevButton class="focus-ring inline-flex h-8 w-8 items-center justify-center rounded-md text-text hover:bg-surface disabled:opacity-50">
+    <Calendar.PrevButton
+      class="focus-ring inline-flex h-8 w-8 items-center justify-center rounded-md text-text hover:bg-surface disabled:opacity-50"
+    >
       <CaretLeftIcon size={18} color="currentColor" aria-hidden="true" />
     </Calendar.PrevButton>
     <Calendar.Heading class="text-body font-sans font-medium text-text" />
-    <Calendar.NextButton class="focus-ring inline-flex h-8 w-8 items-center justify-center rounded-md text-text hover:bg-surface disabled:opacity-50">
+    <Calendar.NextButton
+      class="focus-ring inline-flex h-8 w-8 items-center justify-center rounded-md text-text hover:bg-surface disabled:opacity-50"
+    >
       <CaretRightIcon size={18} color="currentColor" aria-hidden="true" />
     </Calendar.NextButton>
   </div>

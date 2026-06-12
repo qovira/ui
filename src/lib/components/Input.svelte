@@ -19,4 +19,10 @@
   const ariaDescribedby = $derived(describedbyProp ?? ctx?.describedby);
 </script>
 
-<input {...rest} id={resolvedId} aria-invalid={ariaInvalid} aria-describedby={ariaDescribedby} class={cn("flex h-10", FIELD_CONTROL_BASE, klass, "focus-ring")} />
+<input
+  {...rest}
+  id={resolvedId}
+  aria-invalid={ariaInvalid}
+  aria-describedby={ariaDescribedby}
+  class={cn("flex h-10", FIELD_CONTROL_BASE, klass, "focus-ring")}
+/>

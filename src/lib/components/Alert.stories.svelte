@@ -47,7 +47,9 @@
 >
   {#snippet template()}
     <div class="bg-surface text-text max-w-md p-6">
-      <Alert variant="error" role="alert" title="Offline">We've lost your connection — changes won't save until it's back.</Alert>
+      <Alert variant="error" role="alert" title="Offline"
+        >We've lost your connection — changes won't save until it's back.</Alert
+      >
     </div>
   {/snippet}
 </Story>

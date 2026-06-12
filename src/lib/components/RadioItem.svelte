@@ -28,7 +28,8 @@
       "focus-ring",
     )}
   >
-    <span class="h-2.5 w-2.5 rounded-full bg-accent opacity-0 transition-opacity group-data-[state=checked]:opacity-100"></span>
+    <span class="h-2.5 w-2.5 rounded-full bg-accent opacity-0 transition-opacity group-data-[state=checked]:opacity-100"
+    ></span>
   </RadioGroup.Item>
   {@render children()}
 </label>

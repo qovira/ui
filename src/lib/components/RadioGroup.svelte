@@ -27,6 +27,13 @@
   const ariaDescribedby = $derived(describedbyProp ?? ctx?.describedby);
 </script>
 
-<RadioGroup.Root bind:value aria-labelledby={ariaLabelledby} aria-invalid={ariaInvalid} aria-describedby={ariaDescribedby} class={cn("flex flex-col gap-2", klass)} {...rest}>
+<RadioGroup.Root
+  bind:value
+  aria-labelledby={ariaLabelledby}
+  aria-invalid={ariaInvalid}
+  aria-describedby={ariaDescribedby}
+  class={cn("flex flex-col gap-2", klass)}
+  {...rest}
+>
   {@render children?.()}
 </RadioGroup.Root>

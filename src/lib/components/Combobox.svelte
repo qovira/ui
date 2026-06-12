@@ -64,12 +64,16 @@
 
   // The listbox panel needs its own accessible name (it isn't the labelable
   // control): reuse the explicit aria-label, else point at the Field's label.
-  const listboxName = $derived(ariaLabel ? { "aria-label": ariaLabel } : ctx?.labelId ? { "aria-labelledby": ctx.labelId } : {});
+  const listboxName = $derived(
+    ariaLabel ? { "aria-label": ariaLabel } : ctx?.labelId ? { "aria-labelledby": ctx.labelId } : {},
+  );
 
   // Typeahead filtering is consumer-owned in Bits — we hold the search term and
   // derive the visible options (case-insensitive substring on the label).
   let search = $state("");
-  const filtered = $derived(search.trim() ? items.filter((item) => item.label.toLowerCase().includes(search.trim().toLowerCase())) : items);
+  const filtered = $derived(
+    search.trim() ? items.filter((item) => item.label.toLowerCase().includes(search.trim().toLowerCase())) : items,
+  );
 
   function handleOpenChange(next: boolean) {
     open = next;
@@ -95,7 +99,10 @@
       oninput={(e) => (search = e.currentTarget.value)}
       class={cn(FIELD_CONTROL_BASE, "h-10 pr-9", klass, "focus-ring")}
     />
-    <Combobox.Trigger aria-label="Toggle options" class="focus-ring absolute inset-y-0 right-0 flex items-center rounded-md px-2.5 text-text-muted">
+    <Combobox.Trigger
+      aria-label="Toggle options"
+      class="focus-ring absolute inset-y-0 right-0 flex items-center rounded-md px-2.5 text-text-muted"
+    >
       <CaretUpDownIcon size={18} color="currentColor" aria-hidden="true" />
     </Combobox.Trigger>
   </div>

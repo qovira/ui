@@ -19,7 +19,15 @@
     onValueChange?: (value: string) => void;
   }
 
-  let { items, value = $bindable(items[0]?.value), orientation = "horizontal", class: klass, panelClass, panel, onValueChange }: Props = $props();
+  let {
+    items,
+    value = $bindable(items[0]?.value),
+    orientation = "horizontal",
+    class: klass,
+    panelClass,
+    panel,
+    onValueChange,
+  }: Props = $props();
 </script>
 
 <!-- Bits owns behavior: the tablist/tab/tabpanel roles, arrow-key roving focus,
@@ -27,7 +35,12 @@
      @qovira/theme utilities and forwards bind:value. `focus-ring` is appended
      last on every focusable part (triggers and the panel) so a consumer class
      can't strip it. -->
-<Tabs.Root bind:value {orientation} {...onValueChange ? { onValueChange } : {}} class={cn("flex flex-col gap-3", klass)}>
+<Tabs.Root
+  bind:value
+  {orientation}
+  {...onValueChange ? { onValueChange } : {}}
+  class={cn("flex flex-col gap-3", klass)}
+>
   <Tabs.List class="flex gap-1 border-b border-border">
     {#each items as item (item.value)}
       <Tabs.Trigger

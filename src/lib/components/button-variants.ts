@@ -14,7 +14,8 @@ export type IconButtonSize = "md" | "touch";
 
 export const VARIANTS: Record<ButtonVariant, string> = {
   // Espresso (Daylight) ↔ honey (Evening), automatic via the `--btn-primary` token.
-  primary: "bg-btn-primary text-btn-primary-fg hover:bg-btn-primary-hover active:bg-btn-primary-active active:scale-[.99]",
+  primary:
+    "bg-btn-primary text-btn-primary-fg hover:bg-btn-primary-hover active:bg-btn-primary-active active:scale-[.99]",
   // Key CTA — raw honey in both themes; at most one per view (the ≤10% accent rule).
   key: "bg-accent text-warm-900 hover:bg-honey-600 active:bg-honey-700",
   // Secondary — hairline-bordered, transparent fill.

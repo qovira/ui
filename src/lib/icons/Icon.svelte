@@ -10,4 +10,11 @@
   const a11y = $derived(decorative ? { "aria-hidden": true } : { "aria-label": label });
 </script>
 
-<IconCmp {size} weight="regular" color="currentColor" class={cn("inline-block shrink-0 align-middle", klass)} {...rest} {...a11y} />
+<IconCmp
+  {size}
+  weight="regular"
+  color="currentColor"
+  class={cn("inline-block shrink-0 align-middle", klass)}
+  {...rest}
+  {...a11y}
+/>

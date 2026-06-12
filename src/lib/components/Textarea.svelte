@@ -18,5 +18,10 @@
   const ariaDescribedby = $derived(describedbyProp ?? ctx?.describedby);
 </script>
 
-<textarea {...rest} id={resolvedId} aria-invalid={ariaInvalid} aria-describedby={ariaDescribedby} class={cn("flex min-h-20 py-2", FIELD_CONTROL_BASE, klass, "focus-ring")}
+<textarea
+  {...rest}
+  id={resolvedId}
+  aria-invalid={ariaInvalid}
+  aria-describedby={ariaDescribedby}
+  class={cn("flex min-h-20 py-2", FIELD_CONTROL_BASE, klass, "focus-ring")}
 ></textarea>

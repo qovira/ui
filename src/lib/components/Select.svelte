@@ -64,7 +64,9 @@
 
   // The listbox panel needs its own accessible name (it isn't the labelable
   // control): reuse the explicit aria-label, else point at the Field's label.
-  const listboxName = $derived(ariaLabel ? { "aria-label": ariaLabel } : ctx?.labelId ? { "aria-labelledby": ctx.labelId } : {});
+  const listboxName = $derived(
+    ariaLabel ? { "aria-label": ariaLabel } : ctx?.labelId ? { "aria-labelledby": ctx.labelId } : {},
+  );
 </script>
 
 <!-- Bits owns listbox behavior: roving focus, type-ahead, ARIA, portalling. The

@@ -15,7 +15,13 @@
     children: Snippet;
   }
 
-  let { variant = "neutral", href, class: klass, children, ...rest }: Props & (HTMLAttributes<HTMLSpanElement> | HTMLAnchorAttributes) = $props();
+  let {
+    variant = "neutral",
+    href,
+    class: klass,
+    children,
+    ...rest
+  }: Props & (HTMLAttributes<HTMLSpanElement> | HTMLAnchorAttributes) = $props();
 
   // Shares Badge's BADGE_TONE recipe (neutral hairline, or a status's AA-verified
   // tint/text pairing); status chips also carry a glyph (never color alone).
@@ -35,7 +41,11 @@
      class can't merge it away. The static span carries no focus state. -->
 {#if href}
   <!-- eslint-disable svelte/no-navigation-without-resolve -- a generic library control forwards the consumer's arbitrary href verbatim; resolve() is for an app's own route links, not here. -->
-  <a {href} class={cn(base, BADGE_TONE[variant], "transition-colors duration-micro hover:bg-text/5", klass, "focus-ring")} {...rest as HTMLAnchorAttributes}>
+  <a
+    {href}
+    class={cn(base, BADGE_TONE[variant], "transition-colors duration-micro hover:bg-text/5", klass, "focus-ring")}
+    {...rest as HTMLAnchorAttributes}
+  >
     {@render body()}
   </a>
   <!-- eslint-enable svelte/no-navigation-without-resolve -->
