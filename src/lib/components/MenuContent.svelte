@@ -2,6 +2,7 @@
   import { DropdownMenu } from "bits-ui";
   import type { Snippet } from "svelte";
   import { cn } from "../internal/cn.js";
+  import { MENU_PANEL_BASE } from "../internal/menu-item.js";
 
   interface Props {
     children: Snippet;
@@ -18,15 +19,7 @@
 <!-- Portalled and collision-handled by Bits. `focus-ring` is appended last so a
      consumer class can't strip it. -->
 <DropdownMenu.Portal {...portalTo ? { to: portalTo } : {}}>
-  <DropdownMenu.Content
-    {sideOffset}
-    class={cn(
-      "z-50 min-w-[10rem] rounded-xl border border-border bg-surface-raised p-1.5 text-text shadow-[var(--shadow-lg)]",
-      "duration-overlay ease-qovira",
-      klass,
-      "focus-ring",
-    )}
-  >
+  <DropdownMenu.Content {sideOffset} class={cn(MENU_PANEL_BASE, klass, "focus-ring")}>
     {@render children()}
   </DropdownMenu.Content>
 </DropdownMenu.Portal>

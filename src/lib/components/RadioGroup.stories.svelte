@@ -51,6 +51,9 @@
     await expect(group).toHaveAttribute("aria-invalid", "true");
     const message = canvas.getByText("Choose a plan to continue.");
     await expect(group).toHaveAttribute("aria-describedby", message.id);
+    // The group names itself via aria-labelledby, so the Field's <label> must
+    // NOT emit a `for` pointing at a non-labelable element that exists nowhere.
+    await expect(canvas.getByText("Plan")).not.toHaveAttribute("for");
   }}
 >
   {#snippet template()}

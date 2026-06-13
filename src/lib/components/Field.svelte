@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
   import { cn } from "../internal/cn.js";
-  import { setFieldContext, type FieldContext } from "../internal/field-context.js";
+  import { setFieldContext, setFieldGroupRegistrar, type FieldContext } from "../internal/field-context.js";
 
   interface Props {
     /** The label text — always rendered and linked to the control. */
@@ -41,10 +41,19 @@
 
   // Getter keeps the contract reactive across the context boundary.
   setFieldContext(() => ctx);
+
+  // A group control (radiogroup, calendar grid) registers here to say it names
+  // itself via aria-labelledby; the label then drops its `for` so it doesn't
+  // dangle at a non-labelable element. Labelable controls never register, so the
+  // common case keeps the click-to-focus `<label for>`.
+  let group = $state(false);
+  setFieldGroupRegistrar(() => (group = true));
 </script>
 
 <div class={cn("flex flex-col gap-2", klass)}>
-  <label id={labelId} for={controlId} class="text-label font-sans uppercase text-text-muted">{label}</label>
+  <label id={labelId} for={group ? undefined : controlId} class="text-label font-sans uppercase text-text-muted"
+    >{label}</label
+  >
   {@render children(ctx)}
   {#if description}
     <p id={descId} class="text-small font-sans text-text-muted">{description}</p>

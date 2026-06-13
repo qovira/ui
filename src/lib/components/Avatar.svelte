@@ -3,6 +3,7 @@
   import { UserIcon } from "phosphor-svelte";
   import Icon from "../icons/Icon.svelte";
   import { cn } from "../internal/cn.js";
+  import { computeInitials } from "../internal/initials.js";
   import type { AvatarSize } from "./avatar-types.js";
 
   interface Props {
@@ -24,15 +25,7 @@
 
   // Up to two initials — the first LETTER of the first two words. A name with no
   // letters (an id, a symbol) yields none, and the fallback shows a person icon.
-  const initials = $derived(
-    name
-      .split(/\s+/)
-      .map((word) => word.match(/\p{L}/u)?.[0] ?? "")
-      .filter(Boolean)
-      .slice(0, 2)
-      .join("")
-      .toUpperCase(),
-  );
+  const initials = $derived(computeInitials(name));
 
   const SIZE = {
     sm: "size-8 text-small",

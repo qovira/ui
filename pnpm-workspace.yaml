@@ -5,5 +5,5 @@ allowBuilds:
   esbuild: true
   "@tailwindcss/oxide": true
 minimumReleaseAgeExclude:
-  - "@qovira/theme@1.0.2"
+  - "@qovira/theme@1.1.0"
   - "@sveltejs/kit@2.64.0"

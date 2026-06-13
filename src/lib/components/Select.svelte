@@ -2,8 +2,9 @@
   import { Select } from "bits-ui";
   import { CaretUpDownIcon, CheckIcon } from "phosphor-svelte";
   import { cn } from "../internal/cn.js";
+  import { resolveFieldAria } from "../internal/field-aria.svelte.js";
   import { FIELD_CONTROL_BASE } from "../internal/field-control.js";
-  import { getFieldContext } from "../internal/field-context.js";
+  import { LISTBOX_CONTENT_BASE, LISTBOX_ITEM_BASE } from "../internal/listbox.js";
   import type { ListboxItem } from "./listbox-types.js";
 
   interface Props {
@@ -56,16 +57,12 @@
   }: Props = $props();
 
   // Inherit the Field contract from context; explicit props win (works standalone).
-  const field = getFieldContext();
-  const ctx = $derived(field?.());
-  const resolvedId = $derived(id ?? ctx?.id);
-  const ariaInvalid = $derived(invalidProp ?? (ctx?.invalid ? true : undefined));
-  const ariaDescribedby = $derived(describedbyProp ?? ctx?.describedby);
+  const aria = resolveFieldAria(() => ({ id, invalid: invalidProp, describedby: describedbyProp }));
 
   // The listbox panel needs its own accessible name (it isn't the labelable
   // control): reuse the explicit aria-label, else point at the Field's label.
   const listboxName = $derived(
-    ariaLabel ? { "aria-label": ariaLabel } : ctx?.labelId ? { "aria-labelledby": ctx.labelId } : {},
+    ariaLabel ? { "aria-label": ariaLabel } : aria.labelId ? { "aria-labelledby": aria.labelId } : {},
   );
 </script>
 
@@ -77,36 +74,24 @@
      the shared parts live in the `body` snippet to stay DRY. -->
 {#snippet body()}
   <Select.Trigger
-    {...resolvedId ? { id: resolvedId } : {}}
+    {...aria.resolvedId ? { id: aria.resolvedId } : {}}
     aria-label={ariaLabel}
-    aria-invalid={ariaInvalid}
-    aria-describedby={ariaDescribedby}
+    aria-invalid={aria.ariaInvalid}
+    aria-describedby={aria.ariaDescribedby}
     class={cn(FIELD_CONTROL_BASE, "flex h-10 items-center justify-between gap-2 text-left", klass, "focus-ring")}
   >
     <Select.Value {placeholder} class="truncate data-[placeholder]:text-text-muted" />
     <CaretUpDownIcon size={18} color="currentColor" aria-hidden="true" class="shrink-0 text-text-muted" />
   </Select.Trigger>
   <Select.Portal {...portalTo ? { to: portalTo } : {}}>
-    <Select.Content
-      {...listboxName}
-      class={cn(
-        "z-50 max-h-60 min-w-[var(--bits-floating-anchor-width)] overflow-y-auto",
-        "rounded-md border border-border bg-surface-raised p-1 shadow-[var(--shadow-lg)]",
-        "duration-overlay ease-qovira",
-        contentClass,
-      )}
-    >
+    <Select.Content {...listboxName} class={cn(LISTBOX_CONTENT_BASE, contentClass)}>
       <Select.Viewport>
         {#each items as item (item.value)}
           <Select.Item
             value={item.value}
             label={item.label}
             {...item.disabled ? { disabled: true } : {}}
-            class={cn(
-              "flex cursor-default items-center justify-between gap-2 rounded-sm px-2 py-1.5",
-              "text-body font-sans text-text outline-none",
-              "data-[highlighted]:bg-link/8 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-            )}
+            class={LISTBOX_ITEM_BASE}
           >
             {#snippet children({ selected })}
               <span class="truncate">{item.label}</span>

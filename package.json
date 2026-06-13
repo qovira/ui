@@ -59,7 +59,7 @@
   },
   "peerDependencies": {
     "@internationalized/date": "^3.8",
-    "@qovira/theme": "^1.0.2",
+    "@qovira/theme": "^1.1.0",
     "svelte": "^5",
     "tailwindcss": "^4"
   },
@@ -73,7 +73,7 @@
     "@changesets/cli": "^2.31.0",
     "@eslint/js": "^10.0.1",
     "@internationalized/date": "^3.8.2",
-    "@qovira/theme": "^1.0.2",
+    "@qovira/theme": "^1.1.0",
     "@storybook/addon-a11y": "^10.4.2",
     "@storybook/addon-docs": "^10.4.2",
     "@storybook/addon-svelte-csf": "^5.1.2",

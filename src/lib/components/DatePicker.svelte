@@ -3,6 +3,7 @@
   import { CalendarBlankIcon, CaretLeftIcon, CaretRightIcon } from "phosphor-svelte";
   import type { DateValue } from "@internationalized/date";
   import { cn } from "../internal/cn.js";
+  import { CALENDAR_DAY, CALENDAR_NAV_BUTTON } from "../internal/calendar-grid.js";
   import { FIELD_CONTROL_BASE } from "../internal/field-control.js";
   import { getFieldContext } from "../internal/field-context.js";
 
@@ -144,15 +145,11 @@
           <!-- A plain div, not DatePicker.Header: that renders a <header> (a
                banner landmark) which axe flags when nested. -->
           <div class="flex items-center justify-between pb-3">
-            <DatePicker.PrevButton
-              class="focus-ring inline-flex h-8 w-8 items-center justify-center rounded-md text-text hover:bg-surface disabled:opacity-50"
-            >
+            <DatePicker.PrevButton class={CALENDAR_NAV_BUTTON}>
               <CaretLeftIcon size={18} color="currentColor" aria-hidden="true" />
             </DatePicker.PrevButton>
             <DatePicker.Heading class="text-body font-sans font-medium text-text" />
-            <DatePicker.NextButton
-              class="focus-ring inline-flex h-8 w-8 items-center justify-center rounded-md text-text hover:bg-surface disabled:opacity-50"
-            >
+            <DatePicker.NextButton class={CALENDAR_NAV_BUTTON}>
               <CaretRightIcon size={18} color="currentColor" aria-hidden="true" />
             </DatePicker.NextButton>
           </div>
@@ -172,14 +169,7 @@
                   <DatePicker.GridRow class="flex w-full">
                     {#each weekDates as date (date.toString())}
                       <DatePicker.Cell {date} month={month.value} class="p-0">
-                        <DatePicker.Day
-                          class={cn(
-                            "focus-ring inline-flex h-9 w-9 items-center justify-center rounded-md text-body font-sans text-text",
-                            "hover:bg-surface data-[disabled]:opacity-40 data-[unavailable]:text-text-muted data-[unavailable]:line-through",
-                            "data-[outside-month]:pointer-events-none data-[outside-month]:opacity-40",
-                            "data-[selected]:bg-accent data-[selected]:text-warm-900 data-[today]:font-semibold",
-                          )}
-                        />
+                        <DatePicker.Day class={CALENDAR_DAY} />
                       </DatePicker.Cell>
                     {/each}
                   </DatePicker.GridRow>

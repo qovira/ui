@@ -3,6 +3,7 @@
   import { CheckCircleIcon, InfoIcon, WarningIcon, XCircleIcon, XIcon } from "phosphor-svelte";
   import Icon from "../icons/Icon.svelte";
   import { cn } from "../internal/cn.js";
+  import { createDismissTimer } from "../internal/dismiss-timer.js";
   import type { ToastData } from "../internal/toast-store.svelte.js";
 
   let { toast, ondismiss }: { toast: ToastData; ondismiss: () => void } = $props();
@@ -23,21 +24,22 @@
   } as const;
 
   // Auto-dismiss timer that pauses on hover/focus and resumes with the time it
-  // had left. `remaining`/`startedAt` are plain (non-reactive) so only `paused`
-  // drives the effect — reading them as state would loop.
+  // had left (the remaining-time arithmetic lives in, and is unit-tested via,
+  // `dismiss-timer.ts`). The timer captures `ondismiss` once, so `paused` is the
+  // ONLY dependency of the effect below — a sibling toast adding/dismissing
+  // never re-arms this one's timer.
   let paused = $state(false);
-  // One-time capture of the initial duration; it never changes for a toast.
-  let remaining = untrack(() => toast.duration);
-  let startedAt = 0;
+  // The duration never changes for a toast; capture it once (untrack documents
+  // that, and keeps this off the effect's dependency set).
+  const timer = createDismissTimer(
+    untrack(() => toast.duration),
+    () => ondismiss(),
+  );
 
   $effect(() => {
-    if (paused) return;
-    startedAt = Date.now();
-    const timer = setTimeout(ondismiss, remaining);
-    return () => {
-      clearTimeout(timer);
-      remaining = Math.max(0, remaining - (Date.now() - startedAt));
-    };
+    if (paused) timer.pause();
+    else timer.resume();
+    return () => timer.pause();
   });
 </script>
 

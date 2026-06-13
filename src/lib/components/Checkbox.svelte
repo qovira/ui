@@ -2,7 +2,7 @@
   import { Checkbox } from "bits-ui";
   import { CheckIcon, MinusIcon } from "phosphor-svelte";
   import { cn } from "../internal/cn.js";
-  import { getFieldContext } from "../internal/field-context.js";
+  import { resolveFieldAria } from "../internal/field-aria.svelte.js";
 
   interface Props extends Checkbox.RootProps {
     class?: string;
@@ -19,11 +19,7 @@
   }: Props = $props();
 
   // Inherit the Field contract from context; explicit props win (works standalone).
-  const field = getFieldContext();
-  const ctx = $derived(field?.());
-  const resolvedId = $derived(id ?? ctx?.id);
-  const ariaInvalid = $derived(invalidProp ?? (ctx?.invalid ? true : undefined));
-  const ariaDescribedby = $derived(describedbyProp ?? ctx?.describedby);
+  const aria = resolveFieldAria(() => ({ id, invalid: invalidProp, describedby: describedbyProp }));
 </script>
 
 <!-- Bits owns the role/keyboard/ARIA; the wrapper paints the box and swaps the
@@ -32,9 +28,9 @@
 <Checkbox.Root
   bind:checked
   bind:indeterminate
-  {...resolvedId ? { id: resolvedId } : {}}
-  aria-invalid={ariaInvalid}
-  aria-describedby={ariaDescribedby}
+  {...aria.resolvedId ? { id: aria.resolvedId } : {}}
+  aria-invalid={aria.ariaInvalid}
+  aria-describedby={aria.ariaDescribedby}
   class={cn(
     "inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-border bg-surface-raised text-warm-900 transition-colors",
     "data-[state=checked]:border-accent data-[state=checked]:bg-accent",
@@ -45,13 +41,14 @@
   )}
   {...rest}
 >
-  {#snippet children({ checked, indeterminate })}
+  {#snippet children({ checked: isChecked, indeterminate: isIndeterminate })}
     <!-- Decorative glyph: the control's state is conveyed by aria-checked, so the
          indicator is hidden from assistive tech. Sized to the box, hence a raw
-         Phosphor icon rather than the size-locked <Icon> wrapper. -->
-    {#if indeterminate}
+         Phosphor icon rather than the size-locked <Icon> wrapper. Snippet params
+         are renamed so they don't shadow the outer bindable checked/indeterminate. -->
+    {#if isIndeterminate}
       <MinusIcon size={14} weight="bold" color="currentColor" aria-hidden="true" />
-    {:else if checked}
+    {:else if isChecked}
       <CheckIcon size={14} weight="bold" color="currentColor" aria-hidden="true" />
     {/if}
   {/snippet}

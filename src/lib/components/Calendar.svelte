@@ -3,7 +3,8 @@
   import { CaretLeftIcon, CaretRightIcon } from "phosphor-svelte";
   import type { DateValue } from "@internationalized/date";
   import { cn } from "../internal/cn.js";
-  import { getFieldContext } from "../internal/field-context.js";
+  import { CALENDAR_DAY, CALENDAR_NAV_BUTTON } from "../internal/calendar-grid.js";
+  import { getFieldContext, getFieldGroupRegistrar } from "../internal/field-context.js";
 
   // Bits doesn't publicly export its calendar snippet-prop type; this covers the
   // shape we read from each month (the Root `children` snippet supplies it).
@@ -60,6 +61,27 @@
     ...(minValue ? { minValue } : {}),
     ...(maxValue ? { maxValue } : {}),
   });
+
+  // The grid self-labels via calendarLabel, so tell an enclosing Field to drop
+  // the `<label for>` it would otherwise point at this non-labelable group.
+  const registerGroup = getFieldGroupRegistrar();
+  $effect(() => {
+    registerGroup?.();
+  });
+
+  // Everything the two type-branched Roots share. Only `type`, `value`, and the
+  // value-typed `onValueChange` stay inline per branch — hoisting those would
+  // break bits' discriminated-union narrowing on `type`.
+  const rootProps = $derived({
+    disabled,
+    weekdayFormat,
+    ...bounds,
+    ...(resolvedId ? { id: resolvedId } : {}),
+    ...calName,
+    "aria-invalid": ariaInvalid,
+    "aria-describedby": ariaDescribedby,
+    class: cn("inline-block rounded-xl border border-border bg-surface-raised p-4 text-text", klass, "focus-ring"),
+  });
 </script>
 
 <!-- Bits owns the calendar behavior: month grid, roving focus, keyboard nav,
@@ -72,15 +94,11 @@
   <!-- A plain div, not Calendar.Header: that renders a <header> (a banner
        landmark) which axe flags when nested. The parts work standalone. -->
   <div class="flex items-center justify-between pb-3">
-    <Calendar.PrevButton
-      class="focus-ring inline-flex h-8 w-8 items-center justify-center rounded-md text-text hover:bg-surface disabled:opacity-50"
-    >
+    <Calendar.PrevButton class={CALENDAR_NAV_BUTTON}>
       <CaretLeftIcon size={18} color="currentColor" aria-hidden="true" />
     </Calendar.PrevButton>
     <Calendar.Heading class="text-body font-sans font-medium text-text" />
-    <Calendar.NextButton
-      class="focus-ring inline-flex h-8 w-8 items-center justify-center rounded-md text-text hover:bg-surface disabled:opacity-50"
-    >
+    <Calendar.NextButton class={CALENDAR_NAV_BUTTON}>
       <CaretRightIcon size={18} color="currentColor" aria-hidden="true" />
     </Calendar.NextButton>
   </div>
@@ -100,14 +118,7 @@
           <Calendar.GridRow class="flex w-full">
             {#each weekDates as date (date.toString())}
               <Calendar.Cell {date} month={month.value} class="p-0">
-                <Calendar.Day
-                  class={cn(
-                    "focus-ring inline-flex h-9 w-9 items-center justify-center rounded-md text-body font-sans text-text",
-                    "hover:bg-surface data-[disabled]:opacity-40 data-[unavailable]:text-text-muted data-[unavailable]:line-through",
-                    "data-[outside-month]:pointer-events-none data-[outside-month]:opacity-40",
-                    "data-[selected]:bg-accent data-[selected]:text-warm-900 data-[today]:font-semibold",
-                  )}
-                />
+                <Calendar.Day class={CALENDAR_DAY} />
               </Calendar.Cell>
             {/each}
           </Calendar.GridRow>
@@ -125,14 +136,7 @@
       value = v;
       onValueChange?.(v);
     }}
-    {disabled}
-    {weekdayFormat}
-    {...bounds}
-    {...resolvedId ? { id: resolvedId } : {}}
-    {...calName}
-    aria-invalid={ariaInvalid}
-    aria-describedby={ariaDescribedby}
-    class={cn("inline-block rounded-xl border border-border bg-surface-raised p-4 text-text", klass, "focus-ring")}
+    {...rootProps}
   >
     {#snippet children({ months, weekdays })}
       {@render grid(months, weekdays)}
@@ -146,14 +150,7 @@
       value = v;
       onValueChange?.(v);
     }}
-    {disabled}
-    {weekdayFormat}
-    {...bounds}
-    {...resolvedId ? { id: resolvedId } : {}}
-    {...calName}
-    aria-invalid={ariaInvalid}
-    aria-describedby={ariaDescribedby}
-    class={cn("inline-block rounded-xl border border-border bg-surface-raised p-4 text-text", klass, "focus-ring")}
+    {...rootProps}
   >
     {#snippet children({ months, weekdays })}
       {@render grid(months, weekdays)}

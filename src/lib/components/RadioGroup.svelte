@@ -1,7 +1,7 @@
 <script lang="ts">
   import { RadioGroup } from "bits-ui";
   import { cn } from "../internal/cn.js";
-  import { getFieldContext } from "../internal/field-context.js";
+  import { getFieldContext, getFieldGroupRegistrar } from "../internal/field-context.js";
 
   interface Props extends RadioGroup.RootProps {
     class?: string;
@@ -25,6 +25,13 @@
   const ariaLabelledby = $derived(labelledbyProp ?? ctx?.labelId);
   const ariaInvalid = $derived(invalidProp ?? (ctx?.invalid ? true : undefined));
   const ariaDescribedby = $derived(describedbyProp ?? ctx?.describedby);
+
+  // Tell an enclosing Field we self-label, so its <label> drops the `for` that
+  // would otherwise dangle at this non-labelable group.
+  const registerGroup = getFieldGroupRegistrar();
+  $effect(() => {
+    registerGroup?.();
+  });
 </script>
 
 <RadioGroup.Root

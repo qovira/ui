@@ -2,8 +2,9 @@
   import { Combobox } from "bits-ui";
   import { CaretUpDownIcon, CheckIcon } from "phosphor-svelte";
   import { cn } from "../internal/cn.js";
+  import { resolveFieldAria } from "../internal/field-aria.svelte.js";
   import { FIELD_CONTROL_BASE } from "../internal/field-control.js";
-  import { getFieldContext } from "../internal/field-context.js";
+  import { LISTBOX_CONTENT_BASE, LISTBOX_ITEM_BASE } from "../internal/listbox.js";
   import type { ListboxItem } from "./listbox-types.js";
 
   interface Props {
@@ -56,28 +57,28 @@
   }: Props = $props();
 
   // Inherit the Field contract from context; explicit props win (works standalone).
-  const field = getFieldContext();
-  const ctx = $derived(field?.());
-  const resolvedId = $derived(id ?? ctx?.id);
-  const ariaInvalid = $derived(invalidProp ?? (ctx?.invalid ? true : undefined));
-  const ariaDescribedby = $derived(describedbyProp ?? ctx?.describedby);
+  const aria = resolveFieldAria(() => ({ id, invalid: invalidProp, describedby: describedbyProp }));
 
   // The listbox panel needs its own accessible name (it isn't the labelable
   // control): reuse the explicit aria-label, else point at the Field's label.
   const listboxName = $derived(
-    ariaLabel ? { "aria-label": ariaLabel } : ctx?.labelId ? { "aria-labelledby": ctx.labelId } : {},
+    ariaLabel ? { "aria-label": ariaLabel } : aria.labelId ? { "aria-labelledby": aria.labelId } : {},
   );
 
   // Typeahead filtering is consumer-owned in Bits — we hold the search term and
-  // derive the visible options (case-insensitive substring on the label).
+  // derive the visible options (case-insensitive substring on the label). The
+  // needle is hoisted out of the predicate so it's computed once per keystroke,
+  // not once per option. In multiple mode the panel stays open across commits,
+  // so the typed filter intentionally persists until close (bits owns the input
+  // value, so clearing `search` alone would desync the visible text).
   let search = $state("");
-  const filtered = $derived(
-    search.trim() ? items.filter((item) => item.label.toLowerCase().includes(search.trim().toLowerCase())) : items,
-  );
+  const query = $derived(search.trim().toLowerCase());
+  const filtered = $derived(query ? items.filter((item) => item.label.toLowerCase().includes(query)) : items);
 
+  // Unlike Select (which uses bind:open), Combobox routes the open state through
+  // an explicit handler because it must also clear the typed filter on close.
   function handleOpenChange(next: boolean) {
     open = next;
-    // Reset the filter on close so reopening shows the full list again.
     if (!next) search = "";
     onOpenChange?.(next);
   }
@@ -91,11 +92,11 @@
 {#snippet body()}
   <div class="relative">
     <Combobox.Input
-      {...resolvedId ? { id: resolvedId } : {}}
+      {...aria.resolvedId ? { id: aria.resolvedId } : {}}
       {placeholder}
       aria-label={ariaLabel}
-      aria-invalid={ariaInvalid}
-      aria-describedby={ariaDescribedby}
+      aria-invalid={aria.ariaInvalid}
+      aria-describedby={aria.ariaDescribedby}
       oninput={(e) => (search = e.currentTarget.value)}
       class={cn(FIELD_CONTROL_BASE, "h-10 pr-9", klass, "focus-ring")}
     />
@@ -107,26 +108,14 @@
     </Combobox.Trigger>
   </div>
   <Combobox.Portal {...portalTo ? { to: portalTo } : {}}>
-    <Combobox.Content
-      {...listboxName}
-      class={cn(
-        "z-50 max-h-60 min-w-[var(--bits-floating-anchor-width)] overflow-y-auto",
-        "rounded-md border border-border bg-surface-raised p-1 shadow-[var(--shadow-lg)]",
-        "duration-overlay ease-qovira",
-        contentClass,
-      )}
-    >
+    <Combobox.Content {...listboxName} class={cn(LISTBOX_CONTENT_BASE, contentClass)}>
       <Combobox.Viewport>
         {#each filtered as item (item.value)}
           <Combobox.Item
             value={item.value}
             label={item.label}
             {...item.disabled ? { disabled: true } : {}}
-            class={cn(
-              "flex cursor-default items-center justify-between gap-2 rounded-sm px-2 py-1.5",
-              "text-body font-sans text-text outline-none",
-              "data-[highlighted]:bg-link/8 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-            )}
+            class={LISTBOX_ITEM_BASE}
           >
             {#snippet children({ selected })}
               <span class="truncate">{item.label}</span>

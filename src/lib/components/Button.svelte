@@ -57,18 +57,22 @@
     class={cn(classes, inactive && "opacity-50 pointer-events-none")}
     {...rest as HTMLAnchorAttributes}
     aria-disabled={inactive ? "true" : undefined}
-    tabindex={inactive ? -1 : undefined}
-    aria-busy={loading ? "true" : undefined}
+    {...inactive ? { tabindex: -1 } : {}}
+    {...loading ? { "aria-busy": "true" } : {}}
   >
     {@render body()}
   </a>
   <!-- eslint-enable svelte/no-navigation-without-resolve -->
 {:else}
+  <!-- `type="button"` precedes ...rest so it defaults to a non-submitting button
+       (a bare <button> defaults to type="submit"), yet a consumer can still pass
+       type="submit" through ...rest. -->
   <button
     class={classes}
+    type="button"
     {...rest as HTMLButtonAttributes}
     disabled={inactive}
-    aria-busy={loading ? "true" : undefined}
+    {...loading ? { "aria-busy": "true" } : {}}
   >
     {@render body()}
   </button>

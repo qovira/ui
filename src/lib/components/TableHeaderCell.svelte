@@ -20,11 +20,9 @@
   let { sortable = false, sort = "none", onsort, class: klass, children, ...rest }: Props = $props();
 
   // aria-sort lives on the <th> (the column header), with the button as its
-  // control — the correct sortable-header pattern.
-  const ariaSort = $derived(sort === "asc" ? "ascending" : sort === "desc" ? "descending" : "none") as
-    | "ascending"
-    | "descending"
-    | "none";
+  // control — the correct sortable-header pattern. The ternary already infers the
+  // exact "ascending" | "descending" | "none" literal union, so no cast is needed.
+  const ariaSort = $derived(sort === "asc" ? "ascending" : sort === "desc" ? "descending" : "none");
 
   const cell = "px-4 py-3 text-left text-label font-sans uppercase text-text-muted";
 </script>

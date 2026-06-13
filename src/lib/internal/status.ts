@@ -31,6 +31,11 @@ export const STATUS_TEXT: Record<StatusVariant, string> = {
   error: "text-error-text",
 };
 
+// The shape/typography recipe shared by Badge and Chip (the pill geometry,
+// gap, and small label type). Defined once, alongside BADGE_TONE, so the two
+// compact-label components never drift.
+export const BADGE_BASE = "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-small font-sans";
+
 // The composed compact-label recipe shared by Badge and Chip: a quiet neutral
 // hairline, or a status's tint paired with its AA-verified text color (the
 // components add the glyph). Defined once so the two never drift.

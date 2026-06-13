@@ -22,6 +22,9 @@
     for (const name of ["Primary", "Key CTA", "Secondary", "Ghost", "Delete"]) {
       await expect(canvas.getByRole("button", { name })).toBeInTheDocument();
     }
+    // AC: a <button> defaults to type="button", so it never submits an enclosing
+    // form by surprise (consumers opt into type="submit" explicitly).
+    await expect(canvas.getByRole("button", { name: "Primary" })).toHaveAttribute("type", "button");
   }}
 >
   {#snippet template()}
@@ -97,6 +100,24 @@
   {#snippet template()}
     <div class="bg-surface text-text p-6">
       <Button href="/docs" variant="secondary" disabled>Unavailable</Button>
+    </div>
+  {/snippet}
+</Story>
+
+<!-- An active link forwards consumer attributes via ...rest: the component's
+     state-coupled a11y attrs (tabindex/aria-busy) are emitted only when they
+     mean something, so they no longer clobber a passed-through value. -->
+<Story
+  name="Link forwards native attributes"
+  play={async ({ canvas }) => {
+    const link = canvas.getByRole("link", { name: "Docs" });
+    // tabindex passed via ...rest survives on an active (non-disabled) link.
+    await expect(link).toHaveAttribute("tabindex", "-1");
+  }}
+>
+  {#snippet template()}
+    <div class="bg-surface text-text p-6">
+      <Button href="/docs" variant="secondary" tabindex={-1}>Docs</Button>
     </div>
   {/snippet}
 </Story>

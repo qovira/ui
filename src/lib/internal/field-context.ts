@@ -35,3 +35,20 @@ export function setFieldContext(get: () => FieldContext): void {
 export function getFieldContext(): (() => FieldContext) | undefined {
   return getContext<(() => FieldContext) | undefined>(KEY);
 }
+
+const GROUP_KEY = Symbol("qovira-field-group");
+
+/**
+ * Seed a callback a group control (a radiogroup, a calendar grid) can invoke to
+ * tell its `Field` that it names itself via `aria-labelledby`. The `Field` then
+ * drops the `<label for>` it would otherwise point at the group — a `for` can
+ * only target a single labelable element, so on a group it would dangle.
+ */
+export function setFieldGroupRegistrar(registerGroup: () => void): void {
+  setContext(GROUP_KEY, registerGroup);
+}
+
+/** Read the enclosing field's group registrar, if any. */
+export function getFieldGroupRegistrar(): (() => void) | undefined {
+  return getContext<(() => void) | undefined>(GROUP_KEY);
+}

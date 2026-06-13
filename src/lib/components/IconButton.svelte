@@ -48,6 +48,15 @@
   const classes = $derived(cn(BASE, SIZE[size], VARIANTS[variant], klass, "focus-ring"));
 </script>
 
-<button class={classes} {...rest} disabled={inactive} aria-label={label} aria-busy={loading ? "true" : undefined}>
+<!-- `type="button"` precedes ...rest so an icon button defaults to non-submitting
+     (a bare <button> defaults to type="submit"), still overridable via ...rest. -->
+<button
+  class={classes}
+  type="button"
+  {...rest}
+  disabled={inactive}
+  aria-label={label}
+  {...loading ? { "aria-busy": "true" } : {}}
+>
   <Icon icon={loading ? SpinnerIcon : icon} size={ICON_PX[size]} decorative class={loading ? "animate-spin" : ""} />
 </button>

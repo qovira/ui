@@ -22,6 +22,15 @@ export default mergeConfig(
         reporter: ["text", "html"],
         include: ["src/lib/**"],
         exclude: ["src/lib/**/*.stories.*", "src/lib/**/*.d.ts"],
+        // Floors below current (≈98/81/97/97) with headroom for noise, so new
+        // behaviour-bearing logic shipped without a test fails CI (`--coverage`)
+        // rather than rotting uncovered. Ratchet up as coverage rises.
+        thresholds: {
+          statements: 90,
+          branches: 75,
+          functions: 90,
+          lines: 90,
+        },
       },
       projects: [
         // Runes/logic (*.svelte.test.ts with flushSync/$effect.root) and pure

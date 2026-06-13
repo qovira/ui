@@ -3,7 +3,7 @@
   import type { Snippet } from "svelte";
   import Icon from "../icons/Icon.svelte";
   import { cn } from "../internal/cn.js";
-  import { BADGE_TONE, STATUS_ICON } from "../internal/status.js";
+  import { BADGE_BASE, BADGE_TONE, STATUS_ICON } from "../internal/status.js";
   import type { BadgeVariant } from "./status-variants.js";
 
   interface Props {
@@ -23,9 +23,9 @@
     ...rest
   }: Props & (HTMLAttributes<HTMLSpanElement> | HTMLAnchorAttributes) = $props();
 
-  // Shares Badge's BADGE_TONE recipe (neutral hairline, or a status's AA-verified
-  // tint/text pairing); status chips also carry a glyph (never color alone).
-  const base = "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-small font-sans";
+  // Shares Badge's BADGE_BASE shape + BADGE_TONE recipe (neutral hairline, or a
+  // status's AA-verified tint/text pairing); status chips also carry a glyph
+  // (never color alone).
 </script>
 
 {#snippet body()}
@@ -43,14 +43,14 @@
   <!-- eslint-disable svelte/no-navigation-without-resolve -- a generic library control forwards the consumer's arbitrary href verbatim; resolve() is for an app's own route links, not here. -->
   <a
     {href}
-    class={cn(base, BADGE_TONE[variant], "transition-colors duration-micro hover:bg-text/5", klass, "focus-ring")}
+    class={cn(BADGE_BASE, BADGE_TONE[variant], "transition-colors duration-micro hover:bg-text/5", klass, "focus-ring")}
     {...rest as HTMLAnchorAttributes}
   >
     {@render body()}
   </a>
   <!-- eslint-enable svelte/no-navigation-without-resolve -->
 {:else}
-  <span class={cn(base, BADGE_TONE[variant], klass)} {...rest as HTMLAttributes<HTMLSpanElement>}>
+  <span class={cn(BADGE_BASE, BADGE_TONE[variant], klass)} {...rest as HTMLAttributes<HTMLSpanElement>}>
     {@render body()}
   </span>
 {/if}

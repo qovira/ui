@@ -7,7 +7,9 @@
     class?: string;
     children?: Snippet;
     /** Delegate rendering to your own element (a Button, a link): receives
-     *  `props` to spread on so Bits' behavior/ARIA stay wired. */
+     *  `props` to spread on so Bits' behavior/ARIA stay wired. The delegated
+     *  element is responsible for its own `focus-ring` — only the default
+     *  trigger gets it applied automatically. */
     child?: DropdownMenu.TriggerProps["child"];
   }
 

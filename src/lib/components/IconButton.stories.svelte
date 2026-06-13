@@ -24,6 +24,8 @@
     // AC: meets the 40px desktop hit-target floor.
     await expect(btn).toHaveClass("h-10");
     await expect(btn).toHaveClass("w-10");
+    // AC: defaults to type="button" so an icon button in a form/toolbar doesn't submit.
+    await expect(btn).toHaveAttribute("type", "button");
     await userEvent.click(btn);
     await expect(handleClick).toHaveBeenCalledOnce();
   }}
