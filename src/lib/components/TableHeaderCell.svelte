@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { HTMLThAttributes } from "svelte/elements";
   import type { Snippet } from "svelte";
-  import { CaretDownIcon, CaretUpIcon } from "phosphor-svelte";
+  import CaretDownIcon from "phosphor-svelte/lib/CaretDownIcon";
+  import CaretUpIcon from "phosphor-svelte/lib/CaretUpIcon";
   import Icon from "../icons/Icon.svelte";
   import { cn } from "../internal/cn.js";
   import type { TableSortDirection } from "./table-types.js";

@@ -6,7 +6,10 @@
 //   STATUS_ICON — the glyph that carries the meaning without relying on color.
 // Internal — not part of the public surface.
 
-import { CheckCircleIcon, InfoIcon, WarningIcon, XCircleIcon } from "phosphor-svelte";
+import CheckCircleIcon from "phosphor-svelte/lib/CheckCircleIcon";
+import InfoIcon from "phosphor-svelte/lib/InfoIcon";
+import WarningIcon from "phosphor-svelte/lib/WarningIcon";
+import XCircleIcon from "phosphor-svelte/lib/XCircleIcon";
 import type { IconComponent } from "../icons/types.js";
 import type { BadgeVariant, StatusVariant } from "../components/status-variants.js";
 

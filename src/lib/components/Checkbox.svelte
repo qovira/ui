@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Checkbox } from "bits-ui";
-  import { CheckIcon, MinusIcon } from "phosphor-svelte";
+  import CheckIcon from "phosphor-svelte/lib/CheckIcon";
+  import MinusIcon from "phosphor-svelte/lib/MinusIcon";
   import { cn } from "../internal/cn.js";
   import { resolveFieldAria } from "../internal/field-aria.svelte.js";
 

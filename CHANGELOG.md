@@ -1,5 +1,11 @@
 # @qovira/ui
 
+## 2.0.1
+
+### Patch Changes
+
+- Deep-import phosphor-svelte icons so they tree-shake. Every icon was imported from the `phosphor-svelte` barrel, which ships no `sideEffects: false` — so a single component (e.g. `Badge`, `Button`, `Toast`) pulled the library's entire ~3,000-icon set (~8 MB) into the consumer's bundle, regardless of `@qovira/ui`'s own `sideEffects: false`. Icons are now imported from `phosphor-svelte/lib/<Icon>` throughout, the curated `@qovira/ui` icon re-exports use the same deep paths, and an ESLint rule prevents regressions. No public API change — the same icon names export from `@qovira/ui`.
+
 ## 2.0.0
 
 ### Major Changes

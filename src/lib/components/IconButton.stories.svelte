@@ -1,7 +1,8 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect, fn, userEvent } from "storybook/test";
-  import { PlusIcon, TrashIcon } from "phosphor-svelte";
+  import PlusIcon from "phosphor-svelte/lib/PlusIcon";
+  import TrashIcon from "phosphor-svelte/lib/TrashIcon";
   import IconButton from "./IconButton.svelte";
 
   const { Story } = defineMeta({

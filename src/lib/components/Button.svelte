@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
   import type { HTMLAnchorAttributes, HTMLButtonAttributes } from "svelte/elements";
-  import { SpinnerIcon } from "phosphor-svelte";
+  import SpinnerIcon from "phosphor-svelte/lib/SpinnerIcon";
   import { cn } from "../internal/cn.js";
   import Icon from "../icons/Icon.svelte";
   import { VARIANTS, type ButtonVariant } from "./button-variants.js";

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Calendar } from "bits-ui";
-  import { CaretLeftIcon, CaretRightIcon } from "phosphor-svelte";
+  import CaretLeftIcon from "phosphor-svelte/lib/CaretLeftIcon";
+  import CaretRightIcon from "phosphor-svelte/lib/CaretRightIcon";
   import type { DateValue } from "@internationalized/date";
   import { cn } from "../internal/cn.js";
   import { CALENDAR_DAY, CALENDAR_NAV_BUTTON } from "../internal/calendar-grid.js";

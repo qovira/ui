@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Select } from "bits-ui";
-  import { CaretUpDownIcon, CheckIcon } from "phosphor-svelte";
+  import CaretUpDownIcon from "phosphor-svelte/lib/CaretUpDownIcon";
+  import CheckIcon from "phosphor-svelte/lib/CheckIcon";
   import { cn } from "../internal/cn.js";
   import { resolveFieldAria } from "../internal/field-aria.svelte.js";
   import { FIELD_CONTROL_BASE } from "../internal/field-control.js";

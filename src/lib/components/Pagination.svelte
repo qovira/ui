@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Pagination } from "bits-ui";
-  import { CaretLeftIcon, CaretRightIcon } from "phosphor-svelte";
+  import CaretLeftIcon from "phosphor-svelte/lib/CaretLeftIcon";
+  import CaretRightIcon from "phosphor-svelte/lib/CaretRightIcon";
   import { cn } from "../internal/cn.js";
 
   interface Props {

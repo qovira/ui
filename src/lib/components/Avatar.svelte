@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Avatar } from "bits-ui";
-  import { UserIcon } from "phosphor-svelte";
+  import UserIcon from "phosphor-svelte/lib/UserIcon";
   import Icon from "../icons/Icon.svelte";
   import { cn } from "../internal/cn.js";
   import { computeInitials } from "../internal/initials.js";

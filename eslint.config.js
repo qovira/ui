@@ -34,6 +34,26 @@ export default tseslint.config(
     languageOptions: {
       globals: { ...globals.browser },
     },
+    rules: {
+      // Icons MUST be deep-imported (`phosphor-svelte/lib/<Icon>`) so they tree-shake.
+      // phosphor-svelte ships no `sideEffects: false`, so a barrel import pulls its
+      // entire ~3,000-icon set into the consumer's bundle even though we ship source
+      // and set `sideEffects: false`. Type-only imports erase, so they're allowed.
+      // See conventions:writing-svelte.
+      "@typescript-eslint/no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "phosphor-svelte",
+              message:
+                "Deep-import icons — `phosphor-svelte/lib/<Icon>` — so they tree-shake; the barrel inlines all ~3,000 icons. See conventions:writing-svelte.",
+              allowTypeImports: true,
+            },
+          ],
+        },
+      ],
+    },
   },
   prettier,
 );

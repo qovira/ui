@@ -1,6 +1,10 @@
 <script lang="ts">
   import { untrack } from "svelte";
-  import { CheckCircleIcon, InfoIcon, WarningIcon, XCircleIcon, XIcon } from "phosphor-svelte";
+  import CheckCircleIcon from "phosphor-svelte/lib/CheckCircleIcon";
+  import InfoIcon from "phosphor-svelte/lib/InfoIcon";
+  import WarningIcon from "phosphor-svelte/lib/WarningIcon";
+  import XCircleIcon from "phosphor-svelte/lib/XCircleIcon";
+  import XIcon from "phosphor-svelte/lib/XIcon";
   import Icon from "../icons/Icon.svelte";
   import { cn } from "../internal/cn.js";
   import { createDismissTimer } from "../internal/dismiss-timer.js";

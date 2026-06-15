@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Accordion } from "bits-ui";
-  import { CaretDownIcon } from "phosphor-svelte";
+  import CaretDownIcon from "phosphor-svelte/lib/CaretDownIcon";
   import type { Snippet } from "svelte";
   import { cn } from "../internal/cn.js";
   import type { AccordionItem } from "./nav-types.js";
