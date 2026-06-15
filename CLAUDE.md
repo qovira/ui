@@ -24,8 +24,8 @@ Svelte 5.56 / SvelteKit 2.64 / Tailwind v4.3 / Vitest 4.1 (Browser Mode, `provid
 - **Export consumer-facing types from a plain `.ts`** (e.g. `button-variants.ts`, `icons/types.ts`), never re-exported from a `.svelte` module — the ambient `*.svelte` type carries only the default export, so `tsc`/`svelte-check` can't see named type re-exports from `.svelte`.
 - **Stories:** Svelte CSF (`*.stories.svelte`, `defineMeta`), co-located, `tags: ['autodocs']`, a11y `test: 'error'`. Any story rendering custom markup or multiple instances → use `{#snippet template()}…{/snippet}` (a bare `<Story>` child renders _as the meta component's children_, double-wrapping compositions). Arg-only stories (`<Story args={…}/>`) need no snippet.
 - **Keep `.svelte`-source deps (`phosphor-svelte`, `bits-ui`) in `optimizeDeps.exclude` (`.storybook/main.ts`) + `resolve.dedupe: ["svelte"]`** — else the optimizer prebundles them on a second Svelte runtime and rendering crashes. `scripts/clean-package.mjs` strips stories/tests from `dist`.
-- **Commits:** Conventional Commits + a bare `Refs QOV-NN` footer (the release PR closes issues via magic words).
-- **Contributor docs:** `CONTRIBUTING.md` (issue-first workflow, theme-utilities-only scope, "extend the theme, don't hard-code", changesets) + `CODE_OF_CONDUCT.md` (Contributor Covenant) define the external-contributor process — keep in sync with these conventions. Split: Conventional Commits + `QOV-NN` refs are maintainer-only and live here, NOT in `CONTRIBUTING.md`.
+- **Commits:** Conventional Commits.
+- **Contributor docs:** `CONTRIBUTING.md` (issue-first workflow, theme-utilities-only scope, "extend the theme, don't hard-code", changesets) + `CODE_OF_CONDUCT.md` (Contributor Covenant) define the external-contributor process — keep in sync with these conventions. Split: Conventional Commits is maintainer-only (contributors needn't follow it) and lives here, NOT in `CONTRIBUTING.md`.
 
 ## Gate — all green before an issue is Done
 
