@@ -18,5 +18,5 @@
      affordance. `focus-ring` last so a consumer class can't strip it. -->
 <DropdownMenu.SubTrigger class={cn(MENU_ITEM_BASE, "justify-between", klass, "focus-ring")} {disabled}>
   {@render children()}
-  <CaretRightIcon size={16} color="currentColor" aria-hidden="true" class="shrink-0 text-text-muted" />
+  <CaretRightIcon size={16} color="currentColor" aria-hidden="true" class="shrink-0 text-fg-muted" />
 </DropdownMenu.SubTrigger>

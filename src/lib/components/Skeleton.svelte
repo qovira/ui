@@ -15,4 +15,4 @@
      load via Spinner's role="status"). Size it with `class` (e.g. `h-4 w-32`);
      it's CSS-only and JS-free, so it renders identically server- and client-side
      and never shifts layout on hydrate. -->
-<div aria-hidden="true" class={cn("animate-pulse rounded-md bg-text/10", klass)} {...rest}></div>
+<div aria-hidden="true" class={cn("animate-pulse rounded-md bg-fg/10", klass)} {...rest}></div>

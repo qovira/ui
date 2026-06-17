@@ -11,7 +11,7 @@
   let { class: klass, children, ...rest }: Props = $props();
 </script>
 
-<!-- Body copy uses text-text (the brand's body color), comfortable px-4 py-3. -->
-<td class={cn("px-4 py-3 align-middle text-body text-text", klass)} {...rest}>
+<!-- Body copy uses text-fg (the brand's body color), comfortable px-4 py-3. -->
+<td class={cn("px-4 py-3 align-middle text-body text-fg", klass)} {...rest}>
   {@render children()}
 </td>

@@ -47,7 +47,7 @@
   }}
 >
   {#snippet template()}
-    <div id="combobox-single-host" class="bg-surface text-text flex flex-col gap-3 p-6">
+    <div id="combobox-single-host" class="bg-surface text-fg flex flex-col gap-3 p-6">
       <Combobox
         aria-label="Framework"
         items={frameworks}
@@ -57,7 +57,7 @@
         {onOpenChange}
         portalTo="#combobox-single-host"
       />
-      <p data-testid="value" class="text-small font-sans text-text-muted">
+      <p data-testid="value" class="text-small font-sans text-fg-muted">
         {JSON.stringify(single ?? null)}
       </p>
     </div>
@@ -81,7 +81,7 @@
   }}
 >
   {#snippet template()}
-    <div id="combobox-empty-host" class="bg-surface text-text p-6">
+    <div id="combobox-empty-host" class="bg-surface text-fg p-6">
       <Combobox
         aria-label="Framework"
         items={frameworks}
@@ -105,7 +105,7 @@
   }}
 >
   {#snippet template()}
-    <div id="combobox-multi-host" class="bg-surface text-text flex flex-col gap-3 p-6">
+    <div id="combobox-multi-host" class="bg-surface text-fg flex flex-col gap-3 p-6">
       <Combobox
         aria-label="Tags"
         type="multiple"
@@ -114,7 +114,7 @@
         placeholder="Add tags"
         portalTo="#combobox-multi-host"
       />
-      <p data-testid="tags" class="text-small font-sans text-text-muted">
+      <p data-testid="tags" class="text-small font-sans text-fg-muted">
         {JSON.stringify(multi)}
       </p>
     </div>
@@ -129,7 +129,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Combobox aria-label="Framework" items={frameworks} disabled placeholder="Search frameworks" />
     </div>
   {/snippet}
@@ -146,7 +146,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Framework" error="Choose a framework.">
         <Combobox items={frameworks} placeholder="Search frameworks" />
       </Field>
@@ -167,7 +167,7 @@
   }}
 >
   {#snippet template()}
-    <div id="combobox-day-host" class="bg-surface text-text p-6">
+    <div id="combobox-day-host" class="bg-surface text-fg p-6">
       <Combobox
         aria-label="Framework"
         items={frameworks}

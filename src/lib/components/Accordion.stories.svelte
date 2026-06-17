@@ -45,7 +45,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text w-96 p-6">
+    <div class="bg-surface text-fg w-96 p-6">
       <Accordion {items} bind:value={openOne}>
         {#snippet section(item)}
           {#if item.value === "what"}
@@ -57,7 +57,7 @@
           {/if}
         {/snippet}
       </Accordion>
-      <p data-testid="open" class="text-small mt-3 font-sans text-text-muted">{openOne}</p>
+      <p data-testid="open" class="text-small mt-3 font-sans text-fg-muted">{openOne}</p>
     </div>
   {/snippet}
 </Story>
@@ -75,7 +75,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text w-96 p-6">
+    <div class="bg-surface text-fg w-96 p-6">
       <Accordion {items} type="multiple" bind:value={openMany}>
         {#snippet section(item)}
           <p>Section: {item.title}</p>
@@ -93,7 +93,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text w-96 p-6">
+    <div class="bg-surface text-fg w-96 p-6">
       <Accordion {items} disabled value="what">
         {#snippet section(item)}
           <p>{item.title}</p>
@@ -105,7 +105,7 @@
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text w-96 p-6">
+    <div class="bg-surface text-fg w-96 p-6">
       <Accordion {items} value="what">
         {#snippet section(item)}
           <p>The {item.title} answer.</p>

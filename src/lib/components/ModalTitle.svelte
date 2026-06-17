@@ -14,6 +14,6 @@
   let { class: klass, children, ...rest }: Props = $props();
 </script>
 
-<Dialog.Title class={cn("text-h3 font-display text-text", klass)} {...rest}>
+<Dialog.Title class={cn("text-h3 font-display text-fg", klass)} {...rest}>
   {@render children()}
 </Dialog.Title>

@@ -33,9 +33,9 @@
   const navLabel = $derived(ariaLabel ?? "Pagination");
 
   const pageBase =
-    "inline-flex h-9 min-w-9 items-center justify-center rounded-md px-2 text-button font-sans text-text hover:bg-surface data-[selected]:bg-accent data-[selected]:text-warm-900";
+    "inline-flex h-9 min-w-9 items-center justify-center rounded-md px-2 text-button font-sans text-fg hover:bg-surface data-[selected]:bg-accent data-[selected]:text-warm-900";
   const navBase =
-    "inline-flex h-9 w-9 items-center justify-center rounded-md text-text hover:bg-surface disabled:pointer-events-none disabled:opacity-40";
+    "inline-flex h-9 w-9 items-center justify-center rounded-md text-fg hover:bg-surface disabled:pointer-events-none disabled:opacity-40";
 </script>
 
 <!-- Bits owns behavior: page computation (with ellipses), keyboard navigation,
@@ -59,7 +59,7 @@
       </Pagination.PrevButton>
       {#each pages as p (p.key)}
         {#if p.type === "ellipsis"}
-          <span class="px-2 text-text-muted" aria-hidden="true">…</span>
+          <span class="px-2 text-fg-muted" aria-hidden="true">…</span>
         {:else}
           <Pagination.Page page={p} class={cn(pageBase, "focus-ring")}>
             {p.value}

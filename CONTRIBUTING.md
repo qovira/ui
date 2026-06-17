@@ -31,7 +31,7 @@ boundary tight is what lets the whole system share one source of truth.
 **In scope** — contributions we welcome:
 
 - New components and composites built **entirely** on the theme's semantic
-  utilities (`bg-surface`, `text-text`, `focus-ring`, `rounded-md`,
+  utilities (`bg-surface`, `text-fg`, `focus-ring`, `rounded-md`,
   `text-button`, …).
 - Bug fixes (a broken prop, a rendering edge case, a regression).
 - Accessibility fixes — keyboard interaction, ARIA, focus management, anything
@@ -106,7 +106,7 @@ consumer's own Vite/Tailwind compiles it.
 A few conventions are load-bearing — read them before adding a component:
 
 - **Theme utilities only.** Author components in `@qovira/theme`'s semantic
-  utilities (`bg-surface`, `text-text`, `text-button`, `rounded-md`, …). No raw
+  utilities (`bg-surface`, `text-fg`, `text-button`, `rounded-md`, …). No raw
   colors or off-grid values. (See [What belongs here](#what-belongs-here).)
 - **`focus-ring` on every interactive element**, and it must be the **last**
   class in the `cn()` call so a consumer's `class` can't merge it away. This is

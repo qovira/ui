@@ -18,7 +18,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Stack gap={4} data-testid="stack">
         <div class="bg-surface-raised border-border rounded-md border p-3">First</div>
         <div class="bg-surface-raised border-border rounded-md border p-3">Second</div>
@@ -30,7 +30,7 @@
 
 <Story name="Tighter rhythm">
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Stack gap={2}>
         <div class="bg-surface-raised border-border rounded-md border p-3">First</div>
         <div class="bg-surface-raised border-border rounded-md border p-3">Second</div>

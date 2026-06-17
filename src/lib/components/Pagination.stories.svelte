@@ -39,16 +39,16 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Pagination count={95} perPage={10} bind:page aria-label="Reminders pages" />
-      <p data-testid="page" class="text-small mt-3 font-sans text-text-muted">{page}</p>
+      <p data-testid="page" class="text-small mt-3 font-sans text-fg-muted">{page}</p>
     </div>
   {/snippet}
 </Story>
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Pagination count={48} perPage={10} page={3} aria-label="Results pages" />
     </div>
   {/snippet}

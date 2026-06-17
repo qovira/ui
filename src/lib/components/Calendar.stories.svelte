@@ -37,9 +37,9 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text inline-flex flex-col gap-3 p-6">
+    <div class="bg-surface text-fg inline-flex flex-col gap-3 p-6">
       <Calendar aria-label="Reminder date" bind:value={selected} />
-      <p data-testid="value" class="text-small font-sans text-text-muted">
+      <p data-testid="value" class="text-small font-sans text-fg-muted">
         {selected?.toString() ?? "none"}
       </p>
     </div>
@@ -49,7 +49,7 @@
 <!-- No value: the grid opens on the current month (placeholder defaults to today). -->
 <Story name="Empty">
   {#snippet template()}
-    <div class="bg-surface text-text inline-block p-6">
+    <div class="bg-surface text-fg inline-block p-6">
       <Calendar aria-label="Pick a date" />
     </div>
   {/snippet}
@@ -63,7 +63,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text inline-block p-6">
+    <div class="bg-surface text-fg inline-block p-6">
       <Calendar aria-label="Pick a date" disabled value={new CalendarDate(2026, 6, 15)} />
     </div>
   {/snippet}
@@ -82,7 +82,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text inline-block p-6">
+    <div class="bg-surface text-fg inline-block p-6">
       <Field label="Reminder date" error="Choose a valid date.">
         <Calendar value={new CalendarDate(2026, 6, 15)} />
       </Field>
@@ -92,7 +92,7 @@
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text inline-block p-6">
+    <div class="bg-surface text-fg inline-block p-6">
       <Calendar aria-label="Pick a date" value={new CalendarDate(2026, 6, 15)} />
     </div>
   {/snippet}

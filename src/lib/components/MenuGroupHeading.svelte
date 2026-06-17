@@ -13,6 +13,6 @@
 
 <!-- Names the enclosing `Menu.Group` (Bits wires aria-labelledby). Not itself a
      menuitem, so it's skipped in keyboard navigation. -->
-<DropdownMenu.GroupHeading class={cn("px-3 py-1.5 text-label font-sans uppercase text-text-muted", klass)}>
+<DropdownMenu.GroupHeading class={cn("px-3 py-1.5 text-label font-sans uppercase text-fg-muted", klass)}>
   {@render children()}
 </DropdownMenu.GroupHeading>

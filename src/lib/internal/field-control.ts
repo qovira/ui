@@ -6,6 +6,6 @@
  * `class` can't strip it. `text-body` carries no font-family, hence `font-sans`.
  */
 export const FIELD_CONTROL_BASE =
-  "w-full rounded-md px-3 text-body font-sans bg-surface-raised text-text " +
-  "border border-border placeholder:text-text-muted " +
+  "w-full rounded-md px-3 text-body font-sans bg-surface-raised text-fg " +
+  "border border-border placeholder:text-fg-muted " +
   "aria-[invalid=true]:border-error disabled:opacity-50";

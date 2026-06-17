@@ -27,7 +27,7 @@
     await expect(success).toBeInTheDocument();
     // Semantic color AND an icon (never color alone).
     const panel = success.parentElement;
-    await expect(panel).toHaveClass("bg-success-tint");
+    await expect(panel).toHaveClass("bg-tint-success");
     await expect(panel?.querySelector("svg")).toBeTruthy();
     // Announced via a live region: each toast is role="status" (implicitly polite).
     await expect(panel).toHaveAttribute("role", "status");
@@ -36,7 +36,7 @@
 >
   {#snippet template()}
     <ToastProvider portalTo="#toast-host-variants">
-      <div id="toast-host-variants" class="bg-surface text-text flex flex-wrap gap-2 p-6">
+      <div id="toast-host-variants" class="bg-surface text-fg flex flex-wrap gap-2 p-6">
         <Button onclick={() => toast.success("Saved your changes.")}>Success</Button>
         <Button onclick={() => toast.error("Couldn't reach the server.")}>Error</Button>
         <Button onclick={() => toast.warning("Storage is nearly full.")}>Warning</Button>
@@ -59,7 +59,7 @@
 >
   {#snippet template()}
     <ToastProvider portalTo="#toast-host-auto">
-      <div id="toast-host-auto" class="bg-surface text-text p-6">
+      <div id="toast-host-auto" class="bg-surface text-fg p-6">
         <Button onclick={() => toast.info("This will vanish shortly.", { duration: 500 })}>Notify</Button>
       </div>
     </ToastProvider>
@@ -86,7 +86,7 @@
 >
   {#snippet template()}
     <ToastProvider portalTo="#toast-host-pause">
-      <div id="toast-host-pause" class="bg-surface text-text p-6">
+      <div id="toast-host-pause" class="bg-surface text-fg p-6">
         <Button onclick={() => toast.info("Hover to keep me around.", { duration: 800 })}>Notify</Button>
       </div>
     </ToastProvider>
@@ -106,7 +106,7 @@
 >
   {#snippet template()}
     <ToastProvider portalTo="#toast-host-day">
-      <div id="toast-host-day" class="bg-surface text-text flex flex-wrap gap-2 p-6">
+      <div id="toast-host-day" class="bg-surface text-fg flex flex-wrap gap-2 p-6">
         <Button onclick={() => toast.success("All set.")}>Success</Button>
         <Button onclick={() => toast.error("Something went wrong.")}>Error</Button>
       </div>

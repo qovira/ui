@@ -51,7 +51,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text flex flex-wrap items-center gap-3 p-6">
+    <div class="bg-surface text-fg flex flex-wrap items-center gap-3 p-6">
       <IconButton icon={PlusIcon} label="Add" variant="primary" />
       <IconButton icon={PlusIcon} label="Highlight" variant="key" />
       <IconButton icon={PlusIcon} label="More" variant="secondary" />

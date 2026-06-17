@@ -5,7 +5,7 @@ import { extendTailwindMerge } from "tailwind-merge";
 // text-h1…text-h4, text-lead, text-body, text-small, text-button, text-label,
 // text-code). Out of the box tailwind-merge has no idea these are font-size
 // utilities, so it lumps them into the text-COLOR group and drops one when a
-// recipe legitimately combines a role with a color (e.g. `text-body text-text`,
+// recipe legitimately combines a role with a color (e.g. `text-body text-fg`,
 // straight from the theme's Input recipe). Registering them under `font-size`
 // keeps role and color in separate conflict groups — both survive, while two
 // roles (or two colors) still correctly collapse to the last.

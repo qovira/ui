@@ -51,14 +51,14 @@
 </script>
 
 <div class={cn("flex flex-col gap-2", klass)}>
-  <label id={labelId} for={group ? undefined : controlId} class="text-label font-sans uppercase text-text-muted"
+  <label id={labelId} for={group ? undefined : controlId} class="text-label font-sans uppercase text-fg-muted"
     >{label}</label
   >
   {@render children(ctx)}
   {#if description}
-    <p id={descId} class="text-small font-sans text-text-muted">{description}</p>
+    <p id={descId} class="text-small font-sans text-fg-muted">{description}</p>
   {/if}
   {#if error}
-    <p id={errorId} class="text-small font-sans text-error-text">{error}</p>
+    <p id={errorId} class="text-small font-sans text-fg-error">{error}</p>
   {/if}
 </div>

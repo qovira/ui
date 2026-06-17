@@ -93,9 +93,9 @@
         <DateField.Segment
           {part}
           class={cn(
-            "focus-ring rounded-sm px-0.5 tabular-nums text-text",
-            "data-[placeholder]:text-text-muted",
-            part === "literal" && "px-0 text-text-muted",
+            "focus-ring rounded-sm px-0.5 tabular-nums text-fg",
+            "data-[placeholder]:text-fg-muted",
+            part === "literal" && "px-0 text-fg-muted",
           )}
         >
           {segValue}

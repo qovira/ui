@@ -56,7 +56,7 @@
       {...side ? { side } : {}}
       {...align ? { align } : {}}
       class={cn(
-        "z-50 w-72 rounded-xl border border-border bg-surface-raised p-4 text-text shadow-[var(--shadow-lg)]",
+        "z-50 w-72 rounded-xl border border-border bg-surface-raised p-4 text-fg shadow-[var(--shadow-lg)]",
         "duration-overlay ease-qovira",
         klass,
         "focus-ring",

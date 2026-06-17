@@ -25,7 +25,7 @@
   // exact "ascending" | "descending" | "none" literal union, so no cast is needed.
   const ariaSort = $derived(sort === "asc" ? "ascending" : sort === "desc" ? "descending" : "none");
 
-  const cell = "px-4 py-3 text-left text-label font-sans uppercase text-text-muted";
+  const cell = "px-4 py-3 text-left text-label font-sans uppercase text-fg-muted";
 </script>
 
 {#if sortable}
@@ -34,7 +34,7 @@
     <button
       type="button"
       class={cn(
-        "-mx-1 inline-flex items-center gap-1 rounded px-1 transition-colors duration-micro ease-qovira hover:text-text",
+        "-mx-1 inline-flex items-center gap-1 rounded px-1 transition-colors duration-micro ease-qovira hover:text-fg",
         "focus-ring",
       )}
       onclick={onsort}

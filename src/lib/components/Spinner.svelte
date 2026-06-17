@@ -27,5 +27,5 @@
      guard collapses lamp-glow-pulse to a static glow. -->
 <div role="status" class={cn("inline-flex items-center gap-2", klass)} {...rest}>
   <span class={cn("rounded-full bg-accent lamp-glow lamp-glow-pulse", DOT[size])} aria-hidden="true"></span>
-  <span class={showLabel ? "text-small font-sans text-text" : "sr-only"}>{label}</span>
+  <span class={showLabel ? "text-small font-sans text-fg" : "sr-only"}>{label}</span>
 </div>

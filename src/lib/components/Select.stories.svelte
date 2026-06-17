@@ -61,7 +61,7 @@
   }}
 >
   {#snippet template()}
-    <div id="select-single-host" class="bg-surface text-text flex flex-col gap-3 p-6">
+    <div id="select-single-host" class="bg-surface text-fg flex flex-col gap-3 p-6">
       <Select
         aria-label="Model"
         items={models}
@@ -74,7 +74,7 @@
       <button type="button" class="text-small font-sans text-link self-start" onclick={() => (single = undefined)}>
         Reset
       </button>
-      <p data-testid="value" class="text-small font-sans text-text-muted">
+      <p data-testid="value" class="text-small font-sans text-fg-muted">
         {JSON.stringify(single ?? null)}
       </p>
     </div>
@@ -98,7 +98,7 @@
   }}
 >
   {#snippet template()}
-    <div id="select-multi-host" class="bg-surface text-text flex flex-col gap-3 p-6">
+    <div id="select-multi-host" class="bg-surface text-fg flex flex-col gap-3 p-6">
       <Select
         aria-label="Models"
         type="multiple"
@@ -107,7 +107,7 @@
         placeholder="Select models"
         portalTo="#select-multi-host"
       />
-      <p data-testid="multi" class="text-small font-sans text-text-muted">
+      <p data-testid="multi" class="text-small font-sans text-fg-muted">
         {JSON.stringify(multi)}
       </p>
     </div>
@@ -122,7 +122,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Select aria-label="Model" items={models} disabled placeholder="Select a model" />
     </div>
   {/snippet}
@@ -139,7 +139,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Provider" error="Pick a provider to continue.">
         <Select items={models} placeholder="Select a provider" />
       </Field>
@@ -160,7 +160,7 @@
   }}
 >
   {#snippet template()}
-    <div id="select-day-host" class="bg-surface text-text p-6">
+    <div id="select-day-host" class="bg-surface text-fg p-6">
       <Select aria-label="Model" items={models} placeholder="Select a model" portalTo="#select-day-host" />
     </div>
   {/snippet}

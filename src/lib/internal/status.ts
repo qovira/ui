@@ -21,17 +21,17 @@ export const STATUS_ICON: Record<StatusVariant, IconComponent> = {
 };
 
 export const STATUS_TINT: Record<StatusVariant, string> = {
-  info: "bg-info-tint",
-  success: "bg-success-tint",
-  warning: "bg-warning-tint",
-  error: "bg-error-tint",
+  info: "bg-tint-info",
+  success: "bg-tint-success",
+  warning: "bg-tint-warning",
+  error: "bg-tint-error",
 };
 
 export const STATUS_TEXT: Record<StatusVariant, string> = {
-  info: "text-info-text",
-  success: "text-success-text",
-  warning: "text-warning-text",
-  error: "text-error-text",
+  info: "text-fg-info",
+  success: "text-fg-success",
+  warning: "text-fg-warning",
+  error: "text-fg-error",
 };
 
 // The shape/typography recipe shared by Badge and Chip (the pill geometry,
@@ -43,7 +43,7 @@ export const BADGE_BASE = "inline-flex items-center gap-1 rounded-full px-2.5 py
 // hairline, or a status's tint paired with its AA-verified text color (the
 // components add the glyph). Defined once so the two never drift.
 export const BADGE_TONE: Record<BadgeVariant, string> = {
-  neutral: "border border-border bg-surface-raised text-text",
+  neutral: "border border-border bg-surface-raised text-fg",
   info: `${STATUS_TINT.info} ${STATUS_TEXT.info}`,
   success: `${STATUS_TINT.success} ${STATUS_TEXT.success}`,
   warning: `${STATUS_TINT.warning} ${STATUS_TEXT.warning}`,

@@ -22,7 +22,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Notes" description="Anything we should keep in mind?">
         <Textarea placeholder="Add a note…" rows={3} />
       </Field>
@@ -41,7 +41,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Notes" error="Notes can't be empty.">
         <Textarea rows={3} />
       </Field>
@@ -52,7 +52,7 @@
 <!-- Daylight, so axe runs the control in both themes. -->
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Notes">
         <Textarea rows={3} placeholder="Add a note…" />
       </Field>

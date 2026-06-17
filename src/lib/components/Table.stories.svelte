@@ -57,7 +57,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text max-w-2xl p-6">
+    <div class="bg-surface text-fg max-w-2xl p-6">
       <Table.Root>
         <Table.Caption>Workspace members and their roles.</Table.Caption>
         <Table.Head>
@@ -90,7 +90,7 @@
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text max-w-2xl p-6">
+    <div class="bg-surface text-fg max-w-2xl p-6">
       <Table.Root>
         <Table.Caption>Workspace members and their roles.</Table.Caption>
         <Table.Head>

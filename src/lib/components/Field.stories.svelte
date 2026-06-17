@@ -27,7 +27,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Email address">
         <Input type="email" placeholder="you@example.com" />
       </Field>
@@ -46,7 +46,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Email address" description="We'll only use this to send reminders.">
         <Input type="email" />
       </Field>
@@ -69,7 +69,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Email address" error="Enter a valid email address.">
         <Input type="email" value="nope" />
       </Field>
@@ -85,7 +85,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Email address">
         <Input type="email" disabled />
       </Field>
@@ -96,7 +96,7 @@
 <!-- Invalid state in Daylight, so axe checks the error state in both themes. -->
 <Story name="Daylight invalid" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Email address" error="Enter a valid email address.">
         <Input type="email" value="nope" />
       </Field>

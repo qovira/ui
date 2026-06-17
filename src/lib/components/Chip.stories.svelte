@@ -25,7 +25,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text flex flex-wrap items-center gap-2 p-6">
+    <div class="bg-surface text-fg flex flex-wrap items-center gap-2 p-6">
       <Chip>Personal</Chip>
       <Chip variant="success">Synced</Chip>
       <Chip variant="warning">Syncing</Chip>
@@ -44,7 +44,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text flex flex-wrap items-center gap-2 p-6">
+    <div class="bg-surface text-fg flex flex-wrap items-center gap-2 p-6">
       <Chip href="/archive">Archive</Chip>
     </div>
   {/snippet}
@@ -52,7 +52,7 @@
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text flex flex-wrap items-center gap-2 p-6">
+    <div class="bg-surface text-fg flex flex-wrap items-center gap-2 p-6">
       <Chip>Personal</Chip>
       <Chip variant="success">Synced</Chip>
       <Chip variant="warning">Syncing</Chip>

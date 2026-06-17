@@ -18,7 +18,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Cluster gap={2} data-testid="cluster">
         {#each ["Inbox", "Today", "Upcoming", "Notes", "Calendar", "Reminders"] as item (item)}
           <span class="bg-surface-raised border-border rounded-sm border px-2.5 py-1">
@@ -32,7 +32,7 @@
 
 <Story name="Spaced between">
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Cluster justify="between">
         <span class="bg-surface-raised border-border rounded-sm border px-2.5 py-1">Left</span>
         <span class="bg-surface-raised border-border rounded-sm border px-2.5 py-1">Right</span>

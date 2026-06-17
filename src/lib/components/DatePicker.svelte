@@ -116,9 +116,9 @@
           <DatePicker.Segment
             {part}
             class={cn(
-              "focus-ring rounded-sm px-0.5 tabular-nums text-text",
-              "data-[placeholder]:text-text-muted",
-              part === "literal" && "px-0 text-text-muted",
+              "focus-ring rounded-sm px-0.5 tabular-nums text-fg",
+              "data-[placeholder]:text-fg-muted",
+              part === "literal" && "px-0 text-fg-muted",
             )}
           >
             {segValue}
@@ -128,7 +128,7 @@
     </DatePicker.Input>
     <DatePicker.Trigger
       aria-label="Open calendar"
-      class="focus-ring absolute inset-y-0 right-0 flex items-center rounded-md px-2.5 text-text-muted hover:text-text disabled:opacity-50"
+      class="focus-ring absolute inset-y-0 right-0 flex items-center rounded-md px-2.5 text-fg-muted hover:text-fg disabled:opacity-50"
     >
       <CalendarBlankIcon size={18} color="currentColor" aria-hidden="true" />
     </DatePicker.Trigger>
@@ -137,7 +137,7 @@
     <DatePicker.Content
       sideOffset={8}
       class={cn(
-        "z-50 rounded-xl border border-border bg-surface-raised p-4 text-text shadow-[var(--shadow-lg)]",
+        "z-50 rounded-xl border border-border bg-surface-raised p-4 text-fg shadow-[var(--shadow-lg)]",
         "duration-overlay ease-qovira",
         contentClass,
       )}
@@ -150,7 +150,7 @@
             <DatePicker.PrevButton class={CALENDAR_NAV_BUTTON}>
               <CaretLeftIcon size={18} color="currentColor" aria-hidden="true" />
             </DatePicker.PrevButton>
-            <DatePicker.Heading class="text-body font-sans font-medium text-text" />
+            <DatePicker.Heading class="text-body font-sans font-medium text-fg" />
             <DatePicker.NextButton class={CALENDAR_NAV_BUTTON}>
               <CaretRightIcon size={18} color="currentColor" aria-hidden="true" />
             </DatePicker.NextButton>
@@ -160,7 +160,7 @@
               <DatePicker.GridHead>
                 <DatePicker.GridRow class="flex">
                   {#each weekdays as day (day)}
-                    <DatePicker.HeadCell class="text-small w-9 pb-1 text-center font-sans font-normal text-text-muted">
+                    <DatePicker.HeadCell class="text-small w-9 pb-1 text-center font-sans font-normal text-fg-muted">
                       {day}
                     </DatePicker.HeadCell>
                   {/each}

@@ -42,7 +42,7 @@
   }}
 >
   {#snippet template()}
-    <div id="tip-host-main" class="bg-surface text-text p-12">
+    <div id="tip-host-main" class="bg-surface text-fg p-12">
       <Tooltip delayDuration={150} portalTo="#tip-host-main">
         {#snippet trigger({ props })}
           <Button {...props}>Save</Button>
@@ -65,7 +65,7 @@
   }}
 >
   {#snippet template()}
-    <div id="tip-host-day" class="bg-surface text-text p-12">
+    <div id="tip-host-day" class="bg-surface text-fg p-12">
       <Tooltip delayDuration={150} portalTo="#tip-host-day">
         {#snippet trigger({ props })}
           <Button {...props}>Save</Button>

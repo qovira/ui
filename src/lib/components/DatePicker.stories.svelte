@@ -34,9 +34,9 @@
   }}
 >
   {#snippet template()}
-    <div id="datepicker-host" class="bg-surface text-text flex flex-col items-start gap-3 p-6">
+    <div id="datepicker-host" class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
       <DatePicker aria-label="Reminder" bind:value {onOpenChange} portalTo="#datepicker-host" />
-      <p data-testid="value" class="text-small font-sans text-text-muted">
+      <p data-testid="value" class="text-small font-sans text-fg-muted">
         {value?.toString() ?? "none"}
       </p>
     </div>
@@ -51,7 +51,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <DatePicker aria-label="Reminder" disabled value={new CalendarDate(2026, 6, 15)} />
     </div>
   {/snippet}
@@ -68,7 +68,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Reminder date" error="Pick a reminder date.">
         <DatePicker value={new CalendarDate(2026, 6, 15)} />
       </Field>
@@ -89,7 +89,7 @@
   }}
 >
   {#snippet template()}
-    <div id="datepicker-day-host" class="bg-surface text-text p-6">
+    <div id="datepicker-day-host" class="bg-surface text-fg p-6">
       <DatePicker aria-label="Reminder" value={new CalendarDate(2026, 6, 15)} portalTo="#datepicker-day-host" />
     </div>
   {/snippet}
