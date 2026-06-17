@@ -26,8 +26,8 @@
     code: "text-code",
   } as const;
   const font = $derived(variant === "code" ? "font-mono" : "font-sans");
-  // Brand rule: body copy always uses `text-text`; muted is for secondary text only.
-  const color = $derived(tone === "muted" ? "text-text-muted" : "text-text");
+  // Brand rule: body copy always uses `text-fg`; muted is for secondary text only.
+  const color = $derived(tone === "muted" ? "text-fg-muted" : "text-fg");
 </script>
 
 <svelte:element this={as} class={cn(font, ROLE[variant], color, klass)} {...rest}>

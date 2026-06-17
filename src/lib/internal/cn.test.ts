@@ -18,8 +18,8 @@ describe("cn", () => {
   it("keeps a theme typographic role alongside a text color (distinct groups)", () => {
     // The theme's `text-<role>` (font-size) must not be merged away by a
     // `text-<color>` — both appear in the theme's own recipes.
-    expect(cn("text-body", "text-text")).toBe("text-body text-text");
-    expect(cn("font-display", "text-h1", "text-text")).toBe("font-display text-h1 text-text");
+    expect(cn("text-body", "text-fg")).toBe("text-body text-fg");
+    expect(cn("font-display", "text-h1", "text-fg")).toBe("font-display text-h1 text-fg");
   });
 
   it("still collapses two competing typographic roles to the last", () => {

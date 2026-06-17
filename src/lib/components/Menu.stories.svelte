@@ -57,7 +57,7 @@
   }}
 >
   {#snippet template()}
-    <div id="menu-host-main" class="bg-surface text-text p-6">
+    <div id="menu-host-main" class="bg-surface text-fg p-6">
       <Menu.Root bind:open={openMain}>
         <Menu.Trigger>
           {#snippet child({ props })}
@@ -94,7 +94,7 @@
   }}
 >
   {#snippet template()}
-    <div id="menu-host-link" class="bg-surface text-text p-6">
+    <div id="menu-host-link" class="bg-surface text-fg p-6">
       <Menu.Root bind:open={openLink}>
         <Menu.Trigger>
           {#snippet child({ props })}
@@ -139,7 +139,7 @@
   }}
 >
   {#snippet template()}
-    <div id="menu-host-sub" class="bg-surface text-text p-6">
+    <div id="menu-host-sub" class="bg-surface text-fg p-6">
       <Menu.Root bind:open={openSub}>
         <Menu.Trigger>
           {#snippet child({ props })}
@@ -179,7 +179,7 @@
   }}
 >
   {#snippet template()}
-    <div id="menu-host-day" class="bg-surface text-text p-6">
+    <div id="menu-host-day" class="bg-surface text-fg p-6">
       <Menu.Root bind:open={openDay}>
         <Menu.Trigger>
           {#snippet child({ props })}

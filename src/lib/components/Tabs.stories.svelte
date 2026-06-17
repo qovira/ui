@@ -47,7 +47,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Tabs {items} bind:value={active}>
         {#snippet panel(item)}
           {#if item.value === "overview"}
@@ -59,14 +59,14 @@
           {/if}
         {/snippet}
       </Tabs>
-      <p data-testid="active" class="text-small mt-3 font-sans text-text-muted">{active}</p>
+      <p data-testid="active" class="text-small mt-3 font-sans text-fg-muted">{active}</p>
     </div>
   {/snippet}
 </Story>
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Tabs {items} value="overview">
         {#snippet panel(item)}
           <p>The {item.label} panel.</p>

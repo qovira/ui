@@ -17,7 +17,7 @@
 
 <!-- The label wraps the radio so its text is the accessible name and is part of
      the click target. The inner dot shows via the radio's checked data-state. -->
-<label class="flex items-center gap-2 text-body font-sans text-text">
+<label class="flex items-center gap-2 text-body font-sans text-fg">
   <RadioGroup.Item
     {value}
     {disabled}

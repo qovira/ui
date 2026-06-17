@@ -26,7 +26,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text flex flex-wrap items-center gap-2 p-6">
+    <div class="bg-surface text-fg flex flex-wrap items-center gap-2 p-6">
       <Badge>Draft</Badge>
       <Badge variant="success">Active</Badge>
       <Badge variant="warning">Pending</Badge>
@@ -38,7 +38,7 @@
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text flex flex-wrap items-center gap-2 p-6">
+    <div class="bg-surface text-fg flex flex-wrap items-center gap-2 p-6">
       <Badge>Draft</Badge>
       <Badge variant="success">Active</Badge>
       <Badge variant="warning">Pending</Badge>

@@ -103,7 +103,7 @@
     />
     <Combobox.Trigger
       aria-label="Toggle options"
-      class="focus-ring absolute inset-y-0 right-0 flex items-center rounded-md px-2.5 text-text-muted"
+      class="focus-ring absolute inset-y-0 right-0 flex items-center rounded-md px-2.5 text-fg-muted"
     >
       <CaretUpDownIcon size={18} color="currentColor" aria-hidden="true" />
     </Combobox.Trigger>
@@ -126,7 +126,7 @@
             {/snippet}
           </Combobox.Item>
         {:else}
-          <p class="px-2 py-1.5 text-body font-sans text-text-muted">No results</p>
+          <p class="px-2 py-1.5 text-body font-sans text-fg-muted">No results</p>
         {/each}
       </Combobox.Viewport>
     </Combobox.Content>

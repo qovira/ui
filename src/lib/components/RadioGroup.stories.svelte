@@ -31,7 +31,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <RadioGroup bind:value aria-label="Shipping speed">
         <RadioItem value="standard">Standard</RadioItem>
         <RadioItem value="express">Express</RadioItem>
@@ -57,7 +57,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Plan" error="Choose a plan to continue.">
         <RadioGroup value="">
           <RadioItem value="free">Free</RadioItem>
@@ -70,7 +70,7 @@
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <RadioGroup value="express" aria-label="Shipping speed">
         <RadioItem value="standard">Standard</RadioItem>
         <RadioItem value="express">Express</RadioItem>

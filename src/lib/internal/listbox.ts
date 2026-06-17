@@ -13,5 +13,5 @@ export const LISTBOX_CONTENT_BASE =
 // attributes Bits sets as the user navigates.
 export const LISTBOX_ITEM_BASE =
   "flex cursor-default items-center justify-between gap-2 rounded-sm px-2 py-1.5 " +
-  "text-body font-sans text-text outline-none " +
+  "text-body font-sans text-fg outline-none " +
   "data-[highlighted]:bg-link/8 data-[disabled]:pointer-events-none data-[disabled]:opacity-50";

@@ -47,8 +47,8 @@
         value={item.value}
         disabled={item.disabled}
         class={cn(
-          "-mb-px border-b-2 border-transparent px-4 py-2 text-button font-sans text-text-muted",
-          "hover:text-text data-[state=active]:border-accent data-[state=active]:text-text",
+          "-mb-px border-b-2 border-transparent px-4 py-2 text-button font-sans text-fg-muted",
+          "hover:text-fg data-[state=active]:border-accent data-[state=active]:text-fg",
           "data-[disabled]:pointer-events-none data-[disabled]:opacity-40",
           "focus-ring",
         )}
@@ -58,7 +58,7 @@
     {/each}
   </Tabs.List>
   {#each items as item (item.value)}
-    <Tabs.Content value={item.value} class={cn("text-body font-sans text-text", panelClass, "focus-ring")}>
+    <Tabs.Content value={item.value} class={cn("text-body font-sans text-fg", panelClass, "focus-ring")}>
       {@render panel(item)}
     </Tabs.Content>
   {/each}

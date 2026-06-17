@@ -33,9 +33,9 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text flex flex-col items-start gap-3 p-6">
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
       <DateField aria-label="Due date" bind:value />
-      <p data-testid="value" class="text-small font-sans text-text-muted">
+      <p data-testid="value" class="text-small font-sans text-fg-muted">
         {value?.toString() ?? "none"}
       </p>
     </div>
@@ -51,7 +51,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <DateField aria-label="Reminder time" bind:value={withTime} granularity="minute" />
     </div>
   {/snippet}
@@ -60,7 +60,7 @@
 <!-- Empty: placeholder segments render, muted. -->
 <Story name="Empty">
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <DateField aria-label="Due date" />
     </div>
   {/snippet}
@@ -74,7 +74,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <DateField aria-label="Due date" disabled value={new CalendarDate(2026, 6, 15)} />
     </div>
   {/snippet}
@@ -91,7 +91,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Due date" error="Enter a valid date.">
         <DateField value={new CalendarDate(2026, 6, 15)} />
       </Field>
@@ -101,7 +101,7 @@
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <DateField aria-label="Due date" value={new CalendarDate(2026, 6, 15)} />
     </div>
   {/snippet}

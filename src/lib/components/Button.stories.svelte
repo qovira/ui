@@ -28,7 +28,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text flex flex-wrap items-center gap-3 p-6">
+    <div class="bg-surface text-fg flex flex-wrap items-center gap-3 p-6">
       <Button variant="primary">Primary</Button>
       <Button variant="key">Key CTA</Button>
       <Button variant="secondary">Secondary</Button>
@@ -46,7 +46,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Button variant="primary" disabled>Save</Button>
     </div>
   {/snippet}
@@ -63,7 +63,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Button variant="primary" loading>Saving</Button>
     </div>
   {/snippet}
@@ -80,7 +80,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Button href="/docs" variant="secondary">Go to docs</Button>
     </div>
   {/snippet}
@@ -98,7 +98,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Button href="/docs" variant="secondary" disabled>Unavailable</Button>
     </div>
   {/snippet}
@@ -116,7 +116,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Button href="/docs" variant="secondary" tabindex={-1}>Docs</Button>
     </div>
   {/snippet}
@@ -139,7 +139,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Button variant="primary" type="submit" class="rounded-none" onclick={handleClick}>Submit</Button>
     </div>
   {/snippet}
@@ -148,7 +148,7 @@
 <!-- All five variants in Daylight, so axe runs each in both themes. -->
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text flex flex-wrap items-center gap-3 p-6">
+    <div class="bg-surface text-fg flex flex-wrap items-center gap-3 p-6">
       <Button variant="primary">Primary</Button>
       <Button variant="key">Key CTA</Button>
       <Button variant="secondary">Secondary</Button>

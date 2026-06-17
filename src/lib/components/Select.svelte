@@ -81,8 +81,8 @@
     aria-describedby={aria.ariaDescribedby}
     class={cn(FIELD_CONTROL_BASE, "flex h-10 items-center justify-between gap-2 text-left", klass, "focus-ring")}
   >
-    <Select.Value {placeholder} class="truncate data-[placeholder]:text-text-muted" />
-    <CaretUpDownIcon size={18} color="currentColor" aria-hidden="true" class="shrink-0 text-text-muted" />
+    <Select.Value {placeholder} class="truncate data-[placeholder]:text-fg-muted" />
+    <CaretUpDownIcon size={18} color="currentColor" aria-hidden="true" class="shrink-0 text-fg-muted" />
   </Select.Trigger>
   <Select.Portal {...portalTo ? { to: portalTo } : {}}>
     <Select.Content {...listboxName} class={cn(LISTBOX_CONTENT_BASE, contentClass)}>

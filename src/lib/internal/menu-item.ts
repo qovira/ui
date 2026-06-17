@@ -6,11 +6,11 @@
 // The interactive, row-shaped parts (`Menu.Item` and `Menu.SubTrigger`).
 export const MENU_ITEM_BASE =
   "flex cursor-default select-none items-center gap-2 rounded-md px-3 py-2 " +
-  "text-body font-sans text-text outline-none " +
+  "text-body font-sans text-fg outline-none " +
   "data-[highlighted]:bg-link/8 data-[disabled]:pointer-events-none data-[disabled]:opacity-40";
 
 // The floating panel surface shared by `Menu.Content` and `Menu.SubContent` (a
 // submenu panel is the same surface as its parent menu, so the two must match).
 export const MENU_PANEL_BASE =
   "z-50 min-w-[10rem] rounded-xl border border-border bg-surface-raised p-1.5 " +
-  "text-text shadow-[var(--shadow-lg)] duration-overlay ease-qovira";
+  "text-fg shadow-[var(--shadow-lg)] duration-overlay ease-qovira";

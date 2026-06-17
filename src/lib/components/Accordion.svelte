@@ -50,7 +50,7 @@
         <Accordion.Trigger
           class={cn(
             "group flex flex-1 items-center justify-between gap-2 py-4 text-left",
-            "text-body font-sans font-medium text-text",
+            "text-body font-sans font-medium text-fg",
             "data-[disabled]:pointer-events-none data-[disabled]:opacity-40",
             "focus-ring",
           )}
@@ -60,11 +60,11 @@
             size={18}
             color="currentColor"
             aria-hidden="true"
-            class="shrink-0 text-text-muted transition-transform duration-overlay ease-qovira group-data-[state=open]:rotate-180"
+            class="shrink-0 text-fg-muted transition-transform duration-overlay ease-qovira group-data-[state=open]:rotate-180"
           />
         </Accordion.Trigger>
       </Accordion.Header>
-      <Accordion.Content class="overflow-hidden text-body font-sans text-text">
+      <Accordion.Content class="overflow-hidden text-body font-sans text-fg">
         <div class="pb-4">
           {@render section(item)}
         </div>

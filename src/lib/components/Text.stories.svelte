@@ -15,13 +15,13 @@
   play={async ({ canvas }) => {
     // Body binds the text-body role on Figtree and the primary text color.
     const body = canvas.getByText("Body — the default reading size.");
-    await expect(body).toHaveClass("text-body", "font-sans", "text-text");
+    await expect(body).toHaveClass("text-body", "font-sans", "text-fg");
     // Muted uses the secondary color role.
-    await expect(canvas.getByText(/Muted body/)).toHaveClass("text-text-muted");
+    await expect(canvas.getByText(/Muted body/)).toHaveClass("text-fg-muted");
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text flex flex-col gap-3 p-6">
+    <div class="bg-surface text-fg flex flex-col gap-3 p-6">
       <Text variant="lead">Lead — a slightly larger intro line.</Text>
       <Text>Body — the default reading size.</Text>
       <Text variant="small">Small — secondary details.</Text>

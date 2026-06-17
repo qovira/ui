@@ -26,7 +26,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-10">
+    <div class="bg-surface text-fg p-10">
       <Spinner />
     </div>
   {/snippet}
@@ -40,7 +40,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-10">
+    <div class="bg-surface text-fg p-10">
       <Spinner label="Reaching your model…" showLabel />
     </div>
   {/snippet}
@@ -48,7 +48,7 @@
 
 <Story name="Sizes">
   {#snippet template()}
-    <div class="bg-surface text-text flex items-center gap-8 p-10">
+    <div class="bg-surface text-fg flex items-center gap-8 p-10">
       <Spinner size="sm" label="Small" showLabel />
       <Spinner size="md" label="Medium" showLabel />
       <Spinner size="lg" label="Large" showLabel />
@@ -58,7 +58,7 @@
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text flex items-center gap-8 p-10">
+    <div class="bg-surface text-fg flex items-center gap-8 p-10">
       <Spinner />
       <Spinner label="Reaching your model…" showLabel />
     </div>

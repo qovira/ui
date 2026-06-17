@@ -47,13 +47,13 @@
   }}
 >
   {#snippet template()}
-    <div id="pop-host-main" class="bg-surface text-text p-6">
+    <div id="pop-host-main" class="bg-surface text-fg p-6">
       <Popover bind:open={openMain} {onOpenChange} portalTo="#pop-host-main">
         {#snippet trigger({ props })}
           <Button {...props}>Filters</Button>
         {/snippet}
-        <h3 class="text-h3 font-display text-text">Active filters</h3>
-        <p class="text-body mt-2 font-sans text-text-muted">Refine the list by status, owner, or date.</p>
+        <h3 class="text-h3 font-display text-fg">Active filters</h3>
+        <p class="text-body mt-2 font-sans text-fg-muted">Refine the list by status, owner, or date.</p>
       </Popover>
     </div>
   {/snippet}
@@ -71,13 +71,13 @@
   }}
 >
   {#snippet template()}
-    <div id="pop-host-day" class="bg-surface text-text p-6">
+    <div id="pop-host-day" class="bg-surface text-fg p-6">
       <Popover bind:open={openDay} portalTo="#pop-host-day">
         {#snippet trigger({ props })}
           <Button {...props}>Filters</Button>
         {/snippet}
-        <h3 class="text-h3 font-display text-text">Active filters</h3>
-        <p class="text-body mt-2 font-sans text-text-muted">Refine the list by status, owner, or date.</p>
+        <h3 class="text-h3 font-display text-fg">Active filters</h3>
+        <p class="text-body mt-2 font-sans text-fg-muted">Refine the list by status, owner, or date.</p>
       </Popover>
     </div>
   {/snippet}

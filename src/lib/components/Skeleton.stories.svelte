@@ -25,7 +25,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text max-w-sm p-6">
+    <div class="bg-surface text-fg max-w-sm p-6">
       <div class="flex items-center gap-4">
         <Skeleton data-testid="skeleton-avatar" class="size-12 rounded-full" />
         <div class="flex-1 space-y-2">
@@ -44,7 +44,7 @@
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text max-w-sm p-6">
+    <div class="bg-surface text-fg max-w-sm p-6">
       <div class="flex items-center gap-4">
         <Skeleton class="size-12 rounded-full" />
         <div class="flex-1 space-y-2">

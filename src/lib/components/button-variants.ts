@@ -19,7 +19,7 @@ export const VARIANTS: Record<ButtonVariant, string> = {
   // Key CTA — raw honey in both themes; at most one per view (the ≤10% accent rule).
   key: "bg-accent text-warm-900 hover:bg-honey-600 active:bg-honey-700",
   // Secondary — hairline-bordered, transparent fill.
-  secondary: "bg-transparent text-text border border-border hover:bg-surface-raised active:bg-warm-200/40",
+  secondary: "bg-transparent text-fg border border-border hover:bg-surface-raised active:bg-warm-200/40",
   // Ghost — text-only, tinted wash on interaction.
   ghost: "bg-transparent text-link hover:bg-link/8 active:bg-link/12",
   // Destructive — for irreversible actions; pair with a confirm.

@@ -30,8 +30,8 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text flex flex-col items-start gap-3 p-6">
-      <label class="inline-flex items-center gap-2 text-body font-sans text-text">
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
         <Switch bind:checked />Email notifications
       </label>
       <button type="button" class="text-small font-sans text-link" onclick={() => (checked = false)}> Reset </button>
@@ -50,7 +50,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Autoplay" error="This setting needs review.">
         <Switch />
       </Field>
@@ -60,11 +60,11 @@
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text flex flex-col items-start gap-3 p-6">
-      <label class="inline-flex items-center gap-2 text-body font-sans text-text">
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
         <Switch checked />On
       </label>
-      <label class="inline-flex items-center gap-2 text-body font-sans text-text">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
         <Switch />Off
       </label>
     </div>

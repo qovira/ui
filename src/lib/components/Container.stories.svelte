@@ -19,7 +19,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text">
+    <div class="bg-surface text-fg">
       <Container data-testid="container">
         <Text>Page content is centered and capped at ~960px for a calm layout.</Text>
       </Container>
@@ -34,7 +34,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text">
+    <div class="bg-surface text-fg">
       <Container width="prose" data-testid="container">
         <Text
           >Prose caps the measure at ~70 characters so long-form reading stays comfortable rather than stretching the

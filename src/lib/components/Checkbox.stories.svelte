@@ -30,8 +30,8 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text flex flex-col items-start gap-3 p-6">
-      <label class="inline-flex items-center gap-2 text-body font-sans text-text">
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
         <Checkbox bind:checked />Accept terms
       </label>
       <button type="button" class="text-small font-sans text-link" onclick={() => (checked = false)}> Reset </button>
@@ -50,11 +50,11 @@
 >
   {#snippet template()}
     {#snippet row(label: string, props: Record<string, unknown>)}
-      <label class="inline-flex items-center gap-2 text-body font-sans text-text">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
         <Checkbox {...props} />{label}
       </label>
     {/snippet}
-    <div class="bg-surface text-text flex flex-col items-start gap-3 p-6">
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
       {@render row("Unchecked", {})}
       {@render row("Checked", { checked: true })}
       {@render row("Indeterminate", { indeterminate: true })}
@@ -74,7 +74,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Field label="Subscribe to updates" error="Please confirm your choice.">
         <Checkbox />
       </Field>
@@ -84,11 +84,11 @@
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text flex flex-col items-start gap-3 p-6">
-      <label class="inline-flex items-center gap-2 text-body font-sans text-text">
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
         <Checkbox checked />Checked
       </label>
-      <label class="inline-flex items-center gap-2 text-body font-sans text-text">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
         <Checkbox indeterminate />Indeterminate
       </label>
     </div>

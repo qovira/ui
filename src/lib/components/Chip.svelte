@@ -43,7 +43,7 @@
   <!-- eslint-disable svelte/no-navigation-without-resolve -- a generic library control forwards the consumer's arbitrary href verbatim; resolve() is for an app's own route links, not here. -->
   <a
     {href}
-    class={cn(BADGE_BASE, BADGE_TONE[variant], "transition-colors duration-micro hover:bg-text/5", klass, "focus-ring")}
+    class={cn(BADGE_BASE, BADGE_TONE[variant], "transition-colors duration-micro hover:bg-fg/5", klass, "focus-ring")}
     {...rest as HTMLAnchorAttributes}
   >
     {@render body()}

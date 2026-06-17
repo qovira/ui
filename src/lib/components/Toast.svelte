@@ -21,10 +21,10 @@
     info: InfoIcon,
   } as const;
   const TONE = {
-    success: "bg-success-tint text-success-text",
-    error: "bg-error-tint text-error-text",
-    warning: "bg-warning-tint text-warning-text",
-    info: "bg-info-tint text-info-text",
+    success: "bg-tint-success text-fg-success",
+    error: "bg-tint-error text-fg-error",
+    warning: "bg-tint-warning text-fg-warning",
+    info: "bg-tint-info text-fg-info",
   } as const;
 
   // Auto-dismiss timer that pauses on hover/focus and resumes with the time it
@@ -67,7 +67,7 @@
   <button
     type="button"
     aria-label="Dismiss"
-    class="ml-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md hover:bg-text/5 focus-ring"
+    class="ml-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md hover:bg-fg/5 focus-ring"
     onclick={ondismiss}
   >
     <Icon icon={XIcon} decorative />

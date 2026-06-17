@@ -23,7 +23,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Avatar name="Ada Lovelace" />
     </div>
   {/snippet}
@@ -40,7 +40,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Avatar name="Ada Lovelace" src={PIXEL} />
     </div>
   {/snippet}
@@ -56,7 +56,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <!-- A malformed data URI: the browser fails to decode it and fires the
            image's error event in-page, with no server round-trip. -->
       <Avatar name="Grace Hopper" src="data:image/png;base64,this-is-not-valid-image-data" />
@@ -75,7 +75,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Avatar name="?" />
     </div>
   {/snippet}
@@ -83,7 +83,7 @@
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text flex items-center gap-4 p-6">
+    <div class="bg-surface text-fg flex items-center gap-4 p-6">
       <Avatar name="Ada Lovelace" size="sm" />
       <Avatar name="Grace Hopper" size="md" />
       <Avatar name="Alan Turing" size="lg" />

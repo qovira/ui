@@ -19,7 +19,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text p-6">
+    <div class="bg-surface text-fg p-6">
       <Text>Above the line</Text>
       <Separator class="my-3" />
       <Text>Below the line</Text>
@@ -35,7 +35,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text flex h-12 items-center gap-3 p-6">
+    <div class="bg-surface text-fg flex h-12 items-center gap-3 p-6">
       <Text>Left</Text>
       <Separator orientation="vertical" />
       <Text>Right</Text>

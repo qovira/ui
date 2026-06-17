@@ -11,7 +11,7 @@
 </script>
 
 <!-- Every variant carries a glyph and a text message, not color alone; the
-     message uses text-text (body color) on the semantic tint — an AA-verified
+     message uses text-fg (body color) on the semantic tint — an AA-verified
      pairing. axe enforces contrast in both themes on the real render. -->
 <Story
   name="Variants"
@@ -28,7 +28,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text flex max-w-md flex-col gap-3 p-6">
+    <div class="bg-surface text-fg flex max-w-md flex-col gap-3 p-6">
       <Alert variant="info">A quiet heads-up about something in your workspace.</Alert>
       <Alert variant="success" title="Saved">Your reminder is set for Friday.</Alert>
       <Alert variant="warning">Your plan's usage is close to its monthly limit.</Alert>
@@ -46,7 +46,7 @@
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-text max-w-md p-6">
+    <div class="bg-surface text-fg max-w-md p-6">
       <Alert variant="error" role="alert" title="Offline"
         >We've lost your connection — changes won't save until it's back.</Alert
       >
@@ -56,7 +56,7 @@
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
-    <div class="bg-surface text-text flex max-w-md flex-col gap-3 p-6">
+    <div class="bg-surface text-fg flex max-w-md flex-col gap-3 p-6">
       <Alert variant="info">A quiet heads-up about something in your workspace.</Alert>
       <Alert variant="success" title="Saved">Your reminder is set for Friday.</Alert>
       <Alert variant="warning">Your plan's usage is close to its monthly limit.</Alert>

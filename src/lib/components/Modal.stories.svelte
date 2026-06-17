@@ -54,7 +54,7 @@
   }}
 >
   {#snippet template()}
-    <div id="modal-host-main" class="bg-surface text-text p-6">
+    <div id="modal-host-main" class="bg-surface text-fg p-6">
       <Button onclick={() => (openMain = true)}>Open dialog</Button>
       <Modal bind:open={openMain} {onOpenChange} portalTo="#modal-host-main">
         {@render body(() => (openMain = false))}
@@ -78,7 +78,7 @@
   }}
 >
   {#snippet template()}
-    <div id="modal-host-day" class="bg-surface text-text p-6">
+    <div id="modal-host-day" class="bg-surface text-fg p-6">
       <Button onclick={() => (openDay = true)}>Open dialog</Button>
       <Modal bind:open={openDay} portalTo="#modal-host-day">
         {@render body(() => (openDay = false))}

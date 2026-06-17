@@ -30,6 +30,6 @@
   const font = $derived(resolved === "h4" ? "font-sans" : "font-display");
 </script>
 
-<svelte:element this={`h${level}`} class={cn(font, ROLE[resolved], "text-text", klass)} {...rest}>
+<svelte:element this={`h${level}`} class={cn(font, ROLE[resolved], "text-fg", klass)} {...rest}>
   {@render children()}
 </svelte:element>
