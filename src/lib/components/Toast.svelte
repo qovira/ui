@@ -96,7 +96,7 @@
 <div
   role="status"
   class={cn(
-    "pointer-events-auto relative overflow-hidden flex items-center gap-2 rounded-md border border-border p-3 shadow-[var(--shadow-md)]",
+    "pointer-events-auto relative overflow-hidden flex items-center gap-2 rounded-md border border-border p-3 shadow-(--shadow-md)",
     TONE[toast.variant],
   )}
   onmouseenter={() => (paused = true)}

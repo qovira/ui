@@ -13,4 +13,4 @@ export const MENU_ITEM_BASE =
 // submenu panel is the same surface as its parent menu, so the two must match).
 export const MENU_PANEL_BASE =
   "z-50 min-w-[10rem] rounded-xl border border-border bg-surface-raised p-1.5 " +
-  "text-fg shadow-[var(--shadow-lg)] duration-overlay ease-qovira";
+  "text-fg shadow-(--shadow-lg) duration-overlay ease-qovira";

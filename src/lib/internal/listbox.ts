@@ -5,8 +5,8 @@
 
 // The floating dropdown panel that holds the options.
 export const LISTBOX_CONTENT_BASE =
-  "z-50 max-h-60 min-w-[var(--bits-floating-anchor-width)] overflow-y-auto " +
-  "rounded-md border border-border bg-surface-raised p-1 shadow-[var(--shadow-lg)] " +
+  "z-50 max-h-60 min-w-(--bits-floating-anchor-width) overflow-y-auto " +
+  "rounded-md border border-border bg-surface-raised p-1 shadow-(--shadow-lg) " +
   "duration-overlay ease-qovira";
 
 // A single selectable option row; `data-[highlighted]`/`data-[selected]`/`data-[disabled]` are

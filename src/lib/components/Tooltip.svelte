@@ -57,7 +57,7 @@
         {...side ? { side } : {}}
         class={cn(
           "z-50 max-w-xs rounded-md border border-border bg-surface-raised px-2.5 py-1.5",
-          "text-small font-sans text-fg shadow-[var(--shadow-md)]",
+          "text-small font-sans text-fg shadow-(--shadow-md)",
           "duration-overlay ease-qovira",
           klass,
         )}

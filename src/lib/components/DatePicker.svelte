@@ -141,7 +141,7 @@
     <DatePicker.Content
       sideOffset={8}
       class={cn(
-        "z-50 rounded-xl border border-border bg-surface-raised p-4 text-fg shadow-[var(--shadow-lg)]",
+        "z-50 rounded-xl border border-border bg-surface-raised p-4 text-fg shadow-(--shadow-lg)",
         "duration-overlay ease-qovira",
         contentClass,
       )}
