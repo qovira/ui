@@ -42,3 +42,24 @@
     </div>
   {/snippet}
 </Story>
+
+<!-- Regression test: a vertical separator in a plain block container (no flex/grid parent) must have non-zero height.
+     With `self-stretch` alone the height collapses to 0; the `min-h` fallback makes it visible anywhere. -->
+<Story
+  name="VerticalInBlock"
+  play={async ({ canvas }) => {
+    const sep = canvas.getByRole("separator");
+    // ARIA: vertical orientation is declared correctly even outside a flex parent.
+    await expect(sep).toHaveAttribute("aria-orientation", "vertical");
+    // Regression guard: height must be non-zero — `self-stretch` alone collapses to 0 in a block container.
+    const height = sep.getBoundingClientRect().height;
+    await expect(height).toBeGreaterThan(0);
+  }}
+>
+  {#snippet template()}
+    <!-- Plain block div — intentionally NOT flex/grid — to expose the vertical-collapse bug. -->
+    <div class="bg-surface text-fg p-6">
+      <Separator orientation="vertical" />
+    </div>
+  {/snippet}
+</Story>
