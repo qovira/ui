@@ -92,3 +92,34 @@
     </div>
   {/snippet}
 </Story>
+
+<!-- TDD guard: assert the :enabled-gated hover classes are present on the root element. Static Tailwind
+     classes are always in the rendered class attribute, so classList checks are the reliable signal here.
+     These assertions must FAIL before the hover classes are added and PASS after. -->
+<Story
+  name="Hover classes"
+  play={async ({ canvas }) => {
+    const unchecked = canvas.getByRole("radio", { name: "Standard" });
+    const checked = canvas.getByRole("radio", { name: "Express" });
+
+    // Unchecked: border lights to accent on hover when enabled.
+    await expect(unchecked).toHaveClass("enabled:data-[state=unchecked]:hover:border-accent");
+
+    // Checked (border-only — no fill on RadioItem): border deepens to honey-600 on hover when enabled.
+    await expect(checked).toHaveClass("enabled:data-[state=checked]:hover:border-honey-600");
+
+    // The :enabled gate is verified at the CSS-selector level (compiled CSS grep) not in the DOM
+    // class attribute — Tailwind always emits the class token; :enabled is part of the CSS rule
+    // selector, not the token name, so a disabled element still has the token but the rule won't fire.
+  }}
+>
+  {#snippet template()}
+    <div class="bg-surface text-fg p-6">
+      <RadioGroup value="express" aria-label="Delivery speed">
+        <RadioItem value="standard">Standard</RadioItem>
+        <RadioItem value="express">Express</RadioItem>
+        <RadioItem value="disabled" disabled>Disabled</RadioItem>
+      </RadioGroup>
+    </div>
+  {/snippet}
+</Story>

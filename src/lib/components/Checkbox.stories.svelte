@@ -108,3 +108,44 @@
     </div>
   {/snippet}
 </Story>
+
+<!-- TDD guard: assert the :enabled-gated hover classes are present on the root element. Static Tailwind
+     classes are always in the rendered class attribute, so classList checks are the reliable signal here.
+     These assertions must FAIL before the hover classes are added and PASS after. -->
+<Story
+  name="Hover classes"
+  play={async ({ canvas }) => {
+    const unchecked = canvas.getByRole("checkbox", { name: "Unchecked" });
+    const checked = canvas.getByRole("checkbox", { name: "Checked" });
+    const indeterminate = canvas.getByRole("checkbox", { name: "Indeterminate" });
+
+    // Unchecked: border lights to accent on hover when enabled.
+    await expect(unchecked).toHaveClass("enabled:data-[state=unchecked]:hover:border-accent");
+
+    // Checked: accent deepens to honey-600 on hover (fill + border) when enabled.
+    await expect(checked).toHaveClass("enabled:data-[state=checked]:hover:bg-honey-600");
+    await expect(checked).toHaveClass("enabled:data-[state=checked]:hover:border-honey-600");
+
+    // Indeterminate also has a fill, so same honey-600 deepening applies.
+    await expect(indeterminate).toHaveClass("enabled:data-[state=indeterminate]:hover:bg-honey-600");
+    await expect(indeterminate).toHaveClass("enabled:data-[state=indeterminate]:hover:border-honey-600");
+
+    // The :enabled gate is verified at the CSS-selector level (compiled CSS grep) not in the DOM
+    // class attribute — Tailwind always emits the class token; :enabled is part of the CSS rule
+    // selector, not the token name, so a disabled element still has the token but the rule won't fire.
+  }}
+>
+  {#snippet template()}
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
+      {#snippet row(label: string, props: Record<string, unknown>)}
+        <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+          <Checkbox {...props} />{label}
+        </label>
+      {/snippet}
+      {@render row("Unchecked", {})}
+      {@render row("Checked", { checked: true })}
+      {@render row("Indeterminate", { indeterminate: true })}
+      {@render row("Disabled", { disabled: true })}
+    </div>
+  {/snippet}
+</Story>

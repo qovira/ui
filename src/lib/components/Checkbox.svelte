@@ -37,6 +37,11 @@
     "data-[state=checked]:border-accent data-[state=checked]:bg-accent",
     "data-[state=indeterminate]:border-accent data-[state=indeterminate]:bg-accent",
     "disabled:opacity-50",
+    // Hover treatment is :enabled-gated so disabled checkboxes never show a hover state.
+    // Unchecked: border lights to accent. Checked/indeterminate (filled): accent deepens one honey step.
+    "enabled:data-[state=unchecked]:hover:border-accent",
+    "enabled:data-[state=checked]:hover:bg-honey-600 enabled:data-[state=checked]:hover:border-honey-600",
+    "enabled:data-[state=indeterminate]:hover:bg-honey-600 enabled:data-[state=indeterminate]:hover:border-honey-600",
     klass,
     "focus-ring",
   )}
