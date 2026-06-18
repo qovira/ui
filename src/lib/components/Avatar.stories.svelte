@@ -14,12 +14,18 @@
 </script>
 
 <!-- No image: the fallback shows initials derived from the name. The whole
-     avatar is one labelled image, so assistive tech announces the name. -->
+     avatar is one labelled image, so assistive tech announces the name.
+     Also asserts the edge uses the divider token — border-divider — not the hairline
+     border-border, so the circle is distinguishable on both themes. -->
 <Story
   name="Initials"
   play={async ({ canvas }) => {
     const avatar = canvas.getByRole("img", { name: "Ada Lovelace" });
     await expect(avatar).toHaveTextContent("AL");
+    // TDD regression: the root must carry border-divider (not border-border)
+    // so the avatar edge is visible in Evening as well as Daylight.
+    await expect(avatar.classList.contains("border-divider")).toBe(true);
+    await expect(avatar.classList.contains("border-border")).toBe(false);
   }}
 >
   {#snippet template()}
@@ -82,6 +88,20 @@
 </Story>
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg flex items-center gap-4 p-6">
+      <Avatar name="Ada Lovelace" size="sm" />
+      <Avatar name="Grace Hopper" size="md" />
+      <Avatar name="Alan Turing" size="lg" />
+      <Avatar name="?" size="lg" />
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Evening: verifies the avatar edge (border-divider) reads against the dark warm-brown
+     page/surface — the fix that motivated the divider-token change. No special play needed;
+     visual review confirms the circle silhouette is distinguishable. -->
+<Story name="Evening" globals={{ theme: "evening" }}>
   {#snippet template()}
     <div class="bg-surface text-fg flex items-center gap-4 p-6">
       <Avatar name="Ada Lovelace" size="sm" />
