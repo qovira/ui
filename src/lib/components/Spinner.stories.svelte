@@ -10,19 +10,27 @@
   });
 </script>
 
-<!-- The signature lamp-glow loader. Meaning isn't trapped in motion: role="status"
-     announces accessible text (visually hidden by default) and the glow is
-     aria-hidden. The pulse runs on lamp-glow-pulse, which the theme's global
-     prefers-reduced-motion guard collapses to a static glow. -->
+<!-- The signature lamp-glow loader, now with accent-colored radiating rings (ripple) that read clearly against
+     both Daylight (cream) and Evening (espresso) backgrounds. Meaning isn't trapped in motion: role="status"
+     announces accessible text (visually hidden by default) and the glow/rings are aria-hidden.
+     Under prefers-reduced-motion the rings are hidden (display: none) for a clean static dot. -->
 <Story
   name="Loading"
   play={async ({ canvas }) => {
     // AC: role="status" with accessible text.
     const status = canvas.getByRole("status");
     await expect(status).toHaveTextContent("Loading…");
-    // AC: the pulse rides on lamp-glow-pulse, so the theme's reduced-motion guard
-    // (which collapses every animation) pauses it — meaning never lives in motion.
-    await expect(status.querySelector(".lamp-glow-pulse")).toBeInTheDocument();
+
+    // AC: the dot is present and aria-hidden (meaning not trapped in motion).
+    const dot = status.querySelector(".spinner-dot");
+    await expect(dot).toBeInTheDocument();
+    await expect(dot).toHaveAttribute("aria-hidden", "true");
+
+    // AC: the ripple ring is wired — the ::before pseudo-element carries a non-none animationName,
+    // proving the `spinner-ripple` keyframe is applied in a real Chromium rendering context.
+    const dotEl = dot as HTMLElement;
+    const beforeStyle = getComputedStyle(dotEl, "::before");
+    await expect(beforeStyle.animationName).not.toBe("none");
   }}
 >
   {#snippet template()}
