@@ -39,13 +39,13 @@ export const STATUS_TEXT: Record<StatusVariant, string> = {
 // compact-label components never drift.
 export const BADGE_BASE = "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-small font-sans";
 
-// The composed compact-label recipe shared by Badge and Chip: a quiet neutral
-// hairline, or a status's tint paired with its AA-verified text color (the
-// components add the glyph). Defined once so the two never drift.
+// The recipe shared by Badge and Chip. Every tone carries a hairline border (border-border) so neutral and the four
+// status tones stay visually consistent. Status tones layer their AA-verified tint/text pairing on top of that border.
+// The components add the glyph, so meaning is never carried by color alone. Defined once so the two never drift.
 export const BADGE_TONE: Record<BadgeVariant, string> = {
   neutral: "border border-border bg-surface-raised text-fg",
-  info: `${STATUS_TINT.info} ${STATUS_TEXT.info}`,
-  success: `${STATUS_TINT.success} ${STATUS_TEXT.success}`,
-  warning: `${STATUS_TINT.warning} ${STATUS_TEXT.warning}`,
-  error: `${STATUS_TINT.error} ${STATUS_TEXT.error}`,
+  info: `border border-border ${STATUS_TINT.info} ${STATUS_TEXT.info}`,
+  success: `border border-border ${STATUS_TINT.success} ${STATUS_TEXT.success}`,
+  warning: `border border-border ${STATUS_TINT.warning} ${STATUS_TEXT.warning}`,
+  error: `border border-border ${STATUS_TINT.error} ${STATUS_TEXT.error}`,
 };
