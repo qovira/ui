@@ -23,5 +23,14 @@ export const VARIANTS: Record<ButtonVariant, string> = {
   // Ghost — text-only, tinted wash on interaction.
   ghost: "bg-transparent text-link hover:bg-link/8 active:bg-link/12",
   // Destructive — for irreversible actions; pair with a confirm.
-  destructive: "bg-error text-white hover:brightness-95 active:brightness-90",
+  // `brightness()` is a CSS filter that dims the entire element including white text, so it cannot
+  // darken the fill perceptibly while keeping white-on-fill contrast above WCAG AA. Instead we
+  // darken the background fill alone via `color-mix(in srgb, …, black N%)`, which is pure channel
+  // scaling (× (1−N)), leaving `text-white` at #fff. Computed WCAG AA ratios (white text):
+  //   rest   white / #cc4029           ≈ 4.85:1  (pass — same as before)
+  //   hover  white / #cc4029 × 0.90   ≈ 5.72:1  (pass, clearly darker than rest)
+  //   active white / #cc4029 × 0.82   ≈ 6.65:1  (pass, clearly darker than hover)
+  // IconButton shares this VARIANTS map, so both components benefit from the same change.
+  destructive:
+    "bg-error text-white hover:bg-[color-mix(in_srgb,var(--color-error),black_10%)] active:bg-[color-mix(in_srgb,var(--color-error),black_18%)]",
 };
