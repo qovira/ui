@@ -68,11 +68,15 @@
   {/snippet}
 </Story>
 
-<!-- Disabled: segments aren't editable. -->
+<!-- Disabled: segments aren't editable; group is visually dimmed (opacity-50). -->
 <Story
   name="Disabled"
   play={async ({ canvas }) => {
     await expect(canvas.getByRole("spinbutton", { name: /day/i })).toHaveAttribute("aria-disabled", "true");
+    // F18: the input group must be visually dimmed — data-[disabled]:opacity-50 on FIELD_CONTROL_BASE
+    // is what achieves this (CSS :disabled never matches a <div role="group">).
+    const group = canvas.getByRole("group", { name: /Due date/ });
+    await expect(getComputedStyle(group).opacity).toBe("0.5");
   }}
 >
   {#snippet template()}
