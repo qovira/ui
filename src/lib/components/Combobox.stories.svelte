@@ -129,7 +129,9 @@
   {/snippet}
 </Story>
 
-<!-- Multi-select / tag entry: each commit adds to the value array. -->
+<!-- Multi-select / tag entry: each commit adds to the value array. Selected
+     options must be visually distinguished in the open list — their computed
+     background-color must differ from unselected ones. -->
 <Story
   name="Multiple"
   play={async ({ canvas }) => {
@@ -137,6 +139,14 @@
     await canvas.findByRole("listbox");
     await userEvent.click(canvas.getByRole("option", { name: "Svelte" }));
     await userEvent.click(canvas.getByRole("option", { name: "Vue" }));
+    // Assert the open-list selected-vs-unselected distinction before closing.
+    // A selected option's background must differ from an unselected one so users
+    // can see (and deselect) their current picks.
+    const selectedOption = canvas.getByRole("option", { name: "Svelte" });
+    const unselectedOption = canvas.getByRole("option", { name: "Angular" });
+    const selectedBg = getComputedStyle(selectedOption).backgroundColor;
+    const unselectedBg = getComputedStyle(unselectedOption).backgroundColor;
+    await expect(selectedBg).not.toBe(unselectedBg);
     await userEvent.keyboard("{Escape}");
     await expect(canvas.getByTestId("tags")).toHaveTextContent('["svelte","vue"]');
   }}
