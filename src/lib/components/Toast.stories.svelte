@@ -93,6 +93,48 @@
   {/snippet}
 </Story>
 
+<!-- Progress bar is present for auto-dismiss toasts (finite positive duration) and absent for sticky ones. -->
+<Story
+  name="Progress bar — auto dismiss"
+  play={async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "Notify" }));
+    const message = await canvas.findByText("Watch the bar deplete.");
+    const panel = message.closest("[role=status]");
+    // The progress bar is a <div aria-hidden=true> at the bottom of the toast panel.
+    const bar = panel?.querySelector("div[aria-hidden=true]");
+    await expect(bar).toBeTruthy();
+  }}
+>
+  {#snippet template()}
+    <ToastProvider portalTo="#toast-host-bar-auto">
+      <div id="toast-host-bar-auto" class="bg-surface text-fg p-6">
+        <Button onclick={() => toast.info("Watch the bar deplete.", { duration: 5000 })}>Notify</Button>
+      </div>
+    </ToastProvider>
+  {/snippet}
+</Story>
+
+<!-- Sticky toast (duration 0): no progress bar rendered. -->
+<Story
+  name="Progress bar — sticky (no bar)"
+  play={async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "Notify" }));
+    const message = await canvas.findByText("This one sticks around.");
+    const panel = message.closest("[role=status]");
+    // The progress bar is specifically a <div aria-hidden=true> — not the icon SVGs.
+    const bar = panel?.querySelector("div[aria-hidden=true]");
+    await expect(bar).toBeFalsy();
+  }}
+>
+  {#snippet template()}
+    <ToastProvider portalTo="#toast-host-bar-sticky">
+      <div id="toast-host-bar-sticky" class="bg-surface text-fg p-6">
+        <Button onclick={() => toast.info("This one sticks around.", { duration: 0 })}>Notify</Button>
+      </div>
+    </ToastProvider>
+  {/snippet}
+</Story>
+
 <!-- Daylight, so axe checks the toasts in both themes. -->
 <Story
   name="Daylight"
