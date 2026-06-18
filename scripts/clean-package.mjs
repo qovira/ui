@@ -1,6 +1,5 @@
-// Strip co-located stories and tests from the svelte-package output. They live
-// next to components in `src/lib` (house convention), so svelte-package copies
-// them into `dist/` — but none of them may ship in the published package.
+// Strip co-located stories and tests from the svelte-package output. They live next to components in `src/lib`
+// (house convention), so svelte-package copies them into `dist/` — but none of them may ship in the published package.
 import { readdir, rm } from "node:fs/promises";
 import path from "node:path";
 
