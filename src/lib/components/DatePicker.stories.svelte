@@ -147,7 +147,7 @@
   {/snippet}
 </Story>
 
-<!-- Default locale: segments render in dd/mm/yyyy order (European, en-GB). -->
+<!-- Default locale: segments render dd/mm (European, en-GB), and the popover calendar starts the week on Monday. -->
 <Story
   name="Locale default (dd/mm)"
   play={async ({ canvas }) => {
@@ -160,11 +160,17 @@
     await expect(dayIdx).toBeGreaterThanOrEqual(0);
     await expect(monthIdx).toBeGreaterThanOrEqual(0);
     await expect(dayIdx).toBeLessThan(monthIdx);
+    // The en-GB default also drives the popover calendar's week start — Monday-first, like the standalone Calendar.
+    await userEvent.click(canvas.getByRole("button", { name: "Open calendar" }));
+    await canvas.findByRole("application");
+    await expect(canvas.getAllByRole("columnheader")[0]).toHaveTextContent("Mon");
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() => expect(canvas.queryByRole("application")).not.toBeInTheDocument());
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-fg p-6">
-      <DatePicker aria-label="Reminder" value={new CalendarDate(2026, 6, 15)} />
+    <div id="datepicker-locale-host" class="bg-surface text-fg p-6">
+      <DatePicker aria-label="Reminder" value={new CalendarDate(2026, 6, 15)} portalTo="#datepicker-locale-host" />
     </div>
   {/snippet}
 </Story>
