@@ -52,8 +52,15 @@
     // Minimal sort: aria-sort starts "none", and activating the header cycles it.
     const nameHeader = canvas.getByRole("columnheader", { name: "Name" });
     await expect(nameHeader).toHaveAttribute("aria-sort", "none");
-    await userEvent.click(canvas.getByRole("button", { name: "Name" }));
+    const sortButton = canvas.getByRole("button", { name: "Name" });
+    await userEvent.click(sortButton);
     await waitFor(() => expect(nameHeader).toHaveAttribute("aria-sort", "ascending"));
+    // F6 — sortable headers must render uppercase identically to non-sortable ones.
+    // The <button> must carry the `uppercase` class explicitly: UA stylesheets
+    // occasionally suppress text-transform inheritance on replaced/button elements,
+    // so relying on cascade alone is fragile. Both assertions pin the fix.
+    await expect(sortButton).toHaveClass("uppercase");
+    await expect(getComputedStyle(sortButton).textTransform).toBe("uppercase");
   }}
 >
   {#snippet template()}

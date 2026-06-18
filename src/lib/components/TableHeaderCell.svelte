@@ -34,7 +34,7 @@
     <button
       type="button"
       class={cn(
-        "-mx-1 inline-flex items-center gap-1 rounded px-1 transition-colors duration-micro ease-qovira hover:text-fg",
+        "-mx-1 inline-flex items-center gap-1 rounded px-1 uppercase transition-colors duration-micro ease-qovira hover:text-fg",
         "focus-ring",
       )}
       onclick={onsort}
