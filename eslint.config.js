@@ -14,7 +14,11 @@ export default tseslint.config(
     files: ["**/*.svelte", "**/*.svelte.ts", "**/*.svelte.js"],
     languageOptions: {
       parserOptions: {
-        projectService: true,
+        // `.storybook/*.svelte` (decorator wrappers) are tooling, not library source, so they sit
+        // outside the SvelteKit type-checked project (`pnpm check` doesn't cover them either). Let
+        // the project service type-lint them via the default inferred project rather than pulling
+        // `.storybook` into tsconfig's `include`.
+        projectService: { allowDefaultProject: [".storybook/*.svelte"] },
         extraFileExtensions: [".svelte"],
         parser: tseslint.parser,
         svelteConfig,

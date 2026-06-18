@@ -38,3 +38,44 @@
 >
   Click me
 </Story>
+
+<!--
+  Proves that the per-story ThemeWrapper themes its subtree independently of
+  <html data-theme>. This is the critical Docs-page correctness test: on the
+  Docs page all story blocks share one document <html>, so without a wrapper
+  each block clobbers the previous one (last renderer wins). This story runs
+  under the default "evening" global and forcibly sets <html> to "daylight" in
+  the play to simulate the clobbering scenario; the wrapper must still resolve
+  evening tokens from its own [data-theme="evening"] attribute.
+-->
+<Story
+  name="Themed independently of the document"
+  play={async ({ canvasElement }) => {
+    // Simulate a sibling Docs block having clobbered <html> with the opposite theme.
+    document.documentElement.setAttribute("data-theme", "daylight");
+
+    // The ThemeWrapper renders a [data-theme] div INSIDE canvasElement (the wrapper
+    // is the decorator's Component, and DecoratorHandler mounts <StoryComponent /> as
+    // children inside it, so the wrapper is a descendant of canvasElement).
+    const wrapper = canvasElement.querySelector("[data-theme]");
+    await expect(wrapper).not.toBeNull();
+
+    // The wrapper must carry the active global theme (evening by default).
+    await expect((wrapper as Element).getAttribute("data-theme")).toBe("evening");
+
+    // Custom properties must resolve from the wrapper, NOT from the daylight <html>.
+    // Evening --bg is #15100c; daylight --bg is #f1e9dc.
+    // If there is no wrapper (old html-only approach) OR the wrapper is not independently
+    // themed, getComputedStyle resolves #f1e9dc (daylight) instead.
+    await expect(
+      getComputedStyle(wrapper as Element)
+        .getPropertyValue("--bg")
+        .trim(),
+    ).toBe("#15100c");
+
+    // Restore <html> so subsequent stories are not poisoned.
+    document.documentElement.setAttribute("data-theme", "evening");
+  }}
+>
+  Evening theme (independence proof)
+</Story>

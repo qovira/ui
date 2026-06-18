@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/sveltekit";
 import { setTheme } from "@qovira/theme/runtime";
+import ThemeWrapper from "./ThemeWrapper.svelte";
 // Loads Tailwind + the @qovira/theme tokens/fonts into the preview (and the
 // Vitest browser test pass via the setup file), so stories render with the
 // real theme build — the same pipeline a consumer uses.
@@ -30,12 +31,17 @@ const preview: Preview = {
   },
 
   decorators: [
-    // Apply the selected theme through @qovira/theme's own runtime (sets
-    // `data-theme` on <html>), so every story renders in the chosen theme and
-    // the toolbar switches between them live.
+    // Apply the selected theme per story block. `setTheme` keeps <html data-theme>
+    // in sync so the Canvas iframe chrome stays themed and the live toolbar switch
+    // keeps working there. The ThemeWrapper div is what makes each Docs block theme
+    // independently — the Docs page shares one document, so <html> alone clobbers:
+    // the last story block to mount wins. With a per-block [data-theme] wrapper each
+    // block resolves the semantic custom properties from its own attribute via CSS
+    // inheritance, regardless of what <html data-theme> is set to.
     (story, context) => {
-      setTheme(context.globals["theme"] === "daylight" ? "daylight" : "evening");
-      return story();
+      const theme = context.globals["theme"] === "daylight" ? "daylight" : "evening";
+      setTheme(theme);
+      return { Component: ThemeWrapper, props: { theme } };
     },
   ],
 };
