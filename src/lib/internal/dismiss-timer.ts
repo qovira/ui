@@ -1,7 +1,13 @@
 export interface DismissTimer {
-  /** Start, or resume after a pause, counting down the time it has left. Idempotent — a call while already running is a no-op. */
+  /**
+   * Start, or resume after a pause, counting down the time it has left. Idempotent — a call while
+   * already running is a no-op.
+   */
   resume(): void;
-  /** Pause the countdown, banking the elapsed time so a later `resume()` continues from where it left off. Idempotent. */
+  /**
+   * Pause the countdown, banking the elapsed time so a later `resume()` continues from where it left
+   * off. Idempotent.
+   */
   pause(): void;
   /**
    * The fraction of time REMAINING, in [0, 1] (1 = full, 0 = done). While running, this is
