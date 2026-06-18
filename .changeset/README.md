@@ -13,9 +13,8 @@ It asks for the bump level and a summary, then writes a markdown file here. Pick
 the level by the semver contract (see the **Versioning & releases** section of
 the README):
 
-- **major** — removing/renaming a prop, changing a component's default
-  behavior, or raising the required `@qovira/theme` peer range.
-- **minor** — a new component, or an additive prop.
+- **major** — a public-API break, and only that: removing/renaming a prop, or changing a component's default behavior.
+- **minor** — a backward-compatible addition: a new component, an additive prop, or raising the required `@qovira/theme` peer range (which leaves `@qovira/ui`'s own API unchanged).
 - **patch** — a bug fix with no API change.
 
 A token-only change in `@qovira/theme` does **not** require a `@qovira/ui`
