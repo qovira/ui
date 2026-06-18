@@ -85,6 +85,46 @@
   {/snippet}
 </Story>
 
+<!-- TDD geometry guard: renders one unchecked and one controlled-checked switch with no toggling/waiting,
+     so transition timing cannot affect the result. getBoundingClientRect measures the actual rendered gap
+     between the thumb edge and the near track edge in both states; they must be equal within 0.6px.
+     This story FAILS with translate-x-5 (right gap ~4px vs left gap ~2px) and PASSES after translate-x-[1.375rem]. -->
+<Story
+  name="Thumb padding symmetry"
+  play={async ({ canvas }) => {
+    const off = canvas.getByRole("switch", { name: "Off" });
+    const on = canvas.getByRole("switch", { name: "On" });
+
+    const offTrack = off.getBoundingClientRect();
+    const offThumb = off.querySelector("[data-switch-thumb]") as HTMLElement;
+    const onTrack = on.getBoundingClientRect();
+    const onThumb = on.querySelector("[data-switch-thumb]") as HTMLElement;
+
+    const offThumbRect = offThumb.getBoundingClientRect();
+    const onThumbRect = onThumb.getBoundingClientRect();
+
+    // Left gap: distance from the track's left inner edge (adjusted for border) to the thumb's left edge.
+    // Right gap: distance from the thumb's right edge to the track's right inner edge (adjusted for border).
+    // Both border widths cancel if we use the track bounding box directly — border is 1px each side,
+    // but we compare gap-to-gap so the relative asymmetry is what matters; 1px border offsets both sides equally.
+    const leftGap = offThumbRect.left - offTrack.left;
+    const rightGap = onTrack.right - onThumbRect.right;
+
+    await expect(Math.abs(leftGap - rightGap)).toBeLessThan(0.6);
+  }}
+>
+  {#snippet template()}
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Switch />Off
+      </label>
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Switch checked />On
+      </label>
+    </div>
+  {/snippet}
+</Story>
+
 <!-- TDD guard: assert the :enabled-gated hover classes are present on the root element. Static Tailwind
      classes are always in the rendered class attribute, so classList checks are the reliable signal here.
      These assertions must FAIL before the hover classes are added and PASS after. -->

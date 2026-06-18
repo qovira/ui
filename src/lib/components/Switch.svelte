@@ -39,7 +39,10 @@
   )}
   {...rest}
 >
+  <!-- translate-x-5.5 = 22px so the on-state right gap matches the off-state 2px left gap: the track
+       padding-box (w-11 44px minus 2x1px border) is 42px, less px-0.5 (2px each side) and the 16px thumb;
+       translate-x-5 (20px) left a 4px right gap. -->
   <Switch.Thumb
-    class="h-4 w-4 rounded-full bg-surface shadow-[var(--shadow-sm)] transition-transform data-[state=checked]:translate-x-5"
+    class="h-4 w-4 rounded-full bg-surface shadow-[var(--shadow-sm)] transition-transform data-[state=checked]:translate-x-5.5"
   />
 </Switch.Root>
