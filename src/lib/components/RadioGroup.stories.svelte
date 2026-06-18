@@ -14,6 +14,8 @@
 
 <script lang="ts">
   let value = $state("standard");
+  let radioFieldValue = $state("");
+  let radioFieldError = $state<string | undefined>("Choose a plan to continue.");
 </script>
 
 <!-- Single choice: selecting one option deselects the others; bind:value
@@ -42,11 +44,13 @@
 </Story>
 
 <!-- Inside a Field, the group names itself from the Field label (aria-labelledby)
-     and inherits invalid/describedby — no prop-drilling. -->
+     and inherits invalid/describedby — no prop-drilling. Picking a plan clears
+     the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
     const group = canvas.getByRole("radiogroup");
+    // Initial state: valid a11y wiring.
     await expect(group).toHaveAccessibleName("Plan");
     await expect(group).toHaveAttribute("aria-invalid", "true");
     const message = canvas.getByText("Choose a plan to continue.");
@@ -54,12 +58,22 @@
     // The group names itself via aria-labelledby, so the Field's <label> must
     // NOT emit a `for` pointing at a non-labelable element that exists nowhere.
     await expect(canvas.getByText("Plan")).not.toHaveAttribute("for");
+    // Picking a plan satisfies the field — error clears.
+    await userEvent.click(canvas.getByRole("radio", { name: "Free" }));
+    await expect(group).not.toHaveAttribute("aria-invalid", "true");
+    await expect(canvas.queryByText("Choose a plan to continue.")).not.toBeInTheDocument();
   }}
 >
   {#snippet template()}
     <div class="bg-surface text-fg p-6">
-      <Field label="Plan" error="Choose a plan to continue.">
-        <RadioGroup value="">
+      <Field label="Plan" {...radioFieldError ? { error: radioFieldError } : {}}>
+        <RadioGroup
+          bind:value={radioFieldValue}
+          onValueChange={(v) => {
+            radioFieldValue = v;
+            radioFieldError = v ? undefined : "Choose a plan to continue.";
+          }}
+        >
           <RadioItem value="free">Free</RadioItem>
           <RadioItem value="pro">Pro</RadioItem>
         </RadioGroup>

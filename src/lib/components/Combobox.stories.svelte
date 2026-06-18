@@ -25,6 +25,8 @@
   let multi = $state<string | string[]>([]);
   const onValueChange = fn();
   const onOpenChange = fn();
+  let comboboxFieldValue = $state<string | undefined>(undefined);
+  let comboboxFieldError = $state<string | undefined>("Choose a framework.");
 </script>
 
 <!-- Typeahead: typing filters the options to label substring matches; selecting
@@ -135,20 +137,37 @@
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the input inherits the a11y contract without prop-drilling. -->
+<!-- Inside a Field, the input inherits the a11y contract without prop-drilling.
+     Selecting a framework clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
     const input = canvas.getByRole("combobox", { name: /Framework/ });
+    // Initial state: invalid wiring is present.
     await expect(input).toHaveAttribute("aria-invalid", "true");
     const message = canvas.getByText("Choose a framework.");
     await expect(input).toHaveAttribute("aria-describedby", message.id);
+    // Selecting a framework satisfies the field — error clears.
+    await userEvent.click(canvas.getByRole("button", { name: "Toggle options" }));
+    await canvas.findByRole("listbox");
+    await userEvent.click(canvas.getByRole("option", { name: "Svelte" }));
+    await expect(input).not.toHaveAttribute("aria-invalid", "true");
+    await expect(canvas.queryByText("Choose a framework.")).not.toBeInTheDocument();
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-fg p-6">
-      <Field label="Framework" error="Choose a framework.">
-        <Combobox items={frameworks} placeholder="Search frameworks" />
+    <div id="combobox-field-host" class="bg-surface text-fg p-6">
+      <Field label="Framework" {...comboboxFieldError ? { error: comboboxFieldError } : {}}>
+        <Combobox
+          items={frameworks}
+          placeholder="Search frameworks"
+          bind:value={comboboxFieldValue}
+          onValueChange={(v) => {
+            comboboxFieldValue = typeof v === "string" ? v : undefined;
+            comboboxFieldError = comboboxFieldValue ? undefined : "Choose a framework.";
+          }}
+          portalTo="#combobox-field-host"
+        />
       </Field>
     </div>
   {/snippet}

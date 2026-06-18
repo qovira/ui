@@ -25,6 +25,8 @@
   let multi = $state<string | string[]>([]);
   const onValueChange = fn();
   const onOpenChange = fn();
+  let selectFieldValue = $state<string | undefined>(undefined);
+  let selectFieldError = $state<string | undefined>("Pick a provider to continue.");
 </script>
 
 <!-- Single select, driven by the keyboard: focus the trigger, open with Enter,
@@ -128,20 +130,37 @@
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the trigger inherits the a11y contract without prop-drilling. -->
+<!-- Inside a Field, the trigger inherits the a11y contract without prop-drilling.
+     Picking a provider clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
     const trigger = canvas.getByRole("button", { name: /Provider/ });
+    // Initial state: invalid wiring is present.
     await expect(trigger).toHaveAttribute("aria-invalid", "true");
     const message = canvas.getByText("Pick a provider to continue.");
     await expect(trigger).toHaveAttribute("aria-describedby", message.id);
+    // Picking a provider satisfies the field — error clears.
+    await userEvent.click(trigger);
+    await canvas.findByRole("listbox");
+    await userEvent.click(canvas.getByRole("option", { name: "GPT-5" }));
+    await expect(trigger).not.toHaveAttribute("aria-invalid", "true");
+    await expect(canvas.queryByText("Pick a provider to continue.")).not.toBeInTheDocument();
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-fg p-6">
-      <Field label="Provider" error="Pick a provider to continue.">
-        <Select items={models} placeholder="Select a provider" />
+    <div id="select-field-host" class="bg-surface text-fg p-6">
+      <Field label="Provider" {...selectFieldError ? { error: selectFieldError } : {}}>
+        <Select
+          items={models}
+          placeholder="Select a provider"
+          bind:value={selectFieldValue}
+          onValueChange={(v) => {
+            selectFieldValue = typeof v === "string" ? v : undefined;
+            selectFieldError = selectFieldValue ? undefined : "Pick a provider to continue.";
+          }}
+          portalTo="#select-field-host"
+        />
       </Field>
     </div>
   {/snippet}
