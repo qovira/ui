@@ -23,6 +23,8 @@
     granularity?: Granularity;
     hourCycle?: 12 | 24;
     weekdayFormat?: Intl.DateTimeFormatOptions["weekday"];
+    /** BCP-47 locale tag; controls segment order. Defaults to `"en-GB"` (dd/mm/yyyy). */
+    locale?: string;
     name?: string;
     id?: string;
     /** Merged onto the segment-input group (the labelable control). */
@@ -50,6 +52,7 @@
     granularity,
     hourCycle,
     weekdayFormat = "short",
+    locale = "en-GB",
     name,
     id,
     class: klass,
@@ -99,6 +102,7 @@
   {disabled}
   {readonly}
   {weekdayFormat}
+  {locale}
   {...opts}
   {...onOpenChange ? { onOpenChange } : {}}
 >

@@ -27,7 +27,7 @@
   play={async ({ canvas }) => {
     await userEvent.click(canvas.getByRole("button", { name: "Open calendar" }));
     await waitFor(() => expect(onOpenChange).toHaveBeenCalledWith(true));
-    const day = await canvas.findByRole("button", { name: /June 20, 2026/ });
+    const day = await canvas.findByRole("button", { name: /20 June 2026/ });
     await userEvent.click(day);
     await expect(canvas.getByTestId("value")).toHaveTextContent("2026-06-20");
     // Popover dismisses; close defensively so axe checks the resting state.
@@ -71,7 +71,7 @@
     await expect(group).toHaveAttribute("aria-describedby", message.id);
     // Opening the calendar and picking a day clears the error.
     await userEvent.click(canvas.getByRole("button", { name: "Open calendar" }));
-    const day = await canvas.findByRole("button", { name: /June 15, 2026/ });
+    const day = await canvas.findByRole("button", { name: /15 June 2026/ });
     await userEvent.click(day);
     await expect(group).not.toHaveAttribute("aria-invalid", "true");
     await expect(canvas.queryByText("Pick a reminder date.")).not.toBeInTheDocument();
@@ -111,8 +111,8 @@
     // AC (headline): choosing a year jumps the displayed period — the grid re-renders
     // June 2027 (the selectors drive the calendar placeholder, not the selection).
     await userEvent.selectOptions(yearSelect, "2027");
-    await expect(await canvas.findByRole("button", { name: /June 15, 2027/ })).toBeInTheDocument();
-    await expect(canvas.queryByRole("button", { name: /June 15, 2026/ })).not.toBeInTheDocument();
+    await expect(await canvas.findByRole("button", { name: /15 June 2027/ })).toBeInTheDocument();
+    await expect(canvas.queryByRole("button", { name: /15 June 2026/ })).not.toBeInTheDocument();
     // Close the popover to leave a clean a11y state for axe.
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(canvas.queryByRole("application")).not.toBeInTheDocument());
@@ -140,6 +140,28 @@
   {#snippet template()}
     <div id="datepicker-day-host" class="bg-surface text-fg p-6">
       <DatePicker aria-label="Reminder" value={new CalendarDate(2026, 6, 15)} portalTo="#datepicker-day-host" />
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Default locale: segments render in dd/mm/yyyy order (European, en-GB). -->
+<Story
+  name="Locale default (dd/mm)"
+  play={async ({ canvas }) => {
+    const spinbuttons = canvas.getAllByRole("spinbutton");
+    const names = spinbuttons.map((el) => el.getAttribute("aria-label")?.toLowerCase() ?? "");
+    // day must appear before month in the rendered order.
+    const dayIdx = names.findIndex((n) => n.includes("day"));
+    const monthIdx = names.findIndex((n) => n.includes("month"));
+    // Both segments must exist, so the ordering assertion can't pass vacuously on a -1.
+    await expect(dayIdx).toBeGreaterThanOrEqual(0);
+    await expect(monthIdx).toBeGreaterThanOrEqual(0);
+    await expect(dayIdx).toBeLessThan(monthIdx);
+  }}
+>
+  {#snippet template()}
+    <div class="bg-surface text-fg p-6">
+      <DatePicker aria-label="Reminder" value={new CalendarDate(2026, 6, 15)} />
     </div>
   {/snippet}
 </Story>
