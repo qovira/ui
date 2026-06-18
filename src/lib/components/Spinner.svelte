@@ -50,8 +50,7 @@
     background-color: var(--color-accent);
     opacity: 0;
     animation: spinner-ripple 1400ms var(--ease-qovira) infinite;
-    /* Pseudo-elements do not inherit position from the parent inline element; explicitly reset to avoid paint
-     * artifacts when the parent sits in a flex/grid context. */
+    /* Decorative rings never intercept pointer events. */
     pointer-events: none;
   }
 
