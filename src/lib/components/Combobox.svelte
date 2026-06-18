@@ -92,6 +92,14 @@
      to concrete literals; shared parts live in the `body` snippet. -->
 {#snippet body()}
   <div class="relative">
+    <!-- bits-ui's Combobox.Input has no pointer-open handler — it only opens the
+         listbox on ArrowUp/Down or printable keystrokes (keyboard users already
+         have a path). A plain mouse click would silently do nothing, so we wire
+         `onclick` here. Opening is intentionally not tied to focus so that
+         keyboard navigation (Tab into the field) doesn't auto-pop the list. We
+         call handleOpenChange(true) rather than toggling so clicking an
+         already-open input keeps it open (safer than closing mid-type).
+         bits-ui chains handlers via mergeProps, so this runs alongside its own. -->
     <Combobox.Input
       {...aria.resolvedId ? { id: aria.resolvedId } : {}}
       {placeholder}
@@ -99,6 +107,11 @@
       aria-invalid={aria.ariaInvalid}
       aria-describedby={aria.ariaDescribedby}
       oninput={(e) => (search = e.currentTarget.value)}
+      onclick={() => {
+        if (!disabled) {
+          handleOpenChange(true);
+        }
+      }}
       class={cn(FIELD_CONTROL_BASE, "h-10 pr-9", klass, "focus-ring")}
     />
     <Combobox.Trigger

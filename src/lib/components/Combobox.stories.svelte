@@ -94,6 +94,41 @@
   {/snippet}
 </Story>
 
+<!-- Click-on-input: clicking the search input (not the trigger icon) must open
+     the listbox. bits-ui's Combobox.Input has no pointer-open handler, so the
+     open-on-click wire is added manually in the component. After opening,
+     typing still filters as normal. -->
+<Story
+  name="Click input opens"
+  play={async ({ canvas }) => {
+    const input = canvas.getByRole("combobox", { name: "Framework" });
+    // A plain click — no typing, no trigger button — must open the listbox.
+    await userEvent.click(input);
+    await canvas.findByRole("listbox");
+    // Typing while it's open must still filter.
+    await userEvent.type(input, "sv");
+    await expect(canvas.getByRole("option", { name: "Svelte" })).toBeInTheDocument();
+    await expect(canvas.queryByRole("option", { name: "React" })).not.toBeInTheDocument();
+    // Click the input again — already open, must stay open (not toggle).
+    await userEvent.click(input);
+    await expect(canvas.getByRole("listbox")).toBeInTheDocument();
+    // Close cleanly so axe sees the resting state.
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() => expect(canvas.queryByRole("listbox")).not.toBeInTheDocument());
+  }}
+>
+  {#snippet template()}
+    <div id="combobox-click-host" class="bg-surface text-fg p-6">
+      <Combobox
+        aria-label="Framework"
+        items={frameworks}
+        placeholder="Search frameworks"
+        portalTo="#combobox-click-host"
+      />
+    </div>
+  {/snippet}
+</Story>
+
 <!-- Multi-select / tag entry: each commit adds to the value array. -->
 <Story
   name="Multiple"
