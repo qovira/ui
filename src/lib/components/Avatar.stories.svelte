@@ -2,15 +2,15 @@
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect } from "storybook/test";
   import Avatar from "./Avatar.svelte";
+  // Public-domain portrait of Ada Lovelace (Alfred Edward Chalon watercolour, c. 1840; artist died 1860).
+  // Sourced from Wikimedia Commons / Science Museum Group. Intentionally outside src/lib so it never enters dist/.
+  import adaPortrait from "../../stories-assets/ada-lovelace.jpg";
 
   const { Story } = defineMeta({
     title: "Data/Avatar",
     component: Avatar,
     tags: ["autodocs"],
   });
-
-  // A 1×1 transparent GIF — a src that loads, for the photo case.
-  const PIXEL = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 </script>
 
 <!-- No image: the fallback shows initials derived from the name. The whole
@@ -42,12 +42,17 @@
     await expect(canvas.getByRole("img", { name: "Ada Lovelace" })).toBeInTheDocument();
     // The real <img> renders (it's aria-hidden via alt=""), distinct from the
     // role="img" wrapper that carries the name.
-    await expect(canvas.getByRole("img").querySelector("img")).toBeInTheDocument();
+    const img = canvas.getByRole("img").querySelector("img");
+    await expect(img).toBeInTheDocument();
+    // Assert the src resolves to the bundled ada-lovelace asset. Vite emits the
+    // file as a URL (29KB is well above the 4KB inline threshold) so the URL
+    // always contains the original filename.
+    await expect(img?.getAttribute("src")).toContain("ada-lovelace");
   }}
 >
   {#snippet template()}
     <div class="bg-surface text-fg p-6">
-      <Avatar name="Ada Lovelace" src={PIXEL} />
+      <Avatar name="Ada Lovelace" src={adaPortrait} />
     </div>
   {/snippet}
 </Story>
