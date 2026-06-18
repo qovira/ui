@@ -4,7 +4,7 @@
   import CaretRightIcon from "phosphor-svelte/lib/CaretRightIcon";
   import type { DateValue } from "@internationalized/date";
   import { cn } from "../internal/cn.js";
-  import { CALENDAR_DAY, CALENDAR_NAV_BUTTON } from "../internal/calendar-grid.js";
+  import { CALENDAR_DAY, CALENDAR_NAV_BUTTON, CALENDAR_SELECT } from "../internal/calendar-grid.js";
   import { getFieldContext, getFieldGroupRegistrar } from "../internal/field-context.js";
 
   // Bits doesn't publicly export its calendar snippet-prop type; this covers the
@@ -98,7 +98,10 @@
     <Calendar.PrevButton class={CALENDAR_NAV_BUTTON}>
       <CaretLeftIcon size={18} color="currentColor" aria-hidden="true" />
     </Calendar.PrevButton>
-    <Calendar.Heading class="text-body font-sans font-medium text-fg" />
+    <div class="flex items-center gap-2">
+      <Calendar.MonthSelect class={CALENDAR_SELECT} />
+      <Calendar.YearSelect class={CALENDAR_SELECT} />
+    </div>
     <Calendar.NextButton class={CALENDAR_NAV_BUTTON}>
       <CaretRightIcon size={18} color="currentColor" aria-hidden="true" />
     </Calendar.NextButton>

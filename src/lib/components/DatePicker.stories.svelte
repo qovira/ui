@@ -93,6 +93,38 @@
   {/snippet}
 </Story>
 
+<!-- Month + year selectors appear inside the calendar popover, queryable by role. -->
+<Story
+  name="With month and year selectors"
+  play={async ({ canvas }) => {
+    // Open the popover so the calendar renders.
+    await userEvent.click(canvas.getByRole("button", { name: "Open calendar" }));
+    await canvas.findByRole("application");
+    // AC: both native <select> elements are rendered with the correct accessible names.
+    const monthSelect = canvas.getByRole("combobox", { name: "Select a month" });
+    const yearSelect = canvas.getByRole("combobox", { name: "Select a year" });
+    await expect(monthSelect).toBeInTheDocument();
+    await expect(yearSelect).toBeInTheDocument();
+    // AC: the month select offers all 12 months; the year select a non-empty window.
+    await expect(monthSelect.querySelectorAll("option")).toHaveLength(12);
+    await expect(yearSelect.querySelectorAll("option").length).toBeGreaterThan(0);
+    // AC (headline): choosing a year jumps the displayed period — the grid re-renders
+    // June 2027 (the selectors drive the calendar placeholder, not the selection).
+    await userEvent.selectOptions(yearSelect, "2027");
+    await expect(await canvas.findByRole("button", { name: /June 15, 2027/ })).toBeInTheDocument();
+    await expect(canvas.queryByRole("button", { name: /June 15, 2026/ })).not.toBeInTheDocument();
+    // Close the popover to leave a clean a11y state for axe.
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() => expect(canvas.queryByRole("application")).not.toBeInTheDocument());
+  }}
+>
+  {#snippet template()}
+    <div id="datepicker-selector-host" class="bg-surface text-fg p-6">
+      <DatePicker aria-label="Reminder" value={new CalendarDate(2026, 6, 15)} portalTo="#datepicker-selector-host" />
+    </div>
+  {/snippet}
+</Story>
+
 <!-- Daylight: open the popover so axe checks the rendered calendar in the other
      theme, then close to leave a clean slate. -->
 <Story
