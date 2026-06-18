@@ -45,11 +45,14 @@
   {/snippet}
 </Story>
 
-<!-- Disabled: the trigger can't open the popover. -->
+<!-- Disabled: the trigger can't open the popover; group is visually dimmed (opacity-50). -->
 <Story
   name="Disabled"
   play={async ({ canvas }) => {
     await expect(canvas.getByRole("spinbutton", { name: /day/i })).toHaveAttribute("aria-disabled", "true");
+    // Regression pin for F18: data-[disabled]:opacity-50 must cascade to this group too.
+    const group = canvas.getByRole("group", { name: /Reminder/ });
+    await expect(getComputedStyle(group).opacity).toBe("0.5");
   }}
 >
   {#snippet template()}
