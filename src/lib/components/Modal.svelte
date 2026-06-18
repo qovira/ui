@@ -28,7 +28,7 @@
     <Dialog.Content
       class={cn(
         "fixed left-1/2 top-1/2 z-50 w-[calc(100%-2rem)] max-w-[480px] -translate-x-1/2 -translate-y-1/2",
-        "rounded-xl border border-border bg-surface-raised p-6 shadow-[var(--shadow-lg)]",
+        "rounded-xl border border-border bg-surface-raised p-6 shadow-(--shadow-lg)",
         "duration-overlay ease-qovira",
         klass,
         "focus-ring",
