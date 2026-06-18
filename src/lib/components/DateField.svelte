@@ -17,6 +17,8 @@
     /** Smallest editable unit — `"day"` (default) through `"second"` for time. */
     granularity?: Granularity;
     hourCycle?: 12 | 24;
+    /** BCP-47 locale tag; controls segment order. Defaults to `"en-GB"` (dd/mm/yyyy). */
+    locale?: string;
     /** Name for the hidden form input (submits the ISO value). */
     name?: string;
     id?: string;
@@ -36,6 +38,7 @@
     readonly = false,
     granularity,
     hourCycle,
+    locale = "en-GB",
     name,
     id,
     class: klass,
@@ -78,6 +81,7 @@
   }}
   {disabled}
   {readonly}
+  {locale}
   {...opts}
 >
   <DateField.Input

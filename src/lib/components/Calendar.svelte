@@ -21,6 +21,8 @@
     disabled?: boolean;
     /** How weekday headers are formatted. */
     weekdayFormat?: Intl.DateTimeFormatOptions["weekday"];
+    /** BCP-47 locale tag; sets the first day of week and date formatting. Defaults to `"en-GB"` (Monday-first). */
+    locale?: string;
     id?: string;
     class?: string;
     /** Fires whenever the selection changes. */
@@ -37,6 +39,7 @@
     maxValue,
     disabled = false,
     weekdayFormat = "short",
+    locale = "en-GB",
     id,
     class: klass,
     onValueChange,
@@ -76,6 +79,7 @@
   const rootProps = $derived({
     disabled,
     weekdayFormat,
+    locale,
     ...bounds,
     ...(resolvedId ? { id: resolvedId } : {}),
     ...calName,

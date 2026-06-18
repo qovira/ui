@@ -28,12 +28,12 @@
     await expect(canvas.getByRole("application")).toHaveAccessibleName(/Reminder date/);
     // AC: the selected date is marked (data-selected on the day button; the
     // gridcell carries aria-selected).
-    await expect(canvas.getByRole("button", { name: /June 15, 2026/ })).toHaveAttribute("data-selected");
+    await expect(canvas.getByRole("button", { name: /15 June 2026/ })).toHaveAttribute("data-selected");
     // AC: clicking a day round-trips bind:value.
-    await userEvent.click(canvas.getByRole("button", { name: /June 20, 2026/ }));
+    await userEvent.click(canvas.getByRole("button", { name: /20 June 2026/ }));
     await expect(canvas.getByTestId("value")).toHaveTextContent("2026-06-20");
     // AC: keyboard-operable — focus moves with arrows, Enter commits.
-    canvas.getByRole("button", { name: /June 20, 2026/ }).focus();
+    canvas.getByRole("button", { name: /20 June 2026/ }).focus();
     await userEvent.keyboard("{ArrowRight}{Enter}");
     await expect(canvas.getByTestId("value")).toHaveTextContent("2026-06-21");
   }}
@@ -72,8 +72,8 @@
     // AC (headline): choosing a year jumps the displayed period — the grid re-renders
     // June 2027 (the selectors drive the calendar placeholder, not the selection).
     await userEvent.selectOptions(yearSelect, "2027");
-    await expect(await canvas.findByRole("button", { name: /June 15, 2027/ })).toBeInTheDocument();
-    await expect(canvas.queryByRole("button", { name: /June 15, 2026/ })).not.toBeInTheDocument();
+    await expect(await canvas.findByRole("button", { name: /15 June 2027/ })).toBeInTheDocument();
+    await expect(canvas.queryByRole("button", { name: /15 June 2026/ })).not.toBeInTheDocument();
   }}
 >
   {#snippet template()}
@@ -87,7 +87,7 @@
 <Story
   name="Disabled"
   play={async ({ canvas }) => {
-    await expect(canvas.getByRole("button", { name: /June 15, 2026/ })).toHaveAttribute("aria-disabled", "true");
+    await expect(canvas.getByRole("button", { name: /15 June 2026/ })).toHaveAttribute("aria-disabled", "true");
   }}
 >
   {#snippet template()}
@@ -110,7 +110,7 @@
     const message = canvas.getByText("Choose a valid date.");
     await expect(grid).toHaveAttribute("aria-describedby", message.id);
     // Picking a day satisfies the field — error clears.
-    await userEvent.click(canvas.getByRole("button", { name: /June 20, 2026/ }));
+    await userEvent.click(canvas.getByRole("button", { name: /20 June 2026/ }));
     await expect(grid).not.toHaveAttribute("aria-invalid", "true");
     await expect(canvas.queryByText("Choose a valid date.")).not.toBeInTheDocument();
   }}
@@ -131,6 +131,24 @@
 </Story>
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg inline-block p-6">
+      <Calendar aria-label="Pick a date" value={new CalendarDate(2026, 6, 15)} />
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Locale default: the standalone Calendar defaults to en-GB, so the week starts
+     on Monday. The first weekday header cell must read "Mon", not "Sun". -->
+<Story
+  name="Locale default (Monday-first)"
+  play={async ({ canvas }) => {
+    // bits-ui renders Calendar.HeadCell as <th> (columnheader role).
+    const headers = canvas.getAllByRole("columnheader");
+    // AC: the first day-of-week column header is Monday under en-GB.
+    await expect(headers[0]).toHaveTextContent("Mon");
+  }}
+>
   {#snippet template()}
     <div class="bg-surface text-fg inline-block p-6">
       <Calendar aria-label="Pick a date" value={new CalendarDate(2026, 6, 15)} />

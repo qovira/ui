@@ -122,3 +122,47 @@
     </div>
   {/snippet}
 </Story>
+
+<!-- Default locale: segments render in dd/mm/yyyy order (European, en-GB). -->
+<Story
+  name="Locale default (dd/mm)"
+  play={async ({ canvas }) => {
+    const spinbuttons = canvas.getAllByRole("spinbutton");
+    const names = spinbuttons.map((el) => el.getAttribute("aria-label")?.toLowerCase() ?? "");
+    // day must appear before month in the rendered order.
+    const dayIdx = names.findIndex((n) => n.includes("day"));
+    const monthIdx = names.findIndex((n) => n.includes("month"));
+    // Both segments must exist, so the ordering assertion can't pass vacuously on a -1.
+    await expect(dayIdx).toBeGreaterThanOrEqual(0);
+    await expect(monthIdx).toBeGreaterThanOrEqual(0);
+    await expect(dayIdx).toBeLessThan(monthIdx);
+  }}
+>
+  {#snippet template()}
+    <div class="bg-surface text-fg p-6">
+      <DateField aria-label="Due date" value={new CalendarDate(2026, 6, 15)} />
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Explicit en-US locale: segments render in mm/dd/yyyy order. -->
+<Story
+  name="Locale en-US (mm/dd)"
+  play={async ({ canvas }) => {
+    const spinbuttons = canvas.getAllByRole("spinbutton");
+    const names = spinbuttons.map((el) => el.getAttribute("aria-label")?.toLowerCase() ?? "");
+    // month must appear before day in the rendered order.
+    const monthIdx = names.findIndex((n) => n.includes("month"));
+    const dayIdx = names.findIndex((n) => n.includes("day"));
+    // Both segments must exist, so the ordering assertion can't pass vacuously on a -1.
+    await expect(monthIdx).toBeGreaterThanOrEqual(0);
+    await expect(dayIdx).toBeGreaterThanOrEqual(0);
+    await expect(monthIdx).toBeLessThan(dayIdx);
+  }}
+>
+  {#snippet template()}
+    <div class="bg-surface text-fg p-6">
+      <DateField aria-label="Due date" locale="en-US" value={new CalendarDate(2026, 6, 15)} />
+    </div>
+  {/snippet}
+</Story>
