@@ -12,5 +12,5 @@ export const MENU_ITEM_BASE =
 // The floating panel surface shared by `Menu.Content` and `Menu.SubContent` (a
 // submenu panel is the same surface as its parent menu, so the two must match).
 export const MENU_PANEL_BASE =
-  "z-50 min-w-[10rem] rounded-xl border border-border bg-surface-raised p-1.5 " +
+  "z-50 min-w-40 rounded-xl border border-border bg-surface-raised p-1.5 " +
   "text-fg shadow-(--shadow-lg) duration-overlay ease-qovira";

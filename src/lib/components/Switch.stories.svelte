@@ -88,7 +88,7 @@
 <!-- TDD geometry guard: renders one unchecked and one controlled-checked switch with no toggling/waiting,
      so transition timing cannot affect the result. getBoundingClientRect measures the actual rendered gap
      between the thumb edge and the near track edge in both states; they must be equal within 0.6px.
-     This story FAILS with translate-x-5 (right gap ~4px vs left gap ~2px) and PASSES after translate-x-[1.375rem]. -->
+     This story FAILS with translate-x-5 (right gap ~4px vs left gap ~2px) and PASSES after translate-x-5.5. -->
 <Story
   name="Thumb padding symmetry"
   play={async ({ canvas }) => {
