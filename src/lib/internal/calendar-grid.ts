@@ -8,6 +8,14 @@
 export const CALENDAR_NAV_BUTTON =
   "focus-ring inline-flex h-8 w-8 items-center justify-center rounded-md text-fg hover:bg-surface disabled:opacity-50";
 
+// The native <select> elements for month and year in the calendar header. A
+// native select is used deliberately (bits-ui spreads restProps directly onto
+// <select>); no need for the kit's bits-ui Select wrapper. Matches nav-button
+// height (h-8) and uses the same surface/fg tokens so both themes render cleanly.
+export const CALENDAR_SELECT =
+  "focus-ring h-8 cursor-pointer rounded-md bg-surface-raised px-2 text-body font-sans text-fg " +
+  "border border-border disabled:opacity-50";
+
 // A single day cell. Static (no conditionals/consumer input), so callers
 // reference it directly rather than re-running cn() per cell. The `data-*` hooks
 // are the attributes bits sets per day (selected/today/disabled/outside-month).

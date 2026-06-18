@@ -57,6 +57,32 @@
   {/snippet}
 </Story>
 
+<!-- Month + year selectors are present and queryable by their accessible names. -->
+<Story
+  name="With month and year selectors"
+  play={async ({ canvas }) => {
+    // AC: both native <select> elements are rendered with the correct accessible names.
+    const monthSelect = canvas.getByRole("combobox", { name: "Select a month" });
+    const yearSelect = canvas.getByRole("combobox", { name: "Select a year" });
+    await expect(monthSelect).toBeInTheDocument();
+    await expect(yearSelect).toBeInTheDocument();
+    // AC: the month select offers all 12 months; the year select a non-empty window.
+    await expect(monthSelect.querySelectorAll("option")).toHaveLength(12);
+    await expect(yearSelect.querySelectorAll("option").length).toBeGreaterThan(0);
+    // AC (headline): choosing a year jumps the displayed period — the grid re-renders
+    // June 2027 (the selectors drive the calendar placeholder, not the selection).
+    await userEvent.selectOptions(yearSelect, "2027");
+    await expect(await canvas.findByRole("button", { name: /June 15, 2027/ })).toBeInTheDocument();
+    await expect(canvas.queryByRole("button", { name: /June 15, 2026/ })).not.toBeInTheDocument();
+  }}
+>
+  {#snippet template()}
+    <div class="bg-surface text-fg inline-block p-6">
+      <Calendar aria-label="Pick a date" value={new CalendarDate(2026, 6, 15)} />
+    </div>
+  {/snippet}
+</Story>
+
 <!-- Disabled: days and navigation report aria-disabled. -->
 <Story
   name="Disabled"

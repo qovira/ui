@@ -5,7 +5,7 @@
   import CaretRightIcon from "phosphor-svelte/lib/CaretRightIcon";
   import type { DateValue } from "@internationalized/date";
   import { cn } from "../internal/cn.js";
-  import { CALENDAR_DAY, CALENDAR_NAV_BUTTON } from "../internal/calendar-grid.js";
+  import { CALENDAR_DAY, CALENDAR_NAV_BUTTON, CALENDAR_SELECT } from "../internal/calendar-grid.js";
   import { FIELD_CONTROL_BASE } from "../internal/field-control.js";
   import { getFieldContext } from "../internal/field-context.js";
 
@@ -150,7 +150,10 @@
             <DatePicker.PrevButton class={CALENDAR_NAV_BUTTON}>
               <CaretLeftIcon size={18} color="currentColor" aria-hidden="true" />
             </DatePicker.PrevButton>
-            <DatePicker.Heading class="text-body font-sans font-medium text-fg" />
+            <div class="flex items-center gap-2">
+              <DatePicker.MonthSelect class={CALENDAR_SELECT} />
+              <DatePicker.YearSelect class={CALENDAR_SELECT} />
+            </div>
             <DatePicker.NextButton class={CALENDAR_NAV_BUTTON}>
               <CaretRightIcon size={18} color="currentColor" aria-hidden="true" />
             </DatePicker.NextButton>
