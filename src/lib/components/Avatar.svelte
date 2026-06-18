@@ -42,7 +42,7 @@
 <Avatar.Root
   {...label ? { role: "img", "aria-label": label } : { "aria-hidden": true }}
   class={cn(
-    "relative inline-flex shrink-0 select-none items-center justify-center overflow-hidden rounded-full border border-border bg-surface-raised font-sans font-medium text-fg",
+    "relative inline-flex shrink-0 select-none items-center justify-center overflow-hidden rounded-full border border-divider bg-surface-raised font-sans font-medium text-fg",
     SIZE[size],
     klass,
   )}
