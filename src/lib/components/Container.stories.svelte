@@ -15,7 +15,7 @@
   name="Content width"
   play={async ({ canvas }) => {
     // AC: Container enforces the max-width rule (content ~960px).
-    await expect(canvas.getByTestId("container")).toHaveClass("max-w-[960px]", "mx-auto");
+    await expect(canvas.getByTestId("container")).toHaveClass("max-w-240", "mx-auto");
   }}
 >
   {#snippet template()}
