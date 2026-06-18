@@ -33,26 +33,70 @@
   // ONLY dependency of the effect below — a sibling toast adding/dismissing
   // never re-arms this one's timer.
   let paused = $state(false);
+  let progress = $state(1);
+
   // The duration never changes for a toast; capture it once (untrack documents
   // that, and keeps this off the effect's dependency set).
-  const timer = createDismissTimer(
-    untrack(() => toast.duration),
-    () => ondismiss(),
-  );
+  const duration = untrack(() => toast.duration);
+  const timer = createDismissTimer(duration, () => ondismiss());
+
+  // Show the bar only for finite, positive-duration toasts.
+  const showBar = Number.isFinite(duration) && duration > 0;
 
   $effect(() => {
-    if (paused) timer.pause();
-    else timer.resume();
+    if (paused) {
+      timer.pause();
+    } else {
+      timer.resume();
+    }
     return () => timer.pause();
+  });
+
+  // Drive the progress bar via a rAF loop while the timer is running. The loop
+  // is skipped entirely under prefers-reduced-motion so the bar doesn't spin
+  // needlessly (the bar itself is also hidden via `motion-reduce:hidden`, but
+  // skipping the loop avoids the rAF overhead too). When paused, the rAF is
+  // cancelled so the bar freezes at its current width — the timer is already
+  // paused, keeping both in sync.
+  $effect(() => {
+    if (!showBar) {
+      return;
+    }
+    if (typeof window === "undefined") {
+      return;
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    // Track paused reactively: when the value is true we cancel; when false we start.
+    if (paused) {
+      // Bar is frozen — nothing to do; the rAF from the last running phase was
+      // already cancelled by the cleanup below.
+      return;
+    }
+
+    let rafId: number;
+
+    const tick = () => {
+      progress = timer.progress();
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+    };
   });
 </script>
 
 <!-- pointer-events-auto: the stack container is click-through when empty; each
-     toast re-enables its own interactions. -->
+     toast re-enables its own interactions. relative + overflow-hidden creates the
+     stacking context for the absolute progress bar. -->
 <div
   role="status"
   class={cn(
-    "pointer-events-auto flex items-center gap-2 rounded-md border border-border p-3 shadow-[var(--shadow-md)]",
+    "pointer-events-auto relative overflow-hidden flex items-center gap-2 rounded-md border border-border p-3 shadow-[var(--shadow-md)]",
     TONE[toast.variant],
   )}
   onmouseenter={() => (paused = true)}
@@ -72,4 +116,18 @@
   >
     <Icon icon={XIcon} decorative />
   </button>
+
+  {#if showBar}
+    <!-- aria-hidden: the bar is a visual affordance only; the live-region
+         announcement and dismiss button cover the accessible experience.
+         motion-reduce:hidden: hidden for users who prefer reduced motion (the
+         toast still auto-dismisses; only the visual bar is suppressed).
+         GPU-composited scaleX is used rather than animating width, so the
+         deplete does not trigger layout. -->
+    <div
+      aria-hidden="true"
+      class="motion-reduce:hidden absolute bottom-0 left-0 h-1 w-full origin-left bg-current/30"
+      style="transform: scaleX({progress})"
+    ></div>
+  {/if}
 </div>

@@ -85,3 +85,50 @@ describe("createDismissTimer", () => {
     expect(onDismiss).toHaveBeenCalledOnce();
   });
 });
+
+describe("createDismissTimer — progress()", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("returns 1 before resume() is called (full fraction remaining)", () => {
+    const timer = createDismissTimer(1000, vi.fn());
+    expect(timer.progress()).toBe(1);
+  });
+
+  it("returns ~0.6 after resuming and advancing 400ms of a 1000ms timer", () => {
+    const timer = createDismissTimer(1000, vi.fn());
+    timer.resume();
+    vi.advanceTimersByTime(400);
+    const p = timer.progress();
+    expect(p).toBeCloseTo(0.6, 5);
+  });
+
+  it("holds its value across a pause() (the fraction does not keep dropping)", () => {
+    const timer = createDismissTimer(1000, vi.fn());
+    timer.resume();
+    vi.advanceTimersByTime(400);
+    timer.pause();
+    const frozen = timer.progress();
+    // Advance wall-clock while paused — progress must stay fixed.
+    vi.advanceTimersByTime(5000);
+    expect(timer.progress()).toBeCloseTo(frozen, 10);
+  });
+
+  it("returns 0 once the full duration has elapsed", () => {
+    const onDismiss = vi.fn();
+    const timer = createDismissTimer(1000, onDismiss);
+    timer.resume();
+    vi.advanceTimersByTime(1000);
+    expect(onDismiss).toHaveBeenCalledOnce();
+    expect(timer.progress()).toBe(0);
+  });
+
+  it("returns 0 for a zero-duration timer", () => {
+    const timer = createDismissTimer(0, vi.fn());
+    expect(timer.progress()).toBe(0);
+  });
+});
