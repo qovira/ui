@@ -6,7 +6,7 @@ import prettier from "eslint-config-prettier";
 import svelteConfig from "./svelte.config.js";
 
 export default tseslint.config(
-  { ignores: ["dist", "node_modules", "coverage", ".svelte-kit", "build"] },
+  { ignores: ["dist", "node_modules", "coverage", ".svelte-kit", "build", "storybook-static"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...svelte.configs.recommended,
