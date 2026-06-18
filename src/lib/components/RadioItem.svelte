@@ -24,6 +24,10 @@
     class={cn(
       "group inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-border bg-surface-raised transition-colors",
       "data-[state=checked]:border-accent disabled:opacity-50",
+      // Hover treatment is :enabled-gated so disabled radio items never show a hover state.
+      // Unchecked: border lights to accent. Checked (border-only, no fill): border deepens one honey step.
+      "enabled:data-[state=unchecked]:hover:border-accent",
+      "enabled:data-[state=checked]:hover:border-honey-600",
       klass,
       "focus-ring",
     )}

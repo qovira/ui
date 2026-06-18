@@ -84,3 +84,39 @@
     </div>
   {/snippet}
 </Story>
+
+<!-- TDD guard: assert the :enabled-gated hover classes are present on the root element. Static Tailwind
+     classes are always in the rendered class attribute, so classList checks are the reliable signal here.
+     These assertions must FAIL before the hover classes are added and PASS after. -->
+<Story
+  name="Hover classes"
+  play={async ({ canvas }) => {
+    const off = canvas.getByRole("switch", { name: "Off" });
+    const on = canvas.getByRole("switch", { name: "On" });
+
+    // Unchecked: border lights to accent on hover when enabled.
+    await expect(off).toHaveClass("enabled:data-[state=unchecked]:hover:border-accent");
+
+    // Checked (filled): accent deepens to honey-600 on hover (fill + border) when enabled.
+    await expect(on).toHaveClass("enabled:data-[state=checked]:hover:bg-honey-600");
+    await expect(on).toHaveClass("enabled:data-[state=checked]:hover:border-honey-600");
+
+    // The :enabled gate is verified at the CSS-selector level (compiled CSS grep) not in the DOM
+    // class attribute — Tailwind always emits the class token; :enabled is part of the CSS rule
+    // selector, not the token name, so a disabled element still has the token but the rule won't fire.
+  }}
+>
+  {#snippet template()}
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Switch />Off
+      </label>
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Switch checked />On
+      </label>
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Switch disabled />Disabled
+      </label>
+    </div>
+  {/snippet}
+</Story>
