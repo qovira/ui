@@ -93,11 +93,11 @@ force a `@qovira/ui` release — the range already admits it.
 
 The contract — what each part of the version means for you, the consumer:
 
-| Bump      | What changed                                                                                                                             |
-| --------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| **major** | A breaking change: a prop removed or renamed, a component's default behavior changed, or the required `@qovira/theme` peer range raised. |
-| **minor** | A backward-compatible addition: a new component, or an additive (optional) prop.                                                         |
-| **patch** | A backward-compatible bug fix, with no API change.                                                                                       |
+| Bump      | What changed                                                                                                                                              |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **major** | A public-API break, and only that: a prop removed or renamed, or a component's default behavior changed.                                                  |
+| **minor** | A backward-compatible addition: a new component, an additive (optional) prop, or the required `@qovira/theme` peer range raised (ui's own API unchanged). |
+| **patch** | A backward-compatible bug fix, with no API change.                                                                                                        |
 
 ### Cutting a release
 
