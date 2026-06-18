@@ -88,7 +88,7 @@ pnpm package    # svelte-package → dist/ (the only published output) + publint
 
 `@qovira/ui` follows **[semantic versioning](https://semver.org)**, independent
 of `@qovira/theme`. It declares the theme as a peer dependency with a compatible
-range (`@qovira/theme: ^2.0.0`), so a token-only change in the theme does **not**
+range (`@qovira/theme: ^2.1.0`), so a token-only change in the theme does **not**
 force a `@qovira/ui` release — the range already admits it.
 
 The contract — what each part of the version means for you, the consumer:
