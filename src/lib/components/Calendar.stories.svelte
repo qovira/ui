@@ -15,6 +15,8 @@
 <script lang="ts">
   import type { DateValue } from "@internationalized/date";
   let selected = $state<DateValue | DateValue[] | undefined>(new CalendarDate(2026, 6, 15));
+  let calFieldValue = $state<DateValue | undefined>(undefined);
+  let calFieldError = $state<string | undefined>("Choose a valid date.");
 </script>
 
 <!-- A selected date renders aria-selected; clicking another day and keyboard
@@ -69,22 +71,34 @@
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the grid inherits the a11y contract without prop-drilling. -->
+<!-- Inside a Field, the grid inherits the a11y contract without prop-drilling.
+     Picking any day clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
     const grid = canvas.getByRole("application");
     // The Field's label names the grid via context (calendarLabel = label text).
     await expect(grid).toHaveAccessibleName(/Reminder date/);
+    // Initial state: invalid wiring is present.
     await expect(grid).toHaveAttribute("aria-invalid", "true");
     const message = canvas.getByText("Choose a valid date.");
     await expect(grid).toHaveAttribute("aria-describedby", message.id);
+    // Picking a day satisfies the field — error clears.
+    await userEvent.click(canvas.getByRole("button", { name: /June 20, 2026/ }));
+    await expect(grid).not.toHaveAttribute("aria-invalid", "true");
+    await expect(canvas.queryByText("Choose a valid date.")).not.toBeInTheDocument();
   }}
 >
   {#snippet template()}
     <div class="bg-surface text-fg inline-block p-6">
-      <Field label="Reminder date" error="Choose a valid date.">
-        <Calendar value={new CalendarDate(2026, 6, 15)} />
+      <Field label="Reminder date" {...calFieldError ? { error: calFieldError } : {}}>
+        <Calendar
+          bind:value={calFieldValue}
+          onValueChange={(v) => {
+            calFieldValue = Array.isArray(v) ? v[0] : v;
+            calFieldError = calFieldValue ? undefined : "Choose a valid date.";
+          }}
+        />
       </Field>
     </div>
   {/snippet}

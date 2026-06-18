@@ -16,6 +16,8 @@
   import type { DateValue } from "@internationalized/date";
   let value = $state<DateValue | undefined>(new CalendarDate(2026, 6, 15));
   let withTime = $state<DateValue | undefined>(new CalendarDateTime(2026, 6, 15, 9, 30));
+  let dateFieldValue = $state<DateValue | undefined>(new CalendarDate(2026, 6, 15));
+  let dateFieldError = $state<string | undefined>("Enter a valid date.");
 </script>
 
 <!-- Segmented entry: each part is a spinbutton; stepping the day segment with
@@ -80,20 +82,34 @@
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the segment group inherits the a11y contract. -->
+<!-- Inside a Field, the segment group inherits the a11y contract. Stepping any
+     segment fires onValueChange and clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
     const group = canvas.getByRole("group", { name: /Due date/ });
+    // Initial state: invalid wiring is present.
     await expect(group).toHaveAttribute("aria-invalid", "true");
     const message = canvas.getByText("Enter a valid date.");
     await expect(group).toHaveAttribute("aria-describedby", message.id);
+    // Stepping the day segment fires a value change — error clears.
+    const day = canvas.getByRole("spinbutton", { name: /day/i });
+    day.focus();
+    await userEvent.keyboard("{ArrowUp}");
+    await expect(group).not.toHaveAttribute("aria-invalid", "true");
+    await expect(canvas.queryByText("Enter a valid date.")).not.toBeInTheDocument();
   }}
 >
   {#snippet template()}
     <div class="bg-surface text-fg p-6">
-      <Field label="Due date" error="Enter a valid date.">
-        <DateField value={new CalendarDate(2026, 6, 15)} />
+      <Field label="Due date" {...dateFieldError ? { error: dateFieldError } : {}}>
+        <DateField
+          bind:value={dateFieldValue}
+          onValueChange={(v) => {
+            dateFieldValue = v;
+            dateFieldError = v ? undefined : "Enter a valid date.";
+          }}
+        />
       </Field>
     </div>
   {/snippet}

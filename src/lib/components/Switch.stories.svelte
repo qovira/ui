@@ -13,6 +13,8 @@
 
 <script lang="ts">
   let checked = $state(false);
+  let switchFieldChecked = $state(false);
+  let switchFieldError = $state<string | undefined>("This setting needs review.");
 </script>
 
 <!-- bind:checked round-trips; the switch is the rounded-full exception. -->
@@ -39,20 +41,32 @@
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the switch inherits the a11y contract without prop-drilling. -->
+<!-- Inside a Field, the switch inherits the a11y contract without prop-drilling.
+     Toggling the switch on constitutes a valid action — it clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
     const sw = canvas.getByRole("switch", { name: "Autoplay" });
+    // Initial state: invalid wiring is present.
     await expect(sw).toHaveAttribute("aria-invalid", "true");
     const message = canvas.getByText("This setting needs review.");
     await expect(sw).toHaveAttribute("aria-describedby", message.id);
+    // Toggling the switch on satisfies the field — error clears.
+    await userEvent.click(sw);
+    await expect(sw).not.toHaveAttribute("aria-invalid", "true");
+    await expect(canvas.queryByText("This setting needs review.")).not.toBeInTheDocument();
   }}
 >
   {#snippet template()}
     <div class="bg-surface text-fg p-6">
-      <Field label="Autoplay" error="This setting needs review.">
-        <Switch />
+      <Field label="Autoplay" {...switchFieldError ? { error: switchFieldError } : {}}>
+        <Switch
+          bind:checked={switchFieldChecked}
+          onCheckedChange={(v) => {
+            switchFieldChecked = v;
+            switchFieldError = switchFieldChecked ? undefined : "This setting needs review.";
+          }}
+        />
       </Field>
     </div>
   {/snippet}

@@ -16,6 +16,8 @@
   import type { DateValue } from "@internationalized/date";
   let value = $state<DateValue | undefined>(new CalendarDate(2026, 6, 15));
   const onOpenChange = fn();
+  let datePickerFieldValue = $state<DateValue | undefined>(undefined);
+  let datePickerFieldError = $state<string | undefined>("Pick a reminder date.");
 </script>
 
 <!-- Open the popover from the trigger, pick a day; the popover portals + handles
@@ -57,20 +59,35 @@
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the segment group inherits the a11y contract. -->
+<!-- Inside a Field, the segment group inherits the a11y contract. Opening the
+     calendar and picking a day fires onValueChange and clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
     const group = canvas.getByRole("group", { name: /Reminder date/ });
+    // Initial state: invalid wiring is present.
     await expect(group).toHaveAttribute("aria-invalid", "true");
     const message = canvas.getByText("Pick a reminder date.");
     await expect(group).toHaveAttribute("aria-describedby", message.id);
+    // Opening the calendar and picking a day clears the error.
+    await userEvent.click(canvas.getByRole("button", { name: "Open calendar" }));
+    const day = await canvas.findByRole("button", { name: /June 15, 2026/ });
+    await userEvent.click(day);
+    await expect(group).not.toHaveAttribute("aria-invalid", "true");
+    await expect(canvas.queryByText("Pick a reminder date.")).not.toBeInTheDocument();
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-fg p-6">
-      <Field label="Reminder date" error="Pick a reminder date.">
-        <DatePicker value={new CalendarDate(2026, 6, 15)} />
+    <div id="datepicker-field-host" class="bg-surface text-fg p-6">
+      <Field label="Reminder date" {...datePickerFieldError ? { error: datePickerFieldError } : {}}>
+        <DatePicker
+          bind:value={datePickerFieldValue}
+          onValueChange={(v) => {
+            datePickerFieldValue = v;
+            datePickerFieldError = v ? undefined : "Pick a reminder date.";
+          }}
+          portalTo="#datepicker-field-host"
+        />
       </Field>
     </div>
   {/snippet}

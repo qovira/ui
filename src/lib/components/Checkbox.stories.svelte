@@ -13,6 +13,8 @@
 
 <script lang="ts">
   let checked = $state(false);
+  let checkboxFieldChecked = $state(false);
+  let checkboxFieldError = $state<string | undefined>("Please confirm your choice.");
 </script>
 
 <!-- bind:checked round-trips: a click drives state, and an external reset drives
@@ -63,20 +65,32 @@
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the checkbox inherits the a11y contract without prop-drilling. -->
+<!-- Inside a Field, the checkbox inherits the a11y contract without prop-drilling.
+     Checking the box is a valid "I confirm" action — it clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
     const box = canvas.getByRole("checkbox", { name: "Subscribe to updates" });
+    // Initial state: invalid wiring is present.
     await expect(box).toHaveAttribute("aria-invalid", "true");
     const message = canvas.getByText("Please confirm your choice.");
     await expect(box).toHaveAttribute("aria-describedby", message.id);
+    // Checking the box satisfies the field — error clears.
+    await userEvent.click(box);
+    await expect(box).not.toHaveAttribute("aria-invalid", "true");
+    await expect(canvas.queryByText("Please confirm your choice.")).not.toBeInTheDocument();
   }}
 >
   {#snippet template()}
     <div class="bg-surface text-fg p-6">
-      <Field label="Subscribe to updates" error="Please confirm your choice.">
-        <Checkbox />
+      <Field label="Subscribe to updates" {...checkboxFieldError ? { error: checkboxFieldError } : {}}>
+        <Checkbox
+          bind:checked={checkboxFieldChecked}
+          onCheckedChange={(v) => {
+            checkboxFieldChecked = v === true;
+            checkboxFieldError = checkboxFieldChecked ? undefined : "Please confirm your choice.";
+          }}
+        />
       </Field>
     </div>
   {/snippet}
