@@ -84,7 +84,9 @@
 </Story>
 
 <!-- Multi-select: clicking options accumulates them without closing the list;
-     the disabled option can't be chosen. -->
+     the disabled option can't be chosen. Selected options must be visually
+     distinguished in the open list — their computed background-color must
+     differ from unselected ones. -->
 <Story
   name="Multiple"
   play={async ({ canvas }) => {
@@ -95,6 +97,14 @@
     await userEvent.click(canvas.getByRole("option", { name: "Gemini" }));
     // Disabled option stays unselectable.
     await expect(canvas.getByRole("option", { name: "Llama 3" })).toHaveAttribute("data-disabled");
+    // Assert the open-list selected-vs-unselected distinction before closing.
+    // A selected option's background must differ from an unselected one so users
+    // can see (and deselect) their current picks.
+    const selectedOption = canvas.getByRole("option", { name: "GPT-5" });
+    const unselectedOption = canvas.getByRole("option", { name: "Claude Opus" });
+    const selectedBg = getComputedStyle(selectedOption).backgroundColor;
+    const unselectedBg = getComputedStyle(unselectedOption).backgroundColor;
+    await expect(selectedBg).not.toBe(unselectedBg);
     await userEvent.keyboard("{Escape}");
     await expect(canvas.getByTestId("multi")).toHaveTextContent('["gpt-5","gemini"]');
   }}
