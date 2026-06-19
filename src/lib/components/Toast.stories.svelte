@@ -1,22 +1,44 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect, userEvent, waitFor } from "storybook/test";
+  import type { ComponentProps } from "svelte";
   import ToastProvider from "./ToastProvider.svelte";
   import Button from "./Button.svelte";
   import { toast } from "../internal/toast-store.svelte.js";
+
+  type Args = ComponentProps<typeof ToastProvider>;
 
   const { Story } = defineMeta({
     title: "Feedback/Toast",
     component: ToastProvider,
     tags: ["autodocs"],
+    // ToastProvider's only scalar prop is `portalTo` (a portal-target selector — infrastructure, not a user-meaningful
+    // control), so the Playground exposes no Controls; it exists for uniformity. Toasts are driven by the imperative
+    // `toast.*` API via the demo buttons.
+    args: {},
   });
 
   const sleep = (ms: number) => new Promise((resolve) => globalThis.setTimeout(resolve, ms));
 </script>
 
-<!-- The imperative API (called from a handler — i.e. outside any component's
-     context) renders toasts through the provider. Left visible so axe checks
-     them (Evening here, Daylight below). -->
+<!-- Controls playground: spreads `args` to stay uniform with the rest of the library, but ToastProvider exposes no
+user-meaningful scalar props, so its Controls panel is empty. Click a button to fire a toast through the imperative API;
+the fixtures below hardcode their props for deterministic tests. -->
+<Story name="Playground">
+  {#snippet template(args: Args)}
+    <ToastProvider portalTo="#toast-host-playground" {...args}>
+      <div id="toast-host-playground" class="bg-surface text-fg flex flex-wrap gap-2 p-6">
+        <Button onclick={() => toast.success("Saved your changes.")}>Success</Button>
+        <Button onclick={() => toast.error("Couldn't reach the server.")}>Error</Button>
+        <Button onclick={() => toast.warning("Storage is nearly full.")}>Warning</Button>
+        <Button onclick={() => toast.info("A new version is available.")}>Info</Button>
+      </div>
+    </ToastProvider>
+  {/snippet}
+</Story>
+
+<!-- The imperative API (called from a handler — i.e. outside any component's context) renders toasts through the
+     provider. Left visible so axe checks them (Evening here, Daylight below). -->
 <Story
   name="Variants"
   play={async ({ canvas }) => {
@@ -66,8 +88,7 @@
   {/snippet}
 </Story>
 
-<!-- Hovering pauses the timer, so the toast survives past its duration; it
-     dismisses once the pointer leaves. -->
+<!-- Hovering pauses the timer, so the toast survives past its duration; it dismisses once the pointer leaves. -->
 <Story
   name="Pauses on hover"
   play={async ({ canvas }) => {
@@ -149,6 +170,27 @@
   {#snippet template()}
     <ToastProvider portalTo="#toast-host-day">
       <div id="toast-host-day" class="bg-surface text-fg flex flex-wrap gap-2 p-6">
+        <Button onclick={() => toast.success("All set.")}>Success</Button>
+        <Button onclick={() => toast.error("Something went wrong.")}>Error</Button>
+      </div>
+    </ToastProvider>
+  {/snippet}
+</Story>
+
+<!-- Evening: same toasts in the default theme, so axe checks them here too. -->
+<Story
+  name="Evening"
+  globals={{ theme: "evening" }}
+  play={async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "Success" }));
+    await userEvent.click(canvas.getByRole("button", { name: "Error" }));
+    await canvas.findByText("All set.");
+    await canvas.findByText("Something went wrong.");
+  }}
+>
+  {#snippet template()}
+    <ToastProvider portalTo="#toast-host-eve">
+      <div id="toast-host-eve" class="bg-surface text-fg flex flex-wrap gap-2 p-6">
         <Button onclick={() => toast.success("All set.")}>Success</Button>
         <Button onclick={() => toast.error("Something went wrong.")}>Error</Button>
       </div>

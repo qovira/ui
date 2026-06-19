@@ -60,24 +60,23 @@
   // Inherit the Field contract from context; explicit props win (works standalone).
   const aria = resolveFieldAria(() => ({ id, invalid: invalidProp, describedby: describedbyProp }));
 
-  // The listbox panel needs its own accessible name (it isn't the labelable
-  // control): reuse the explicit aria-label, else point at the Field's label.
+  // The listbox panel needs its own accessible name (it isn't the labelable control): reuse the explicit aria-label,
+  // else point at the Field's label.
   const listboxName = $derived(
     ariaLabel ? { "aria-label": ariaLabel } : aria.labelId ? { "aria-labelledby": aria.labelId } : {},
   );
 
-  // Typeahead filtering is consumer-owned in Bits — we hold the search term and
-  // derive the visible options (case-insensitive substring on the label). The
-  // needle is hoisted out of the predicate so it's computed once per keystroke,
-  // not once per option. In multiple mode the panel stays open across commits,
-  // so the typed filter intentionally persists until close (bits owns the input
-  // value, so clearing `search` alone would desync the visible text).
+  // Typeahead filtering is consumer-owned in Bits — we hold the search term and derive the visible options
+  // (case-insensitive substring on the label). The needle is hoisted out of the predicate so it's computed once per
+  // keystroke, not once per option. In multiple mode the panel stays open across commits, so the typed filter
+  // intentionally persists until close (bits owns the input value, so clearing `search` alone would desync the visible
+  // text).
   let search = $state("");
   const query = $derived(search.trim().toLowerCase());
   const filtered = $derived(query ? items.filter((item) => item.label.toLowerCase().includes(query)) : items);
 
-  // Unlike Select (which uses bind:open), Combobox routes the open state through
-  // an explicit handler because it must also clear the typed filter on close.
+  // Unlike Select (which uses bind:open), Combobox routes the open state through an explicit handler because it must
+  // also clear the typed filter on close.
   function handleOpenChange(next: boolean) {
     open = next;
     if (!next) search = "";
@@ -85,21 +84,18 @@
   }
 </script>
 
-<!-- Bits owns the combobox behavior (ARIA, keyboard, portalling, the hidden
-     form input); the wrapper supplies theme utilities, filters the options, and
-     consumes the Field contract on the input (the labelable control). The Root
-     is branched on `type` so the value/onValueChange discriminated union narrows
-     to concrete literals; shared parts live in the `body` snippet. -->
+<!-- Bits owns the combobox behavior (ARIA, keyboard, portalling, the hidden form input); the wrapper supplies theme
+     utilities, filters the options, and consumes the Field contract on the input (the labelable control). The Root is
+     branched on `type` so the value/onValueChange discriminated union narrows to concrete literals; shared parts live
+     in the `body` snippet. -->
 {#snippet body()}
   <div class="relative">
-    <!-- bits-ui's Combobox.Input has no pointer-open handler — it only opens the
-         listbox on ArrowUp/Down or printable keystrokes (keyboard users already
-         have a path). A plain mouse click would silently do nothing, so we wire
-         `onclick` here. Opening is intentionally not tied to focus so that
-         keyboard navigation (Tab into the field) doesn't auto-pop the list. We
-         call handleOpenChange(true) rather than toggling so clicking an
-         already-open input keeps it open (safer than closing mid-type).
-         bits-ui chains handlers via mergeProps, so this runs alongside its own. -->
+    <!-- bits-ui's Combobox.Input has no pointer-open handler — it only opens the listbox on ArrowUp/Down or printable
+         keystrokes (keyboard users already have a path). A plain mouse click would silently do nothing, so we wire
+         `onclick` here. Opening is intentionally not tied to focus so that keyboard navigation (Tab into the field)
+         doesn't auto-pop the list. We call handleOpenChange(true) rather than toggling so clicking an already-open
+         input keeps it open (safer than closing mid-type). bits-ui chains handlers via mergeProps, so this runs
+         alongside its own. -->
     <Combobox.Input
       {...aria.resolvedId ? { id: aria.resolvedId } : {}}
       {placeholder}

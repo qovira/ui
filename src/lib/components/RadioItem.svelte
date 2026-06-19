@@ -15,24 +15,24 @@
   let { value, disabled = false, class: klass, children }: Props = $props();
 </script>
 
-<!-- The label wraps the radio so its text is the accessible name and is part of
-     the click target. The inner dot shows via the radio's checked data-state. -->
+<!-- The label wraps the radio so its text is the accessible name and is part of the click target. The inner dot shows
+     via the radio's checked data-state. -->
 <label class="flex items-center gap-2 text-body font-sans text-fg">
   <RadioGroup.Item
     {value}
     {disabled}
     class={cn(
-      "group inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-border bg-surface-raised transition-colors",
+      "group inline-flex size-5 shrink-0 items-center justify-center rounded-full border border-border bg-surface-raised transition-colors",
       "data-[state=checked]:border-accent disabled:opacity-50",
-      // Hover treatment is :enabled-gated so disabled radio items never show a hover state.
-      // Unchecked: border lights to accent. Checked (border-only, no fill): border deepens one honey step.
+      // Hover treatment is :enabled-gated so disabled radio items never show a hover state. Unchecked: border lights to
+      // accent. Checked (border-only, no fill): border deepens one honey step.
       "enabled:data-[state=unchecked]:hover:border-accent",
       "enabled:data-[state=checked]:hover:border-honey-600",
       klass,
       "focus-ring",
     )}
   >
-    <span class="h-2.5 w-2.5 rounded-full bg-accent opacity-0 transition-opacity group-data-[state=checked]:opacity-100"
+    <span class="size-2.5 rounded-full bg-accent opacity-0 transition-opacity group-data-[state=checked]:opacity-100"
     ></span>
   </RadioGroup.Item>
   {@render children()}

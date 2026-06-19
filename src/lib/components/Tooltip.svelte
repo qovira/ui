@@ -6,9 +6,8 @@
   interface Props {
     /** Open state. `bind:open` for two-way; `onOpenChange` fires either way. */
     open?: boolean;
-    /** The element the hint describes. Receives `props` to spread onto your own
-     *  element so hover/focus/ARIA stay wired (Bits' `child` delegation). The
-     *  trigger must carry its own meaning — a tooltip is never the sole label. */
+    /** The element the hint describes. Receives `props` to spread onto your own element so hover/focus/ARIA stay wired
+     *  (Bits' `child` delegation). The trigger must carry its own meaning — a tooltip is never the sole label. */
     trigger: Snippet<[{ props: Record<string, unknown> }]>;
     /** The hint content. Supplementary only — never the lone carrier of meaning. */
     children: Snippet;
@@ -38,12 +37,10 @@
   }: Props = $props();
 </script>
 
-<!-- Bits owns behavior: it shows on hover AND keyboard focus, hides on blur /
-     Escape / pointer-leave, positions with collision handling, and wires the
-     trigger's aria-describedby to the tip. The wrapper only dresses the tip in
-     @qovira/theme utilities. The trigger delegates to the consumer's element via
-     Bits' `child` snippet — that element carries the real, non-tooltip-only
-     meaning. -->
+<!-- Bits owns behavior: it shows on hover AND keyboard focus, hides on blur / Escape / pointer-leave, positions with
+     collision handling, and wires the trigger's aria-describedby to the tip. The wrapper only dresses the tip in
+     @qovira/theme utilities. The trigger delegates to the consumer's element via Bits' `child` snippet — that element
+     carries the real, non-tooltip-only meaning. -->
 <Tooltip.Provider {delayDuration}>
   <Tooltip.Root bind:open {...onOpenChange ? { onOpenChange } : {}}>
     <Tooltip.Trigger>

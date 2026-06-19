@@ -1,13 +1,25 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect, userEvent } from "storybook/test";
+  import type { ComponentProps } from "svelte";
   import Switch from "./Switch.svelte";
   import Field from "./Field.svelte";
+
+  type Args = ComponentProps<typeof Switch>;
 
   const { Story } = defineMeta({
     title: "Forms/Switch",
     component: Switch,
     tags: ["autodocs"],
+    // Defaults for the args-driven Playground story; the fixtures hardcode their own props and ignore these.
+    args: { checked: false, disabled: false, required: false },
+    argTypes: {
+      checked: { control: "boolean" },
+      disabled: { control: "boolean" },
+      required: { control: "boolean" },
+    },
+    // Limit the Controls panel to the meaningful boolean state props; name/value are form-submission scalars.
+    parameters: { controls: { include: ["checked", "disabled", "required"] } },
   });
 </script>
 
@@ -16,6 +28,19 @@
   let switchFieldChecked = $state(false);
   let switchFieldError = $state<string | undefined>("This setting needs review.");
 </script>
+
+<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
+inert; this story spreads `args`, so editing a control live-updates the preview. The switch is wrapped in a label so axe
+always has an accessible name regardless of the args. -->
+<Story name="Playground">
+  {#snippet template(args: Args)}
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Switch {...args} />Email notifications
+      </label>
+    </div>
+  {/snippet}
+</Story>
 
 <!-- bind:checked round-trips; the switch is the rounded-full exception. -->
 <Story
@@ -41,8 +66,8 @@
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the switch inherits the a11y contract without prop-drilling.
-     Toggling the switch on constitutes a valid action — it clears the error. -->
+<!-- Inside a Field, the switch inherits the a11y contract without prop-drilling. Toggling the switch on constitutes a
+     valid action — it clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
@@ -72,23 +97,10 @@
   {/snippet}
 </Story>
 
-<Story name="Daylight" globals={{ theme: "daylight" }}>
-  {#snippet template()}
-    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
-      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
-        <Switch checked />On
-      </label>
-      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
-        <Switch />Off
-      </label>
-    </div>
-  {/snippet}
-</Story>
-
-<!-- TDD geometry guard: renders one unchecked and one controlled-checked switch with no toggling/waiting,
-     so transition timing cannot affect the result. getBoundingClientRect measures the actual rendered gap
-     between the thumb edge and the near track edge in both states; they must be equal within 0.6px.
-     This story FAILS with translate-x-5 (right gap ~4px vs left gap ~2px) and PASSES after translate-x-5.5. -->
+<!-- TDD geometry guard: renders one unchecked and one controlled-checked switch with no toggling/waiting, so transition
+     timing cannot affect the result. getBoundingClientRect measures the actual rendered gap between the thumb edge and
+     the near track edge in both states; they must be equal within 0.6px. This story FAILS with translate-x-5 (right gap
+     ~4px vs left gap ~2px) and PASSES after translate-x-5.5. -->
 <Story
   name="Thumb padding symmetry"
   play={async ({ canvas }) => {
@@ -105,8 +117,8 @@
 
     // Left gap: distance from the track's left inner edge (adjusted for border) to the thumb's left edge.
     // Right gap: distance from the thumb's right edge to the track's right inner edge (adjusted for border).
-    // Both border widths cancel if we use the track bounding box directly — border is 1px each side,
-    // but we compare gap-to-gap so the relative asymmetry is what matters; 1px border offsets both sides equally.
+    // Both border widths cancel if we use the track bounding box directly — border is 1px each side, but we compare
+    // gap-to-gap so the relative asymmetry is what matters; 1px border offsets both sides equally.
     const leftGap = offThumbRect.left - offTrack.left;
     const rightGap = onTrack.right - onThumbRect.right;
 
@@ -125,9 +137,9 @@
   {/snippet}
 </Story>
 
-<!-- TDD guard: assert the :enabled-gated hover classes are present on the root element. Static Tailwind
-     classes are always in the rendered class attribute, so classList checks are the reliable signal here.
-     These assertions must FAIL before the hover classes are added and PASS after. -->
+<!-- TDD guard: assert the :enabled-gated hover classes are present on the root element. Static Tailwind classes are
+     always in the rendered class attribute, so classList checks are the reliable signal here. These assertions must
+     FAIL before the hover classes are added and PASS after. -->
 <Story
   name="Hover classes"
   play={async ({ canvas }) => {
@@ -141,9 +153,9 @@
     await expect(on).toHaveClass("enabled:data-[state=checked]:hover:bg-honey-600");
     await expect(on).toHaveClass("enabled:data-[state=checked]:hover:border-honey-600");
 
-    // The :enabled gate is verified at the CSS-selector level (compiled CSS grep) not in the DOM
-    // class attribute — Tailwind always emits the class token; :enabled is part of the CSS rule
-    // selector, not the token name, so a disabled element still has the token but the rule won't fire.
+    // The :enabled gate is verified at the CSS-selector level (compiled CSS grep) not in the DOM class attribute —
+    // Tailwind always emits the class token; :enabled is part of the CSS rule selector, not the token name, so a
+    // disabled element still has the token but the rule won't fire.
   }}
 >
   {#snippet template()}
@@ -156,6 +168,32 @@
       </label>
       <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
         <Switch disabled />Disabled
+      </label>
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Daylight" globals={{ theme: "daylight" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Switch checked />On
+      </label>
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Switch />Off
+      </label>
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Evening" globals={{ theme: "evening" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Switch checked />On
+      </label>
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Switch />Off
       </label>
     </div>
   {/snippet}

@@ -1,13 +1,24 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect, userEvent, waitFor } from "storybook/test";
+  import type { ComponentProps } from "svelte";
   import Tabs from "./Tabs.svelte";
   import type { TabItem } from "./nav-types.js";
+
+  type Args = Omit<ComponentProps<typeof Tabs>, "items">;
 
   const { Story } = defineMeta({
     title: "Navigation/Tabs",
     component: Tabs,
     tags: ["autodocs"],
+    // Defaults for the args-driven Playground story; the fixtures hardcode their own props and ignore these.
+    args: { orientation: "horizontal" },
+    argTypes: {
+      orientation: { control: "inline-radio", options: ["horizontal", "vertical"] },
+    },
+    // Limit the Controls panel to the scalar prop — items/panel are structured content, value is a binding key that
+    // must match an item, and onValueChange is a callback.
+    parameters: { controls: { include: ["orientation"] } },
   });
 
   const items: TabItem[] = [
@@ -21,8 +32,23 @@
   let active = $state("overview");
 </script>
 
-<!-- Arrow-key navigation with correct tablist/tab/tabpanel roles; bind:value
-     round-trips. activationMode is automatic, so focusing a tab activates it. -->
+<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
+inert; this story spreads `args`, so editing a control live-updates the preview. items/panel supply the structured
+content; the playground drives orientation. -->
+<Story name="Playground">
+  {#snippet template(args: Args)}
+    <div class="bg-surface text-fg p-6">
+      <Tabs {items} {...args}>
+        {#snippet panel(item)}
+          <p>The {item.label} panel.</p>
+        {/snippet}
+      </Tabs>
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Arrow-key navigation with correct tablist/tab/tabpanel roles; bind:value round-trips. activationMode is automatic,
+     so focusing a tab activates it. -->
 <Story
   name="Tabbed panels"
   play={async ({ canvas }) => {
@@ -35,8 +61,7 @@
     // First tab selected by default; its panel is shown.
     await expect(overview).toHaveAttribute("aria-selected", "true");
     await expect(canvas.getByRole("tabpanel")).toHaveTextContent("the overview");
-    // AC: arrow-key navigable — ArrowRight activates the next tab, and
-    // bind:value round-trips to the consumer's state.
+    // AC: arrow-key navigable — ArrowRight activates the next tab, and bind:value round-trips to the consumer's state.
     overview.focus();
     await userEvent.keyboard("{ArrowRight}");
     await waitFor(() => expect(activity).toHaveAttribute("aria-selected", "true"));
@@ -65,6 +90,18 @@
 </Story>
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg p-6">
+      <Tabs {items} value="overview">
+        {#snippet panel(item)}
+          <p>The {item.label} panel.</p>
+        {/snippet}
+      </Tabs>
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Evening" globals={{ theme: "evening" }}>
   {#snippet template()}
     <div class="bg-surface text-fg p-6">
       <Tabs {items} value="overview">

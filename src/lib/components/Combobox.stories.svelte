@@ -1,14 +1,27 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect, fn, userEvent, waitFor } from "storybook/test";
+  import type { ComponentProps } from "svelte";
   import Combobox from "./Combobox.svelte";
   import Field from "./Field.svelte";
   import type { ListboxItem } from "./listbox-types.js";
+
+  type Args = Omit<ComponentProps<typeof Combobox>, "items">;
 
   const { Story } = defineMeta({
     title: "Forms/Combobox",
     component: Combobox,
     tags: ["autodocs"],
+    // Defaults for the args-driven Playground story; the fixtures hardcode their own props and ignore these.
+    args: { type: "single", placeholder: "Search…", disabled: false },
+    argTypes: {
+      type: { control: "inline-radio", options: ["single", "multiple"] },
+      placeholder: { control: "text" },
+      disabled: { control: "boolean" },
+    },
+    // Limit the Controls panel to the scalar props — items is an option array and value is bindable, so both are left
+    // out (the items are supplied in the template).
+    parameters: { controls: { include: ["type", "placeholder", "disabled"] } },
   });
 
   const frameworks: ListboxItem[] = [
@@ -29,9 +42,19 @@
   let comboboxFieldError = $state<string | undefined>("Choose a framework.");
 </script>
 
-<!-- Typeahead: typing filters the options to label substring matches; selecting
-     a filtered option commits its value (bind:value round-trips, rendered out)
-     and both callbacks fire. -->
+<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
+inert; this story spreads `args`, so editing a control live-updates the preview. `items` is an option array with no
+native control, so it's supplied here — this playground drives type, placeholder, and disabled. -->
+<Story name="Playground">
+  {#snippet template(args: Args)}
+    <div id="combobox-playground-host" class="bg-surface text-fg flex flex-col gap-3 p-6">
+      <Combobox aria-label="Framework" items={frameworks} portalTo="#combobox-playground-host" {...args} />
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Typeahead: typing filters the options to label substring matches; selecting a filtered option commits its value
+(bind:value round-trips, rendered out) and both callbacks fire. -->
 <Story
   name="Filter and select"
   play={async ({ canvas }) => {
@@ -75,9 +98,8 @@
     await userEvent.type(input, "zzz");
     await waitFor(() => expect(canvas.getByText("No results")).toBeInTheDocument());
     await expect(canvas.queryAllByRole("option")).toHaveLength(0);
-    // Close before the play ends so axe checks the resting state — an open,
-    // empty listbox is a transient edge, asserted above in-play (mirrors how the
-    // Modal/Select stories tear overlays down before the a11y pass runs).
+    // Close before the play ends so axe checks the resting state — an open, empty listbox is a transient edge, asserted
+    // above in-play (mirrors how the Modal/Select stories tear overlays down before the a11y pass runs).
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(canvas.queryByRole("listbox")).not.toBeInTheDocument());
   }}
@@ -94,10 +116,9 @@
   {/snippet}
 </Story>
 
-<!-- Click-on-input: clicking the search input (not the trigger icon) must open
-     the listbox. bits-ui's Combobox.Input has no pointer-open handler, so the
-     open-on-click wire is added manually in the component. After opening,
-     typing still filters as normal. -->
+<!-- Click-on-input: clicking the search input (not the trigger icon) must open the listbox. bits-ui's Combobox.Input
+has no pointer-open handler, so the open-on-click wire is added manually in the component. After opening, typing still
+filters as normal. -->
 <Story
   name="Click input opens"
   play={async ({ canvas }) => {
@@ -129,9 +150,8 @@
   {/snippet}
 </Story>
 
-<!-- Multi-select / tag entry: each commit adds to the value array. Selected
-     options must be visually distinguished in the open list — their computed
-     background-color must differ from unselected ones. -->
+<!-- Multi-select / tag entry: each commit adds to the value array. Selected options must be visually distinguished in
+the open list — their computed background-color must differ from unselected ones. -->
 <Story
   name="Multiple"
   play={async ({ canvas }) => {
@@ -140,8 +160,8 @@
     await userEvent.click(canvas.getByRole("option", { name: "Svelte" }));
     await userEvent.click(canvas.getByRole("option", { name: "Vue" }));
     // Assert the open-list selected-vs-unselected distinction before closing.
-    // A selected option's background must differ from an unselected one so users
-    // can see (and deselect) their current picks.
+    // A selected option's background must differ from an unselected one so users can see (and deselect) their current
+    // picks.
     const selectedOption = canvas.getByRole("option", { name: "Svelte" });
     const unselectedOption = canvas.getByRole("option", { name: "Angular" });
     const selectedBg = getComputedStyle(selectedOption).backgroundColor;
@@ -182,8 +202,8 @@
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the input inherits the a11y contract without prop-drilling.
-     Selecting a framework clears the error. -->
+<!-- Inside a Field, the input inherits the a11y contract without prop-drilling. Selecting a framework clears the
+error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
@@ -218,8 +238,8 @@
   {/snippet}
 </Story>
 
-<!-- Daylight: open the filtered list so axe checks the rendered panel in the
-     other theme, then close to leave a clean slate. -->
+<!-- Daylight: open the filtered list so axe checks the rendered panel in the other theme, then close to leave a clean
+slate. -->
 <Story
   name="Daylight"
   globals={{ theme: "daylight" }}
@@ -237,6 +257,29 @@
         items={frameworks}
         placeholder="Search frameworks"
         portalTo="#combobox-day-host"
+      />
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Evening: open the filtered list so axe checks the rendered panel in the default theme too, then close. -->
+<Story
+  name="Evening"
+  globals={{ theme: "evening" }}
+  play={async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "Toggle options" }));
+    await canvas.findByRole("listbox");
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() => expect(canvas.queryByRole("listbox")).not.toBeInTheDocument());
+  }}
+>
+  {#snippet template()}
+    <div id="combobox-eve-host" class="bg-surface text-fg p-6">
+      <Combobox
+        aria-label="Framework"
+        items={frameworks}
+        placeholder="Search frameworks"
+        portalTo="#combobox-eve-host"
       />
     </div>
   {/snippet}

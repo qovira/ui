@@ -8,12 +8,12 @@
     label: string;
     /** Optional help text shown under the control (non-error guidance). */
     description?: string;
-    /** When set, the field is invalid: the message shows and `aria-invalid` +
-     *  `aria-describedby` are wired onto the control. Error is never color-only. */
+    /** When set, the field is invalid: the message shows and `aria-invalid` + `aria-describedby` are wired onto the
+     *  control. Error is never color-only. */
     error?: string;
     class?: string;
-    /** The control. Receives the contract as an arg; nested controls also read
-     *  it from context, so no prop-drilling is required either way. */
+    /** The control. Receives the contract as an arg; nested controls also read it from context, so no prop-drilling is
+     *  required either way. */
     children: Snippet<[FieldContext]>;
   }
 
@@ -42,9 +42,8 @@
   // Getter keeps the contract reactive across the context boundary.
   setFieldContext(() => ctx);
 
-  // A group control (radiogroup, calendar grid) registers here to say it names
-  // itself via aria-labelledby; the label then drops its `for` so it doesn't
-  // dangle at a non-labelable element. Labelable controls never register, so the
+  // A group control (radiogroup, calendar grid) registers here to say it names itself via aria-labelledby; the label
+  // then drops its `for` so it doesn't dangle at a non-labelable element. Labelable controls never register, so the
   // common case keeps the click-to-focus `<label for>`.
   let group = $state(false);
   setFieldGroupRegistrar(() => (group = true));

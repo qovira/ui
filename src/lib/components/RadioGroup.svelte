@@ -17,17 +17,16 @@
     ...rest
   }: Props = $props();
 
-  // A radiogroup names itself via aria-labelledby (a `<label for>` can't target a
-  // group), so it consumes the Field's labelId — plus invalid/describedby —
-  // from context. Explicit props win.
+  // A radiogroup names itself via aria-labelledby (a `<label for>` can't target a group), so it consumes the Field's
+  // labelId — plus invalid/describedby — from context. Explicit props win.
   const field = getFieldContext();
   const ctx = $derived(field?.());
   const ariaLabelledby = $derived(labelledbyProp ?? ctx?.labelId);
   const ariaInvalid = $derived(invalidProp ?? (ctx?.invalid ? true : undefined));
   const ariaDescribedby = $derived(describedbyProp ?? ctx?.describedby);
 
-  // Tell an enclosing Field we self-label, so its <label> drops the `for` that
-  // would otherwise dangle at this non-labelable group.
+  // Tell an enclosing Field we self-label, so its <label> drops the `for` that would otherwise dangle at this
+  // non-labelable group.
   const registerGroup = getFieldGroupRegistrar();
   $effect(() => {
     registerGroup?.();

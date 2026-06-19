@@ -1,17 +1,36 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect } from "storybook/test";
+  import type { ComponentProps } from "svelte";
   import Badge from "./Badge.svelte";
+
+  type Args = Omit<ComponentProps<typeof Badge>, "children">;
 
   const { Story } = defineMeta({
     title: "Feedback/Badge",
     component: Badge,
     tags: ["autodocs"],
+    // Defaults for the args-driven Playground story; the fixtures below hardcode their own props and ignore these.
+    args: { variant: "neutral" },
+    argTypes: {
+      variant: { control: "select", options: ["neutral", "info", "success", "warning", "error"] },
+    },
+    parameters: { controls: { include: ["variant"] } },
   });
 </script>
 
-<!-- Compact labels. Neutral is a quiet hairline tag; status variants pair the
-     semantic tint/text with a glyph so meaning is never carried by color alone. -->
+<!-- Controls playground: spreads `args`, so editing the variant control live-updates the preview. The fixtures below
+hardcode their props for deterministic tests, so their Controls panel is inert. The label is fixed representative copy. -->
+<Story name="Playground">
+  {#snippet template(args: Args)}
+    <div class="bg-surface text-fg flex flex-wrap items-center gap-2 p-6">
+      <Badge {...args}>Active</Badge>
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Compact labels. Neutral is a quiet hairline tag; status variants pair the semantic tint/text with a glyph so
+     meaning is never carried by color alone. -->
 <Story
   name="Variants"
   play={async ({ canvas }) => {
@@ -37,6 +56,18 @@
 </Story>
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg flex flex-wrap items-center gap-2 p-6">
+      <Badge>Draft</Badge>
+      <Badge variant="success">Active</Badge>
+      <Badge variant="warning">Pending</Badge>
+      <Badge variant="error">Failed</Badge>
+      <Badge variant="info">Beta</Badge>
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Evening" globals={{ theme: "evening" }}>
   {#snippet template()}
     <div class="bg-surface text-fg flex flex-wrap items-center gap-2 p-6">
       <Badge>Draft</Badge>

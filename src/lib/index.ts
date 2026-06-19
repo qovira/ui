@@ -1,6 +1,5 @@
-// Public export surface for @qovira/ui — the single barrel. Every component the
-// library ships is re-exported here; consumers `import { X } from "@qovira/ui"`.
-// Tree-shakeable: unused components drop out of the consumer's bundle.
+// Public export surface for @qovira/ui — the single barrel. Every component the library ships is re-exported here;
+// consumers `import { X } from "@qovira/ui"`. Tree-shakeable: unused components drop out of the consumer's bundle.
 //
 // Internal helpers (e.g. `internal/cn`) are intentionally NOT exported.
 
@@ -17,8 +16,8 @@ export { default as ModalTitle } from "./components/ModalTitle.svelte";
 export { default as ModalDescription } from "./components/ModalDescription.svelte";
 export { default as Popover } from "./components/Popover.svelte";
 export { default as Tooltip } from "./components/Tooltip.svelte";
-// Menu is compound — `Menu.Root`, `Menu.Item`, `Menu.Separator`, … (the
-// namespace convention Bits uses for its own compound components).
+// Menu is compound — `Menu.Root`, `Menu.Item`, `Menu.Separator`, … (the namespace convention Bits uses for its own
+// compound components).
 export * as Menu from "./components/menu.js";
 
 // Navigation & disclosure.
@@ -32,8 +31,8 @@ export { default as ToastProvider } from "./components/ToastProvider.svelte";
 export { toast } from "./internal/toast-store.svelte.js";
 export type { ToastVariant, ToastOptions } from "./internal/toast-store.svelte.js";
 
-// Status & loading: hand-rolled, semantic tint + glyph (never color alone).
-// Spinner is the signature lamp-glow loader; Skeleton the warm-surface placeholder.
+// Status & loading: hand-rolled, semantic tint + glyph (never color alone). Spinner is the signature lamp-glow loader;
+// Skeleton the warm-surface placeholder.
 export { default as Alert } from "./components/Alert.svelte";
 export { default as Badge } from "./components/Badge.svelte";
 export { default as Chip } from "./components/Chip.svelte";
@@ -41,8 +40,8 @@ export { default as Spinner } from "./components/Spinner.svelte";
 export { default as Skeleton } from "./components/Skeleton.svelte";
 export type { StatusVariant, BadgeVariant, SpinnerSize } from "./components/status-variants.js";
 
-// Data display: Avatar (Bits, with initials/icon fallback) and the calm,
-// compound Table — `Table.Root`, `Table.Row`, `Table.HeaderCell`, ….
+// Data display: Avatar (Bits, with initials/icon fallback) and the calm, compound Table — `Table.Root`, `Table.Row`,
+// `Table.HeaderCell`, ….
 export { default as Avatar } from "./components/Avatar.svelte";
 export type { AvatarSize } from "./components/avatar-types.js";
 export * as Table from "./components/table.js";

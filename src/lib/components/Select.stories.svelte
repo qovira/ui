@@ -1,14 +1,27 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect, fn, userEvent, waitFor } from "storybook/test";
+  import type { ComponentProps } from "svelte";
   import Select from "./Select.svelte";
   import Field from "./Field.svelte";
   import type { ListboxItem } from "./listbox-types.js";
+
+  type Args = Omit<ComponentProps<typeof Select>, "items">;
 
   const { Story } = defineMeta({
     title: "Forms/Select",
     component: Select,
     tags: ["autodocs"],
+    // Defaults for the args-driven Playground story; the fixtures hardcode their own props and ignore these.
+    args: { type: "single", placeholder: "Select…", disabled: false },
+    argTypes: {
+      type: { control: "inline-radio", options: ["single", "multiple"] },
+      placeholder: { control: "text" },
+      disabled: { control: "boolean" },
+    },
+    // Limit the Controls panel to the scalar props — items is an option array and value is bindable, so both are left
+    // out (the items are supplied in the template).
+    parameters: { controls: { include: ["type", "placeholder", "disabled"] } },
   });
 
   const models: ListboxItem[] = [
@@ -29,9 +42,19 @@
   let selectFieldError = $state<string | undefined>("Pick a provider to continue.");
 </script>
 
-<!-- Single select, driven by the keyboard: focus the trigger, open with Enter,
-     arrow to an option, commit with Enter. Proves listbox keyboard nav, the
-     bind:value round-trip (rendered out), and that both callbacks fire. -->
+<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
+inert; this story spreads `args`, so editing a control live-updates the preview. `items` is an option array with no
+native control, so it's supplied here — this playground drives type, placeholder, and disabled. -->
+<Story name="Playground">
+  {#snippet template(args: Args)}
+    <div id="select-playground-host" class="bg-surface text-fg flex flex-col gap-3 p-6">
+      <Select aria-label="Model" items={models} portalTo="#select-playground-host" {...args} />
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Single select, driven by the keyboard: focus the trigger, open with Enter, arrow to an option, commit with Enter.
+     Proves listbox keyboard nav, the bind:value round-trip (rendered out), and that both callbacks fire. -->
 <Story
   name="Single"
   play={async ({ canvas }) => {
@@ -40,8 +63,8 @@
     await userEvent.keyboard("{Enter}");
     await canvas.findByRole("listbox");
     await expect(onOpenChange).toHaveBeenCalledWith(true);
-    // The first option is highlighted on open; ArrowDown moves to the second,
-    // proving keyboard nav, and Enter commits it.
+    // The first option is highlighted on open; ArrowDown moves to the second, proving keyboard nav, and Enter commits
+    // it.
     await userEvent.keyboard("{ArrowDown}");
     await waitFor(() =>
       expect(canvas.getByRole("option", { name: "Claude Opus" })).toHaveAttribute("data-highlighted"),
@@ -83,10 +106,9 @@
   {/snippet}
 </Story>
 
-<!-- Multi-select: clicking options accumulates them without closing the list;
-     the disabled option can't be chosen. Selected options must be visually
-     distinguished in the open list — their computed background-color must
-     differ from unselected ones. -->
+<!-- Multi-select: clicking options accumulates them without closing the list; the disabled option can't be chosen.
+     Selected options must be visually distinguished in the open list — their computed background-color must differ from
+     unselected ones. -->
 <Story
   name="Multiple"
   play={async ({ canvas }) => {
@@ -98,8 +120,8 @@
     // Disabled option stays unselectable.
     await expect(canvas.getByRole("option", { name: "Llama 3" })).toHaveAttribute("data-disabled");
     // Assert the open-list selected-vs-unselected distinction before closing.
-    // A selected option's background must differ from an unselected one so users
-    // can see (and deselect) their current picks.
+    // A selected option's background must differ from an unselected one so users can see (and deselect) their current
+    // picks.
     const selectedOption = canvas.getByRole("option", { name: "GPT-5" });
     const unselectedOption = canvas.getByRole("option", { name: "Claude Opus" });
     const selectedBg = getComputedStyle(selectedOption).backgroundColor;
@@ -140,8 +162,8 @@
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the trigger inherits the a11y contract without prop-drilling.
-     Picking a provider clears the error. -->
+<!-- Inside a Field, the trigger inherits the a11y contract without prop-drilling. Picking a provider clears the
+     error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
@@ -176,8 +198,8 @@
   {/snippet}
 </Story>
 
-<!-- Daylight: open the listbox so axe checks the rendered panel in the other
-     theme, then close to leave a clean slate. -->
+<!-- Daylight: open the listbox so axe checks the rendered panel in the other theme, then close to leave a clean
+     slate. -->
 <Story
   name="Daylight"
   globals={{ theme: "daylight" }}
@@ -191,6 +213,24 @@
   {#snippet template()}
     <div id="select-day-host" class="bg-surface text-fg p-6">
       <Select aria-label="Model" items={models} placeholder="Select a model" portalTo="#select-day-host" />
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Evening: open the listbox so axe checks the rendered panel in the default theme too, then close. -->
+<Story
+  name="Evening"
+  globals={{ theme: "evening" }}
+  play={async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "Model" }));
+    await canvas.findByRole("listbox");
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() => expect(canvas.queryByRole("listbox")).not.toBeInTheDocument());
+  }}
+>
+  {#snippet template()}
+    <div id="select-eve-host" class="bg-surface text-fg p-6">
+      <Select aria-label="Model" items={models} placeholder="Select a model" portalTo="#select-eve-host" />
     </div>
   {/snippet}
 </Story>

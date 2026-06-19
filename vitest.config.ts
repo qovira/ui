@@ -22,9 +22,8 @@ export default mergeConfig(
         reporter: ["text", "html"],
         include: ["src/lib/**"],
         exclude: ["src/lib/**/*.stories.*", "src/lib/**/*.d.ts"],
-        // Floors below current (≈98/81/97/97) with headroom for noise, so new
-        // behaviour-bearing logic shipped without a test fails CI (`--coverage`)
-        // rather than rotting uncovered. Ratchet up as coverage rises.
+        // Floors below current (≈98/81/97/97) with headroom for noise, so new behaviour-bearing logic shipped without a
+        // test fails CI (`--coverage`) rather than rotting uncovered. Ratchet up as coverage rises.
         thresholds: {
           statements: 90,
           branches: 75,
@@ -33,9 +32,8 @@ export default mergeConfig(
         },
       },
       projects: [
-        // Runes/logic (*.svelte.test.ts with flushSync/$effect.root) and pure
-        // helpers (*.test.ts). Component render/interaction tests live in the
-        // `storybook` project (stories run as Browser-Mode tests).
+        // Runes/logic (*.svelte.test.ts with flushSync/$effect.root) and pure helpers (*.test.ts). Component
+        // render/interaction tests live in the `storybook` project (stories run as Browser-Mode tests).
         {
           extends: true,
           test: {
@@ -44,9 +42,8 @@ export default mergeConfig(
             include: ["src/**/*.{test,svelte.test}.ts"],
           },
         },
-        // Every story → a Vitest Browser-Mode test: it renders in a real
-        // browser and its `play` function is the assertion; axe runs via the
-        // setup file's a11y annotations.
+        // Every story → a Vitest Browser-Mode test: it renders in a real browser and its `play` function is the
+        // assertion; axe runs via the setup file's a11y annotations.
         {
           extends: true,
           plugins: [storybookTest({ configDir: path.join(dirname, ".storybook") })],

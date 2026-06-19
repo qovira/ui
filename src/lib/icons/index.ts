@@ -1,19 +1,17 @@
-// Curated Phosphor icon re-exports. `@qovira/ui` standardizes on one weight
-// (Regular, enforced by <Icon>) and re-exports the working set the library and
-// its consumers draw from — so call sites import icons from `@qovira/ui`, not
-// directly from phosphor-svelte. Grow this set as components need more glyphs.
+// Curated Phosphor icon re-exports. `@qovira/ui` standardizes on one weight (Regular, enforced by <Icon>) and
+// re-exports the working set the library and its consumers draw from — so call sites import icons from `@qovira/ui`,
+// not directly from phosphor-svelte. Grow this set as components need more glyphs.
 //
 // The `*Icon`-suffixed names are Phosphor's non-deprecated exports.
 
 export { default as Icon } from "./Icon.svelte";
 export type { IconProps, IconComponent } from "./types.js";
 
-// Deep-imported (`phosphor-svelte/lib/<Icon>`), never the barrel: phosphor ships no
-// `sideEffects: false`, so a barrel re-export would defeat tree-shaking and pull all
-// ~3,000 icons into the consumer's bundle. See conventions:writing-svelte.
+// Deep-imported (`phosphor-svelte/lib/<Icon>`), never the barrel: phosphor ships no `sideEffects: false`, so a barrel
+// re-export would defeat tree-shaking and pull all ~3,000 icons into the consumer's bundle. See
+// conventions:writing-svelte.
 
-// Status — always paired with a semantic color (the "never color alone" rule);
-// used by Alert, Toast, status Badge/Chip.
+// Status — always paired with a semantic color (the "never color alone" rule); used by Alert, Toast, status Badge/Chip.
 export { default as CheckCircleIcon } from "phosphor-svelte/lib/CheckCircleIcon";
 export { default as WarningIcon } from "phosphor-svelte/lib/WarningIcon";
 export { default as WarningCircleIcon } from "phosphor-svelte/lib/WarningCircleIcon";

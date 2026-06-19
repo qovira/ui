@@ -84,13 +84,11 @@
   );
 </script>
 
-<!-- Bits owns the whole picker: segmented entry, the collision-handled,
-     portalled popover, calendar keyboard nav, and ARIA. The wrapper styles the
-     parts and consumes the Field contract on the segment group. Each focusable
-     part (segments, trigger, nav buttons, days) carries its own `focus-ring`. -->
-<!-- Controlled value via one-way prop + writeback: passing `undefined` to the
-     non-optional Bits `value` is rejected under exactOptionalPropertyTypes; the
-     cast lets the legitimate empty/clear `undefined` flow through at runtime.
+<!-- Bits owns the whole picker: segmented entry, the collision-handled, portalled popover, calendar keyboard nav, and
+     ARIA. The wrapper styles the parts and consumes the Field contract on the segment group. Each focusable part
+     (segments, trigger, nav buttons, days) carries its own `focus-ring`. -->
+<!-- Controlled value via one-way prop + writeback: passing `undefined` to the non-optional Bits `value` is rejected
+     under exactOptionalPropertyTypes; the cast lets the legitimate empty/clear `undefined` flow through at runtime.
      `open` is a plain boolean, so it round-trips through `bind:open`. -->
 <DatePicker.Root
   value={value as DateValue}
@@ -103,6 +101,8 @@
   {readonly}
   {weekdayFormat}
   {locale}
+  fixedWeeks
+  disableDaysOutsideMonth={false}
   {...opts}
   {...onOpenChange ? { onOpenChange } : {}}
 >
@@ -121,7 +121,7 @@
             {part}
             class={cn(
               "focus-ring rounded-sm px-0.5 tabular-nums text-fg",
-              "data-[placeholder]:text-fg-muted",
+              "data-placeholder:text-fg-muted",
               part === "literal" && "px-0 text-fg-muted",
             )}
           >
@@ -148,16 +148,14 @@
     >
       <DatePicker.Calendar>
         {#snippet children({ months, weekdays })}
-          <!-- A plain div, not DatePicker.Header: that renders a <header> (a
-               banner landmark) which axe flags when nested. -->
-          <div class="flex items-center justify-between pb-3">
+          <!-- A plain div, not DatePicker.Header: that renders a <header> (a banner landmark) which axe flags when
+               nested. -->
+          <div class="flex items-center justify-between gap-2 pb-3">
             <DatePicker.PrevButton class={CALENDAR_NAV_BUTTON}>
               <CaretLeftIcon size={18} color="currentColor" aria-hidden="true" />
             </DatePicker.PrevButton>
-            <div class="flex items-center gap-2">
-              <DatePicker.MonthSelect class={CALENDAR_SELECT} />
-              <DatePicker.YearSelect class={CALENDAR_SELECT} />
-            </div>
+            <DatePicker.MonthSelect class={CALENDAR_SELECT} />
+            <DatePicker.YearSelect class={CALENDAR_SELECT} />
             <DatePicker.NextButton class={CALENDAR_NAV_BUTTON}>
               <CaretRightIcon size={18} color="currentColor" aria-hidden="true" />
             </DatePicker.NextButton>
@@ -165,8 +163,8 @@
           {#each months as month (month.value.toString())}
             <DatePicker.Grid class="w-full border-collapse select-none">
               <DatePicker.GridHead>
-                <DatePicker.GridRow class="flex">
-                  {#each weekdays as day (day)}
+                <DatePicker.GridRow class="flex w-full justify-center">
+                  {#each weekdays as day, i (i)}
                     <DatePicker.HeadCell class="text-small w-9 pb-1 text-center font-sans font-normal text-fg-muted">
                       {day}
                     </DatePicker.HeadCell>
@@ -175,7 +173,7 @@
               </DatePicker.GridHead>
               <DatePicker.GridBody>
                 {#each month.weeks as weekDates (weekDates[0]?.toString())}
-                  <DatePicker.GridRow class="flex w-full">
+                  <DatePicker.GridRow class="flex w-full justify-center">
                     {#each weekDates as date (date.toString())}
                       <DatePicker.Cell {date} month={month.value} class="p-0">
                         <DatePicker.Day class={CALENDAR_DAY} />

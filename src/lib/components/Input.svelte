@@ -10,8 +10,8 @@
 
   let { class: klass, id, "aria-invalid": invalidProp, "aria-describedby": describedbyProp, ...rest }: Props = $props();
 
-  // Inherit the Field contract from context, but an explicit prop always wins
-  // (so the control also works standalone, outside a Field).
+  // Inherit the Field contract from context, but an explicit prop always wins (so the control also works standalone,
+  // outside a Field).
   const aria = resolveFieldAria(() => ({ id, invalid: invalidProp, describedby: describedbyProp }));
 </script>
 

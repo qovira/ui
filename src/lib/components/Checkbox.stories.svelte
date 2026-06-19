@@ -1,13 +1,27 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect, userEvent } from "storybook/test";
+  import type { ComponentProps } from "svelte";
   import Checkbox from "./Checkbox.svelte";
   import Field from "./Field.svelte";
+
+  type Args = ComponentProps<typeof Checkbox>;
 
   const { Story } = defineMeta({
     title: "Forms/Checkbox",
     component: Checkbox,
     tags: ["autodocs"],
+    // Defaults for the args-driven Playground story; the fixtures hardcode their own props and ignore these.
+    args: { checked: false, indeterminate: false, disabled: false, required: false, readonly: false },
+    argTypes: {
+      checked: { control: "boolean" },
+      indeterminate: { control: "boolean" },
+      disabled: { control: "boolean" },
+      required: { control: "boolean" },
+      readonly: { control: "boolean" },
+    },
+    // Limit the Controls panel to the meaningful boolean state props; name/value are form-submission scalars.
+    parameters: { controls: { include: ["checked", "indeterminate", "disabled", "required", "readonly"] } },
   });
 </script>
 
@@ -17,8 +31,20 @@
   let checkboxFieldError = $state<string | undefined>("Please confirm your choice.");
 </script>
 
-<!-- bind:checked round-trips: a click drives state, and an external reset drives
-     the control back. -->
+<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
+inert; this story spreads `args`, so editing a control live-updates the preview. The checkbox is wrapped in a label so
+axe always has an accessible name regardless of the args. -->
+<Story name="Playground">
+  {#snippet template(args: Args)}
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Checkbox {...args} />Accept terms
+      </label>
+    </div>
+  {/snippet}
+</Story>
+
+<!-- bind:checked round-trips: a click drives state, and an external reset drives the control back. -->
 <Story
   name="Bind"
   play={async ({ canvas }) => {
@@ -65,8 +91,8 @@
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the checkbox inherits the a11y contract without prop-drilling.
-     Checking the box is a valid "I confirm" action — it clears the error. -->
+<!-- Inside a Field, the checkbox inherits the a11y contract without prop-drilling. Checking the box is a valid "I
+confirm" action — it clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
@@ -96,22 +122,9 @@
   {/snippet}
 </Story>
 
-<Story name="Daylight" globals={{ theme: "daylight" }}>
-  {#snippet template()}
-    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
-      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
-        <Checkbox checked />Checked
-      </label>
-      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
-        <Checkbox indeterminate />Indeterminate
-      </label>
-    </div>
-  {/snippet}
-</Story>
-
-<!-- TDD guard: assert the :enabled-gated hover classes are present on the root element. Static Tailwind
-     classes are always in the rendered class attribute, so classList checks are the reliable signal here.
-     These assertions must FAIL before the hover classes are added and PASS after. -->
+<!-- TDD guard: assert the :enabled-gated hover classes are present on the root element. Static Tailwind classes are
+always in the rendered class attribute, so classList checks are the reliable signal here. These assertions must FAIL
+before the hover classes are added and PASS after. -->
 <Story
   name="Hover classes"
   play={async ({ canvas }) => {
@@ -130,9 +143,9 @@
     await expect(indeterminate).toHaveClass("enabled:data-[state=indeterminate]:hover:bg-honey-600");
     await expect(indeterminate).toHaveClass("enabled:data-[state=indeterminate]:hover:border-honey-600");
 
-    // The :enabled gate is verified at the CSS-selector level (compiled CSS grep) not in the DOM
-    // class attribute — Tailwind always emits the class token; :enabled is part of the CSS rule
-    // selector, not the token name, so a disabled element still has the token but the rule won't fire.
+    // The :enabled gate is verified at the CSS-selector level (compiled CSS grep) not in the DOM class attribute —
+    // Tailwind always emits the class token; :enabled is part of the CSS rule selector, not the token name, so a
+    // disabled element still has the token but the rule won't fire.
   }}
 >
   {#snippet template()}
@@ -146,6 +159,32 @@
       {@render row("Checked", { checked: true })}
       {@render row("Indeterminate", { indeterminate: true })}
       {@render row("Disabled", { disabled: true })}
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Daylight" globals={{ theme: "daylight" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Checkbox checked />Checked
+      </label>
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Checkbox indeterminate />Indeterminate
+      </label>
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Evening" globals={{ theme: "evening" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Checkbox checked />Checked
+      </label>
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Checkbox indeterminate />Indeterminate
+      </label>
     </div>
   {/snippet}
 </Story>

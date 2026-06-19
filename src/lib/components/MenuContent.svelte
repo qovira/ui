@@ -16,8 +16,7 @@
   let { children, sideOffset = 6, class: klass, portalTo }: Props = $props();
 </script>
 
-<!-- Portalled and collision-handled by Bits. `focus-ring` is appended last so a
-     consumer class can't strip it. -->
+<!-- Portalled and collision-handled by Bits. `focus-ring` is appended last so a consumer class can't strip it. -->
 <DropdownMenu.Portal {...portalTo ? { to: portalTo } : {}}>
   <DropdownMenu.Content {sideOffset} class={cn(MENU_PANEL_BASE, klass, "focus-ring")}>
     {@render children()}

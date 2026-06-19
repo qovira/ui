@@ -1,12 +1,25 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect, userEvent, waitFor } from "storybook/test";
+  import type { ComponentProps } from "svelte";
   import Pagination from "./Pagination.svelte";
+
+  type Args = ComponentProps<typeof Pagination>;
 
   const { Story } = defineMeta({
     title: "Navigation/Pagination",
     component: Pagination,
     tags: ["autodocs"],
+    // Defaults for the args-driven Playground story; the fixtures hardcode their own props and ignore these.
+    args: { count: 95, perPage: 10, page: 1, siblingCount: 1 },
+    argTypes: {
+      count: { control: "number" },
+      perPage: { control: "number" },
+      page: { control: "number" },
+      siblingCount: { control: "number" },
+    },
+    // Limit the Controls panel to scalar props — aria-label, class, and the onPageChange callback are excluded.
+    parameters: { controls: { include: ["count", "perPage", "page", "siblingCount"] } },
   });
 </script>
 
@@ -14,8 +27,19 @@
   let page = $state(1);
 </script>
 
-<!-- Navigates pages and exposes the current page; bind:page round-trips. The
-     wrapper provides a labelled navigation landmark. -->
+<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
+inert; this story spreads `args`, so editing a control live-updates the preview. The aria-label naming the navigation
+landmark is hardcoded for axe; the playground drives count, perPage, page, and siblingCount. -->
+<Story name="Playground">
+  {#snippet template(args: Args)}
+    <div class="bg-surface text-fg p-6">
+      <Pagination aria-label="Pagination" {...args} />
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Navigates pages and exposes the current page; bind:page round-trips. The wrapper provides a labelled navigation
+     landmark. -->
 <Story
   name="Pages"
   play={async ({ canvas }) => {
@@ -32,8 +56,7 @@
     await userEvent.click(canvas.getByRole("button", { name: "Go to next page" }));
     await waitFor(() => expect(canvas.getByRole("button", { name: "Page 2" })).toHaveAttribute("data-selected"));
     await expect(canvas.getByTestId("page")).toHaveTextContent("2");
-    // Jump directly to a visible page (with siblingCount 1, distant pages sit
-    // behind an ellipsis).
+    // Jump directly to a visible page (with siblingCount 1, distant pages sit behind an ellipsis).
     await userEvent.click(canvas.getByRole("button", { name: "Page 3" }));
     await waitFor(() => expect(canvas.getByTestId("page")).toHaveTextContent("3"));
   }}
@@ -47,6 +70,14 @@
 </Story>
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg p-6">
+      <Pagination count={48} perPage={10} page={3} aria-label="Results pages" />
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Evening" globals={{ theme: "evening" }}>
   {#snippet template()}
     <div class="bg-surface text-fg p-6">
       <Pagination count={48} perPage={10} page={3} aria-label="Results pages" />

@@ -16,9 +16,8 @@
   let { variant = "neutral", class: klass, children, ...rest }: Props = $props();
 </script>
 
-<!-- Neutral is a quiet hairline label; status variants use the theme's
-     AA-verified tint/text pairing (BADGE_TONE) AND a glyph, so meaning is never
-     color alone. -->
+<!-- Neutral is a quiet hairline label; status variants use the theme's AA-verified tint/text pairing (BADGE_TONE) AND a
+     glyph, so meaning is never color alone. -->
 <span class={cn(BADGE_BASE, BADGE_TONE[variant], klass)} {...rest}>
   {#if variant !== "neutral"}
     <Icon icon={STATUS_ICON[variant]} decorative />

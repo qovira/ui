@@ -1,20 +1,45 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect, fn, userEvent } from "storybook/test";
+  import type { ComponentProps } from "svelte";
   import Button from "./Button.svelte";
+
+  // `ComponentProps<typeof Button>` is `Props & (HTMLButtonAttributes | HTMLAnchorAttributes)`; a plain `Omit` over that
+  // union exceeds TS's union-complexity limit, so distribute the omit across each member.
+  type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
+  type Args = DistributiveOmit<ComponentProps<typeof Button>, "children">;
 
   const { Story } = defineMeta({
     title: "Actions/Button",
     component: Button,
     tags: ["autodocs"],
+    // Defaults for the args-driven Playground story; the fixtures hardcode their own props and ignore these.
+    args: { variant: "secondary", loading: false, disabled: false },
+    argTypes: {
+      variant: { control: "select", options: ["primary", "key", "secondary", "ghost", "destructive"] },
+      loading: { control: "boolean" },
+      disabled: { control: "boolean" },
+    },
+    // Limit the Controls panel to scalar props; children is the label and href morphs the element to an anchor.
+    parameters: { controls: { include: ["variant", "loading", "disabled"] } },
   });
 
   // Module-scoped spy so the template and the play function share one handle.
   const handleClick = fn();
 </script>
 
-<!-- All five variants on brand, in both themes (this story + Daylight below) so
-     axe checks each one's contrast in each theme. -->
+<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
+inert; this story spreads `args`, so editing a control live-updates the preview. -->
+<Story name="Playground">
+  {#snippet template(args: Args)}
+    <div class="bg-surface text-fg p-6">
+      <Button {...args}>Save changes</Button>
+    </div>
+  {/snippet}
+</Story>
+
+<!-- All five variants on brand, in both themes (this story + Daylight below) so axe checks each one's contrast in each
+     theme. -->
 <Story
   name="Variants"
   play={async ({ canvas }) => {
@@ -22,8 +47,8 @@
     for (const name of ["Primary", "Key CTA", "Secondary", "Ghost", "Delete"]) {
       await expect(canvas.getByRole("button", { name })).toBeInTheDocument();
     }
-    // AC: a <button> defaults to type="button", so it never submits an enclosing
-    // form by surprise (consumers opt into type="submit" explicitly).
+    // AC: a <button> defaults to type="button", so it never submits an enclosing form by surprise (consumers opt into
+    // type="submit" explicitly).
     await expect(canvas.getByRole("button", { name: "Primary" })).toHaveAttribute("type", "button");
   }}
 >
@@ -60,6 +85,17 @@
     // AC: loading is a visible, story-covered state.
     await expect(btn).toBeDisabled();
     await expect(btn).toHaveAttribute("aria-busy", "true");
+    // The indicator is the signature Spinner (its pulsing dot), not a generic rotating icon — so the loading state
+    // matches the standalone Spinner.
+    const dot = btn.querySelector(".spinner-dot");
+    await expect(dot).not.toBeNull();
+    await expect(btn.querySelector(".animate-spin")).toBeNull();
+    // It inherits the button's text color (bg-current), so it stays visible on honey fills (key, primary in Evening)
+    // where the honey accent would vanish.
+    await expect(dot).toHaveClass("bg-current");
+    // Decorative: the button already owns the busy semantics (aria-busy + the visible label), so the embedded spinner
+    // adds no role/label of its own.
+    await expect(btn.querySelector('[role="status"]')).toBeNull();
   }}
 >
   {#snippet template()}
@@ -69,7 +105,7 @@
   {/snippet}
 </Story>
 
-<!-- With `href` the button renders an <a> with identical styling + focus ring. -->
+<!-- With `href` the button renders an `<a>` with identical styling + focus ring. -->
 <Story
   name="As link"
   play={async ({ canvas }) => {
@@ -90,8 +126,8 @@
 <Story
   name="Disabled link"
   play={async ({ canvas }) => {
-    // Dropping href removes the implicit link role (an <a> with no href is not a
-    // link), so it's neither focusable nor followable; query it by its text.
+    // Dropping href removes the implicit link role (an <a> with no href is not a link), so it's neither focusable nor
+    // followable; query it by its text.
     const link = canvas.getByText("Unavailable");
     await expect(link).toHaveAttribute("aria-disabled", "true");
     await expect(link).not.toHaveAttribute("href");
@@ -104,9 +140,9 @@
   {/snippet}
 </Story>
 
-<!-- An active link forwards consumer attributes via ...rest: the component's
-     state-coupled a11y attrs (tabindex/aria-busy) are emitted only when they
-     mean something, so they no longer clobber a passed-through value. -->
+<!-- An active link forwards consumer attributes via ...rest: the component's state-coupled a11y attrs
+     (tabindex/aria-busy) are emitted only when they mean something, so they no longer clobber a passed-through
+     value. -->
 <Story
   name="Link forwards native attributes"
   play={async ({ canvas }) => {
@@ -122,8 +158,8 @@
   {/snippet}
 </Story>
 
-<!-- Native attributes ride through ...rest; consumer `class` merges via cn(),
-     but it can never strip the focus ring (the most-enforced a11y rule). -->
+<!-- Native attributes ride through ...rest; consumer `class` merges via cn(), but it can never strip the focus ring
+     (the most-enforced a11y rule). -->
 <Story
   name="Native attributes"
   play={async ({ canvas }) => {
@@ -145,8 +181,20 @@
   {/snippet}
 </Story>
 
-<!-- All five variants in Daylight, so axe runs each in both themes. -->
+<!-- All five variants, one per theme: Daylight then Evening, so axe runs each variant in both. -->
 <Story name="Daylight" globals={{ theme: "daylight" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg flex flex-wrap items-center gap-3 p-6">
+      <Button variant="primary">Primary</Button>
+      <Button variant="key">Key CTA</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="destructive">Delete</Button>
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Evening" globals={{ theme: "evening" }}>
   {#snippet template()}
     <div class="bg-surface text-fg flex flex-wrap items-center gap-3 p-6">
       <Button variant="primary">Primary</Button>

@@ -3,9 +3,8 @@
   import type { Snippet } from "svelte";
   import { cn } from "../internal/cn.js";
 
-  // Wraps Bits' Dialog.Description — wires the dialog's aria-describedby via the
-  // Dialog context. Body copy always uses `text-fg` (never muted). Render
-  // inside a <Modal>.
+  // Wraps Bits' Dialog.Description — wires the dialog's aria-describedby via the Dialog context. Body copy always uses
+  // `text-fg` (never muted). Render inside a <Modal>.
   interface Props extends Dialog.DescriptionProps {
     class?: string;
     children: Snippet;

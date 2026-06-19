@@ -15,10 +15,9 @@ export interface ToastData {
 }
 
 /**
- * The toast queue. State lives on the instance (a `$state` array), so each
- * `<ToastProvider>` owns its own toasts — there is NO module-level toast data,
- * which is what keeps it SSR-safe (a top-level array would bleed across
- * requests). Verified in `toast-store.svelte.test.ts`.
+ * The toast queue. State lives on the instance (a `$state` array), so each `<ToastProvider>` owns its own toasts —
+ * there is NO module-level toast data, which is what keeps it SSR-safe (a top-level array would bleed across requests).
+ * Verified in `toast-store.svelte.test.ts`.
  */
 export class ToastStore {
   toasts = $state<ToastData[]>([]);
@@ -48,18 +47,15 @@ export function getToastStore(): ToastStore {
   return store;
 }
 
-// The imperative API reaches the mounted provider's store from anywhere —
-// including code with no component context (event handlers, load results). The
-// provider registers its store here ON MOUNT (client only). This holds only a
-// *reference*, never toast data: the data lives in the context-seeded store, so
-// nothing crosses SSR requests (effects don't run server-side, so this stays
-// null there). Last provider to mount wins, matching the single-provider design.
+// The imperative API reaches the mounted provider's store from anywhere — including code with no component context
+// (event handlers, load results). The provider registers its store here ON MOUNT (client only). This holds only a
+// *reference*, never toast data: the data lives in the context-seeded store, so nothing crosses SSR requests (effects
+// don't run server-side, so this stays null there). Last provider to mount wins, matching the single-provider design.
 let active: ToastStore | null = null;
 
 /**
- * Register a provider's store as the imperative API's target; returns a disposer
- * that clears it **only if still active**, so an earlier provider unmounting
- * can't wipe a later one's registration (last mount wins).
+ * Register a provider's store as the imperative API's target; returns a disposer that clears it **only if still
+ * active**, so an earlier provider unmounting can't wipe a later one's registration (last mount wins).
  */
 export function registerActiveToastStore(store: ToastStore): () => void {
   active = store;

@@ -67,12 +67,11 @@
   );
 </script>
 
-<!-- Bits owns the segmented-entry behavior (per-segment focus, arrow stepping,
-     ARIA spinbuttons, the hidden form input). The wrapper styles the group and
-     segments; each segment carries `focus-ring` (it's the focusable element). -->
-<!-- Controlled value via one-way prop + writeback: passing `undefined` to the
-     non-optional Bits `value` is rejected under exactOptionalPropertyTypes; the
-     cast lets the legitimate empty/clear `undefined` flow through at runtime. -->
+<!-- Bits owns the segmented-entry behavior (per-segment focus, arrow stepping, ARIA spinbuttons, the hidden form
+     input). The wrapper styles the group and segments; each segment carries `focus-ring` (it's the focusable
+     element). -->
+<!-- Controlled value via one-way prop + writeback: passing `undefined` to the non-optional Bits `value` is rejected
+     under exactOptionalPropertyTypes; the cast lets the legitimate empty/clear `undefined` flow through at runtime. -->
 <DateField.Root
   value={value as DateValue}
   onValueChange={(v) => {
@@ -98,7 +97,7 @@
           {part}
           class={cn(
             "focus-ring rounded-sm px-0.5 tabular-nums text-fg",
-            "data-[placeholder]:text-fg-muted",
+            "data-placeholder:text-fg-muted",
             part === "literal" && "px-0 text-fg-muted",
           )}
         >

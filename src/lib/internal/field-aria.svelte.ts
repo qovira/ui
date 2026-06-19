@@ -14,18 +14,15 @@ export interface ResolvedFieldAria {
   readonly resolvedId: string | undefined;
   readonly ariaInvalid: AriaAttributes["aria-invalid"];
   readonly ariaDescribedby: string | undefined;
-  /** The Field's label id, for a non-labelable part (e.g. a listbox panel) that
-   *  names itself via `aria-labelledby`. */
+  /** The Field's label id, for a non-labelable part (e.g. a listbox panel) that names itself via `aria-labelledby`. */
   readonly labelId: string | undefined;
 }
 
 /**
- * Resolve a labelable control's `id` + `aria-invalid`/`aria-describedby` against
- * an enclosing `Field`'s context, with an explicit prop always winning (so the
- * control also works standalone). Pass the overrides as a getter so they stay
- * reactive; the returned values are reactive too. Single source of truth for
- * Input/Textarea/Checkbox/Switch — the resolution was previously copied verbatim
- * across all four.
+ * Resolve a labelable control's `id` + `aria-invalid`/`aria-describedby` against an enclosing `Field`'s context, with
+ * an explicit prop always winning (so the control also works standalone). Pass the overrides as a getter so they stay
+ * reactive; the returned values are reactive too. Single source of truth for Input/Textarea/Checkbox/Switch — the
+ * resolution was previously copied verbatim across all four.
  */
 export function resolveFieldAria(overrides: () => FieldAriaOverrides): ResolvedFieldAria {
   const field = getFieldContext();
