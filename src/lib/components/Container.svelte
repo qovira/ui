@@ -12,9 +12,9 @@
 
   let { width = "content", class: klass, children, ...rest }: Props = $props();
 
-  // Brand layout rule: content caps at 60rem (~960px), prose at ~70ch (see Brand & Design).
-  // Content uses the rem scale (max-w-240); prose stays arbitrary — ch has no scale token,
-  // as the theme README notes for `max-w-[70ch]`. Centered, with a 24px gutter (px-6).
+  // Brand layout rule: content caps at 60rem (~960px), prose at ~70ch (see Brand & Design). Content uses the rem scale
+  // (max-w-240); prose stays arbitrary — ch has no scale token, as the theme README notes for `max-w-[70ch]`. Centered,
+  // with a 24px gutter (px-6).
   const MAX = { content: "max-w-240", prose: "max-w-[70ch]" } as const;
 </script>
 

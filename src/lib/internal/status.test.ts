@@ -2,16 +2,24 @@ import { describe, expect, it } from "vitest";
 import { BADGE_TONE } from "./status.js";
 
 describe("BADGE_TONE", () => {
-  // Every tone must carry a border so neutral and status variants are visually
-  // consistent (F1 acceptance criterion).
+  // Every tone carries a border so neutral and status variants are visually consistent (F1). Neutral has no status tint
+  // to carry contrast, so it uses the stronger `border-divider` to stay legible against the Evening surfaces; the
+  // status tones keep the hairline `border-border` and lean on their tint instead.
   const variants = ["neutral", "info", "success", "warning", "error"] as const;
+  const statusVariants = ["info", "success", "warning", "error"] as const;
 
   it.each(variants)('"%s" includes a border utility', (variant) => {
     const classes = BADGE_TONE[variant].split(" ");
     expect(classes).toContain("border");
   });
 
-  it.each(variants)('"%s" includes border-border', (variant) => {
+  it("neutral uses the stronger divider edge so it reads on the Evening surfaces", () => {
+    const classes = BADGE_TONE.neutral.split(" ");
+    expect(classes).toContain("border-divider");
+    expect(classes).not.toContain("border-border");
+  });
+
+  it.each(statusVariants)('"%s" keeps the hairline border-border', (variant) => {
     const classes = BADGE_TONE[variant].split(" ");
     expect(classes).toContain("border-border");
   });

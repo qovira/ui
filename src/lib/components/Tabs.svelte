@@ -30,11 +30,9 @@
   }: Props = $props();
 </script>
 
-<!-- Bits owns behavior: the tablist/tab/tabpanel roles, arrow-key roving focus,
-     and aria-controls/aria-selected wiring. The wrapper dresses the parts in
-     @qovira/theme utilities and forwards bind:value. `focus-ring` is appended
-     last on every focusable part (triggers and the panel) so a consumer class
-     can't strip it. -->
+<!-- Bits owns behavior: the tablist/tab/tabpanel roles, arrow-key roving focus, and aria-controls/aria-selected wiring.
+     The wrapper dresses the parts in @qovira/theme utilities and forwards bind:value. `focus-ring` is appended last on
+     every focusable part (triggers and the panel) so a consumer class can't strip it. -->
 <Tabs.Root
   bind:value
   {orientation}
@@ -49,7 +47,7 @@
         class={cn(
           "-mb-px border-b-2 border-transparent px-4 py-2 text-button font-sans text-fg-muted",
           "hover:text-fg data-[state=active]:border-accent data-[state=active]:text-fg",
-          "data-[disabled]:pointer-events-none data-[disabled]:opacity-40",
+          "data-disabled:pointer-events-none data-disabled:opacity-40",
           "focus-ring",
         )}
       >

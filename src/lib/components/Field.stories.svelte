@@ -1,18 +1,43 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect } from "storybook/test";
+  import type { ComponentProps } from "svelte";
   import Field from "./Field.svelte";
   import Input from "./Input.svelte";
+
+  type Args = Omit<ComponentProps<typeof Field>, "children">;
 
   const { Story } = defineMeta({
     title: "Forms/Field",
     component: Field,
     tags: ["autodocs"],
+    // Defaults for the args-driven Playground story; the fixtures hardcode their own props and ignore these.
+    args: { label: "Email address", description: "We'll only use this to send reminders.", error: "" },
+    argTypes: {
+      label: { control: "text" },
+      description: { control: "text" },
+      error: { control: "text" },
+    },
+    // Limit the Controls panel to the label/help/error strings; children is a snippet and class is excluded.
+    parameters: { controls: { include: ["label", "description", "error"] } },
   });
 </script>
 
-<!-- The Input is nested with NO id/aria props — it inherits the whole contract
-     from Field via context (the "no prop-drilling" requirement). -->
+<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
+inert; this story spreads `args`, so editing a control live-updates the preview. An Input is nested as the wrapped
+control (it inherits the contract from context) so the field renders a real, labelled control. -->
+<Story name="Playground">
+  {#snippet template(args: Args)}
+    <div class="bg-surface text-fg p-6">
+      <Field {...args}>
+        <Input type="email" placeholder="you@example.com" />
+      </Field>
+    </div>
+  {/snippet}
+</Story>
+
+<!-- The Input is nested with NO id/aria props — it inherits the whole contract from Field via context (the "no
+     prop-drilling" requirement). -->
 <Story
   name="Default"
   play={async ({ canvas }) => {
@@ -54,8 +79,8 @@
   {/snippet}
 </Story>
 
-<!-- Error state: aria-invalid + a real message carry the meaning; the red
-     border only reinforces (never color alone). -->
+<!-- Error state: aria-invalid + a real message carry the meaning; the red border only reinforces (never color
+     alone). -->
 <Story
   name="Invalid"
   play={async ({ canvas }) => {
@@ -93,8 +118,18 @@
   {/snippet}
 </Story>
 
-<!-- Invalid state in Daylight, so axe checks the error state in both themes. -->
-<Story name="Daylight invalid" globals={{ theme: "daylight" }}>
+<!-- The invalid field (its richest state) in each theme, so axe checks the error treatment in both. -->
+<Story name="Daylight" globals={{ theme: "daylight" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg p-6">
+      <Field label="Email address" error="Enter a valid email address.">
+        <Input type="email" value="nope" />
+      </Field>
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Evening" globals={{ theme: "evening" }}>
   {#snippet template()}
     <div class="bg-surface text-fg p-6">
       <Field label="Email address" error="Enter a valid email address.">

@@ -18,13 +18,12 @@
 
   let { name, src, size = "md", class: klass }: Props = $props();
 
-  // The trimmed name is the accessible label. If it's empty (misuse — name is
-  // required), the avatar degrades to a decorative placeholder rather than a
-  // role="img" with no accessible name.
+  // The trimmed name is the accessible label. If it's empty (misuse — name is required), the avatar degrades to a
+  // decorative placeholder rather than a role="img" with no accessible name.
   const label = $derived(name.trim());
 
-  // Up to two initials — the first LETTER of the first two words. A name with no
-  // letters (an id, a symbol) yields none, and the fallback shows a person icon.
+  // Up to two initials — the first LETTER of the first two words. A name with no letters (an id, a symbol) yields none,
+  // and the fallback shows a person icon.
   const initials = $derived(computeInitials(name));
 
   const SIZE = {
@@ -34,11 +33,10 @@
   } as const;
 </script>
 
-<!-- Bits owns the load/fallback behavior: the image is hidden until it loads and
-     the fallback shows while loading or on error. The whole avatar is one
-     labelled image (role="img" + aria-label=name), so the name is announced in
-     every state; the <img> is decorative (alt="") and the fallback is hidden
-     from assistive tech to avoid a second, redundant announcement. -->
+<!-- Bits owns the load/fallback behavior: the image is hidden until it loads and the fallback shows while loading or on
+     error. The whole avatar is one labelled image (role="img" + aria-label=name), so the name is announced in every
+     state; the <img> is decorative (alt="") and the fallback is hidden from assistive tech to avoid a second, redundant
+     announcement. -->
 <Avatar.Root
   {...label ? { role: "img", "aria-label": label } : { "aria-hidden": true }}
   class={cn(
@@ -50,7 +48,7 @@
   {#if src}
     <Avatar.Image {src} alt="" class="size-full rounded-[inherit] object-cover" />
   {/if}
-  <Avatar.Fallback aria-hidden="true" class="inline-flex size-full items-center justify-center">
+  <Avatar.Fallback aria-hidden="true" class="inline-flex size-full items-center justify-center leading-none">
     {#if initials}
       {initials}
     {:else}

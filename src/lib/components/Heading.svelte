@@ -24,9 +24,8 @@
     h3: "text-h3",
     h4: "text-h4",
   } as const;
-  // Display/H1–H3 are Fraunces (font-display); H4 is Figtree (font-sans) — the
-  // font isn't carried by the text-* role, so the wrapper applies it so call
-  // sites can't forget it (see Brand & Design typography).
+  // Display/H1–H3 are Fraunces (font-display); H4 is Figtree (font-sans) — the font isn't carried by the text-* role,
+  // so the wrapper applies it so call sites can't forget it (see Brand & Design typography).
   const font = $derived(resolved === "h4" ? "font-sans" : "font-display");
 </script>
 

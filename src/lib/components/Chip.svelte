@@ -23,9 +23,8 @@
     ...rest
   }: Props & (HTMLAttributes<HTMLSpanElement> | HTMLAnchorAttributes) = $props();
 
-  // Shares Badge's BADGE_BASE shape + BADGE_TONE recipe (neutral hairline, or a
-  // status's AA-verified tint/text pairing); status chips also carry a glyph
-  // (never color alone).
+  // Shares Badge's BADGE_BASE shape + BADGE_TONE recipe (neutral's divider edge, or a status's AA-verified tint/text
+  // pairing); status chips also carry a glyph (never color alone).
 </script>
 
 {#snippet body()}
@@ -35,10 +34,9 @@
   {@render children()}
 {/snippet}
 
-<!-- A Chip morphs to an <a> when given `href` — same look, now navigable. The
-     anchor gets a subtle adaptive hover (text color at low alpha works on every
-     tint and in both themes) and the focus-ring appended LAST so a consumer
-     class can't merge it away. The static span carries no focus state. -->
+<!-- A Chip morphs to an <a> when given `href` — same look, now navigable. The anchor gets a subtle adaptive hover (text
+     color at low alpha works on every tint and in both themes) and the focus-ring appended LAST so a consumer class
+     can't merge it away. The static span carries no focus state. -->
 {#if href}
   <!-- eslint-disable svelte/no-navigation-without-resolve -- a generic library control forwards the consumer's arbitrary href verbatim; resolve() is for an app's own route links, not here. -->
   <a

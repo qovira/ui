@@ -11,9 +11,8 @@
   let { class: klass, children, ...rest }: Props = $props();
 </script>
 
-<!-- A calm table: comfortable density, hairline row rules, no zebra/grid noise.
-     Wrapped in a horizontal-scroll container so a wide table stays usable on
-     narrow viewports without forcing the page to scroll. -->
+<!-- A calm table: comfortable density, hairline row rules, no zebra/grid noise. Wrapped in a horizontal-scroll
+     container so a wide table stays usable on narrow viewports without forcing the page to scroll. -->
 <div class="w-full overflow-x-auto">
   <table class={cn("w-full border-collapse text-left font-sans text-body text-fg", klass)} {...rest}>
     {@render children()}

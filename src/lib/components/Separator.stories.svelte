@@ -1,15 +1,37 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect } from "storybook/test";
+  import type { ComponentProps } from "svelte";
   import Separator from "./Separator.svelte";
   import Text from "./Text.svelte";
+
+  type Args = ComponentProps<typeof Separator>;
 
   const { Story } = defineMeta({
     title: "Layout/Separator",
     component: Separator,
     tags: ["autodocs"],
+    // Defaults for the args-driven Playground story; the fixtures hardcode their own props and ignore these.
+    args: { orientation: "horizontal", decorative: false },
+    argTypes: {
+      orientation: { control: "inline-radio", options: ["horizontal", "vertical"] },
+      decorative: { control: "boolean" },
+    },
+    parameters: { controls: { include: ["orientation", "decorative"] } },
   });
 </script>
+
+<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
+inert; this story spreads `args`, so editing a control live-updates the preview. -->
+<Story name="Playground">
+  {#snippet template(args: Args)}
+    <div class="bg-surface text-fg p-6">
+      <Text>Left</Text>
+      <Separator {...args} />
+      <Text>Right</Text>
+    </div>
+  {/snippet}
+</Story>
 
 <Story
   name="Horizontal"
@@ -60,6 +82,26 @@
     <!-- Plain block div — intentionally NOT flex/grid — to expose the vertical-collapse bug. -->
     <div class="bg-surface text-fg p-6">
       <Separator orientation="vertical" />
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Daylight" globals={{ theme: "daylight" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg p-6">
+      <Text>Above the line</Text>
+      <Separator class="my-3" />
+      <Text>Below the line</Text>
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Evening" globals={{ theme: "evening" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg p-6">
+      <Text>Above the line</Text>
+      <Separator class="my-3" />
+      <Text>Below the line</Text>
     </div>
   {/snippet}
 </Story>

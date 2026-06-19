@@ -1,15 +1,42 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect } from "storybook/test";
+  import type { ComponentProps } from "svelte";
   import Field from "./Field.svelte";
   import Textarea from "./Textarea.svelte";
+
+  type Args = ComponentProps<typeof Textarea>;
 
   const { Story } = defineMeta({
     title: "Forms/Textarea",
     component: Textarea,
     tags: ["autodocs"],
+    // Defaults for the args-driven Playground story; the fixtures hardcode their own props and ignore these.
+    args: { placeholder: "Add a note…", rows: 3, disabled: false, readonly: false, required: false },
+    argTypes: {
+      placeholder: { control: "text" },
+      rows: { control: "number" },
+      disabled: { control: "boolean" },
+      readonly: { control: "boolean" },
+      required: { control: "boolean" },
+    },
+    // Limit the Controls panel to the user-meaningful scalar attributes the textarea actually reflects.
+    parameters: { controls: { include: ["placeholder", "rows", "disabled", "readonly", "required"] } },
   });
 </script>
+
+<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
+inert; this story spreads `args`, so editing a control live-updates the preview. The textarea is nested in a Field with
+a hardcoded label so axe always has an accessible name regardless of the args. -->
+<Story name="Playground">
+  {#snippet template(args: Args)}
+    <div class="bg-surface text-fg p-6">
+      <Field label="Notes">
+        <Textarea {...args} />
+      </Field>
+    </div>
+  {/snippet}
+</Story>
 
 <!-- Textarea consumes the same Field contract as Input — nested with no props. -->
 <Story
@@ -49,8 +76,18 @@
   {/snippet}
 </Story>
 
-<!-- Daylight, so axe runs the control in both themes. -->
+<!-- Daylight + Evening, so axe runs the control in both themes. -->
 <Story name="Daylight" globals={{ theme: "daylight" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg p-6">
+      <Field label="Notes">
+        <Textarea rows={3} placeholder="Add a note…" />
+      </Field>
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Evening" globals={{ theme: "evening" }}>
   {#snippet template()}
     <div class="bg-surface text-fg p-6">
       <Field label="Notes">

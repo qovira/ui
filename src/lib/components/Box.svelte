@@ -4,11 +4,10 @@
   import { cn } from "../internal/cn.js";
 
   /**
-   * Smoke component for the build/pack pipeline: a styled surface that
-   * exercises the whole shape — `@qovira/theme` semantic utilities, the `cn()`
-   * class merge, `$props` + native-attribute passthrough, and a `children`
-   * snippet. It proves a component authored here renders styled in a consumer.
-   * Real primitives supersede it as the library fills out.
+   * Smoke component for the build/pack pipeline: a styled surface that exercises the whole shape — `@qovira/theme`
+   * semantic utilities, the `cn()` class merge, `$props` + native-attribute passthrough, and a `children` snippet. It
+   * proves a component authored here renders styled in a consumer. Real primitives supersede it as the library fills
+   * out.
    */
   interface Props extends HTMLAttributes<HTMLDivElement> {
     class?: string;

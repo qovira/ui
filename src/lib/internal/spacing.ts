@@ -1,6 +1,5 @@
-// Shared spacing scale for the layout primitives. The brand's 4px base maps 1:1
-// to Tailwind's default spacing step, so the scale (4·8·12·16·20·24·32·40·48·64)
-// is exactly `*-1 *-2 *-3 *-4 *-5 *-6 *-8 *-10 *-12 *-16`. No off-grid values.
+// Shared spacing scale for the layout primitives. The brand's 4px base maps 1:1 to Tailwind's default spacing step, so
+// the scale (4·8·12·16·20·24·32·40·48·64) is exactly `*-1 *-2 *-3 *-4 *-5 *-6 *-8 *-10 *-12 *-16`. No off-grid values.
 
 /** Spacing steps on the brand's scale (1:1 with theme/Tailwind spacing). */
 export type SpacingStep = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16;

@@ -12,8 +12,8 @@
 
   let { toast, ondismiss }: { toast: ToastData; ondismiss: () => void } = $props();
 
-  // Semantic color AND an icon — never color alone. Tint/text pairs are the
-  // theme's AA-verified status pairings; the icon inherits the text color.
+  // Semantic color AND an icon — never color alone. Tint/text pairs are the theme's AA-verified status pairings; the
+  // icon inherits the text color.
   const ICON = {
     success: CheckCircleIcon,
     error: XCircleIcon,
@@ -27,16 +27,14 @@
     info: "bg-tint-info text-fg-info",
   } as const;
 
-  // Auto-dismiss timer that pauses on hover/focus and resumes with the time it
-  // had left (the remaining-time arithmetic lives in, and is unit-tested via,
-  // `dismiss-timer.ts`). The timer captures `ondismiss` once, so `paused` is the
-  // ONLY dependency of the effect below — a sibling toast adding/dismissing
-  // never re-arms this one's timer.
+  // Auto-dismiss timer that pauses on hover/focus and resumes with the time it had left (the remaining-time arithmetic
+  // lives in, and is unit-tested via, `dismiss-timer.ts`). The timer captures `ondismiss` once, so `paused` is the ONLY
+  // dependency of the effect below — a sibling toast adding/dismissing never re-arms this one's timer.
   let paused = $state(false);
   let progress = $state(1);
 
-  // The duration never changes for a toast; capture it once (untrack documents
-  // that, and keeps this off the effect's dependency set).
+  // The duration never changes for a toast; capture it once (untrack documents that, and keeps this off the effect's
+  // dependency set).
   const duration = untrack(() => toast.duration);
   const timer = createDismissTimer(duration, () => ondismiss());
 
@@ -52,12 +50,10 @@
     return () => timer.pause();
   });
 
-  // Drive the progress bar via a rAF loop while the timer is running. The loop
-  // is skipped entirely under prefers-reduced-motion so the bar doesn't spin
-  // needlessly (the bar itself is also hidden via `motion-reduce:hidden`, but
-  // skipping the loop avoids the rAF overhead too). When paused, the rAF is
-  // cancelled so the bar freezes at its current width — the timer is already
-  // paused, keeping both in sync.
+  // Drive the progress bar via a rAF loop while the timer is running. The loop is skipped entirely under
+  // prefers-reduced-motion so the bar doesn't spin needlessly (the bar itself is also hidden via
+  // `motion-reduce:hidden`, but skipping the loop avoids the rAF overhead too). When paused, the rAF is cancelled so
+  // the bar freezes at its current width — the timer is already paused, keeping both in sync.
   $effect(() => {
     if (!showBar) {
       return;
@@ -71,8 +67,7 @@
 
     // Track paused reactively: when the value is true we cancel; when false we start.
     if (paused) {
-      // Bar is frozen — nothing to do; the rAF from the last running phase was
-      // already cancelled by the cleanup below.
+      // Bar is frozen — nothing to do; the rAF from the last running phase was already cancelled by the cleanup below.
       return;
     }
 
@@ -90,9 +85,8 @@
   });
 </script>
 
-<!-- pointer-events-auto: the stack container is click-through when empty; each
-     toast re-enables its own interactions. relative + overflow-hidden creates the
-     stacking context for the absolute progress bar. -->
+<!-- pointer-events-auto: the stack container is click-through when empty; each toast re-enables its own interactions.
+     relative + overflow-hidden creates the stacking context for the absolute progress bar. -->
 <div
   role="status"
   class={cn(
@@ -106,24 +100,22 @@
 >
   <Icon icon={ICON[toast.variant]} decorative />
   <span class="text-small font-sans">{toast.message}</span>
-  <!-- Inherits the toast's semantic text color via currentColor; meets the
-       hit-target floor and keeps the focus ring. -->
+  <!-- Inherits the toast's semantic text color via currentColor; meets the hit-target floor and keeps the focus
+       ring. -->
   <button
     type="button"
     aria-label="Dismiss"
-    class="ml-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md hover:bg-fg/5 focus-ring"
+    class="ml-auto inline-flex size-10 shrink-0 items-center justify-center rounded-md hover:bg-fg/5 focus-ring"
     onclick={ondismiss}
   >
     <Icon icon={XIcon} decorative />
   </button>
 
   {#if showBar}
-    <!-- aria-hidden: the bar is a visual affordance only; the live-region
-         announcement and dismiss button cover the accessible experience.
-         motion-reduce:hidden: hidden for users who prefer reduced motion (the
-         toast still auto-dismisses; only the visual bar is suppressed).
-         GPU-composited scaleX is used rather than animating width, so the
-         deplete does not trigger layout. -->
+    <!-- aria-hidden: the bar is a visual affordance only; the live-region announcement and dismiss button cover the
+         accessible experience. motion-reduce:hidden: hidden for users who prefer reduced motion (the toast still
+         auto-dismisses; only the visual bar is suppressed). GPU-composited scaleX is used rather than animating width,
+         so the deplete does not trigger layout. -->
     <div
       aria-hidden="true"
       class="motion-reduce:hidden absolute bottom-0 left-0 h-1 w-full origin-left bg-current/30"

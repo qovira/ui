@@ -38,12 +38,10 @@
     "inline-flex h-9 w-9 items-center justify-center rounded-md text-fg hover:bg-surface disabled:pointer-events-none disabled:opacity-40";
 </script>
 
-<!-- Bits owns behavior: page computation (with ellipses), keyboard navigation,
-     and the current-page `data-selected`/`aria-label` wiring on each page
-     button. The Root renders a plain <div>, so the wrapper provides the
-     navigation landmark. Prev/Next are icon-only, so they carry their own
-     accessible names. `focus-ring` is appended last on every button so a
-     consumer class can't strip it. -->
+<!-- Bits owns behavior: page computation (with ellipses), keyboard navigation, and the current-page
+     `data-selected`/`aria-label` wiring on each page button. The Root renders a plain <div>, so the wrapper provides
+     the navigation landmark. Prev/Next are icon-only, so they carry their own accessible names. `focus-ring` is
+     appended last on every button so a consumer class can't strip it. -->
 <nav aria-label={navLabel}>
   <Pagination.Root
     {count}

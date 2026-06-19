@@ -4,9 +4,8 @@
 
   let { icon: IconCmp, size = 20, label, decorative, class: klass, ...rest }: IconProps = $props();
 
-  // Weight is locked to Regular and color to currentColor (brand iconography
-  // rules); icons inherit the surrounding text color. Only size and the
-  // accessible-name decision are caller-controlled.
+  // Weight is locked to Regular and color to currentColor (brand iconography rules); icons inherit the surrounding text
+  // color. Only size and the accessible-name decision are caller-controlled.
   const a11y = $derived(decorative ? { "aria-hidden": true } : { "aria-label": label });
 </script>
 

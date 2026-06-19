@@ -10,8 +10,7 @@
   let { children, class: klass }: Props = $props();
 </script>
 
-<!-- A labelled group of items (role=group). Pair with `Menu.GroupHeading`, which
-     names it via aria-labelledby. -->
+<!-- A labelled group of items (role=group). Pair with `Menu.GroupHeading`, which names it via aria-labelledby. -->
 <DropdownMenu.Group class={klass}>
   {@render children()}
 </DropdownMenu.Group>

@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { HTMLButtonAttributes } from "svelte/elements";
-  import SpinnerIcon from "phosphor-svelte/lib/SpinnerIcon";
   import { cn } from "../internal/cn.js";
   import Icon from "../icons/Icon.svelte";
+  import Spinner from "./Spinner.svelte";
   import type { IconComponent } from "../icons/types.js";
   import { VARIANTS, type ButtonVariant, type IconButtonSize } from "./button-variants.js";
 
@@ -10,9 +10,8 @@
     /** The Phosphor icon to render. */
     icon: IconComponent;
     /**
-     * Accessible name for the action — REQUIRED. An icon-only control has no
-     * visible text, so the label is its only accessible name. It sits on the
-     * `<button>`; the icon itself is `aria-hidden`.
+     * Accessible name for the action — REQUIRED. An icon-only control has no visible text, so the label is its only
+     * accessible name. It sits on the `<button>`; the icon itself is `aria-hidden`.
      */
     label: string;
     variant?: ButtonVariant;
@@ -34,9 +33,8 @@
     ...rest
   }: Props = $props();
 
-  // Square hit target: `md` meets the 40px desktop floor, `touch` the 44px
-  // touch floor (both named in the design's a11y guardrails). `focus-ring` is
-  // appended LAST so `class` can never strip it.
+  // Square hit target: `md` meets the 40px desktop floor, `touch` the 44px touch floor (both named in the design's a11y
+  // guardrails). `focus-ring` is appended LAST so `class` can never strip it.
   const BASE =
     "inline-flex items-center justify-center rounded-md select-none " +
     "transition-[background,box-shadow,transform] duration-micro ease-qovira " +
@@ -48,8 +46,8 @@
   const classes = $derived(cn(BASE, SIZE[size], VARIANTS[variant], klass, "focus-ring"));
 </script>
 
-<!-- `type="button"` precedes ...rest so an icon button defaults to non-submitting
-     (a bare <button> defaults to type="submit"), still overridable via ...rest. -->
+<!-- `type="button"` precedes ...rest so an icon button defaults to non-submitting (a bare <button> defaults to
+     type="submit"), still overridable via ...rest. -->
 <button
   class={classes}
   type="button"
@@ -58,5 +56,11 @@
   aria-label={label}
   {...loading ? { "aria-busy": "true" } : {}}
 >
-  <Icon icon={loading ? SpinnerIcon : icon} size={ICON_PX[size]} decorative class={loading ? "animate-spin" : ""} />
+  {#if loading}
+    <!-- The signature Spinner, in `current` tone so it inherits the button's text color (visible on every fill), and
+         decorative since the button already carries aria-busy + the aria-label. -->
+    <Spinner size="sm" tone="current" decorative />
+  {:else}
+    <Icon {icon} size={ICON_PX[size]} decorative />
+  {/if}
 </button>

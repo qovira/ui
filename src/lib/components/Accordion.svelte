@@ -10,8 +10,7 @@
     items: AccordionItem[];
     /** `single` (one open at a time, default) or `multiple`. */
     type?: "single" | "multiple";
-    /** Open value(s) — a `string` for single, `string[]` for multiple.
-     *  `bind:value` round-trips. */
+    /** Open value(s) — a `string` for single, `string[]` for multiple. `bind:value` round-trips. */
     value?: string | string[];
     /** Disables every section. */
     disabled?: boolean;
@@ -34,14 +33,11 @@
   const listClass = $derived(cn("divide-y divide-border border-y border-border", klass));
 </script>
 
-<!-- Bits owns behavior: the heading/button/region ARIA, aria-expanded, and
-     keyboard expand/collapse + roving focus. The wrapper dresses the parts in
-     @qovira/theme utilities. The Root is branched on `type` so the single/
-     multiple value union narrows to a concrete literal; the rows are shared via
-     the `rows` snippet. Value is one-way + writeback (not bind:value) because
-     the union won't narrow under bind — `bind:value` on THIS component still
-     round-trips. The caret rotation is the disclosure motion (honors
-     prefers-reduced-motion via the theme's global reset). `focus-ring` is
+<!-- Bits owns behavior: the heading/button/region ARIA, aria-expanded, and keyboard expand/collapse + roving focus. The
+     wrapper dresses the parts in @qovira/theme utilities. The Root is branched on `type` so the single/ multiple value
+     union narrows to a concrete literal; the rows are shared via the `rows` snippet. Value is one-way + writeback (not
+     bind:value) because the union won't narrow under bind — `bind:value` on THIS component still round-trips. The caret
+     rotation is the disclosure motion (honors prefers-reduced-motion via the theme's global reset). `focus-ring` is
      appended last on the trigger so a consumer class can't strip it. -->
 {#snippet rows()}
   {#each items as item (item.value)}
@@ -51,7 +47,7 @@
           class={cn(
             "group flex flex-1 items-center justify-between gap-2 py-4 text-left",
             "text-body font-sans font-medium text-fg",
-            "data-[disabled]:pointer-events-none data-[disabled]:opacity-40",
+            "data-disabled:pointer-events-none data-disabled:opacity-40",
             "focus-ring",
           )}
         >

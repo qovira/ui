@@ -12,9 +12,8 @@
   let { open = $bindable(false), children, onOpenChange }: Props = $props();
 </script>
 
-<!-- Bits owns the menu behavior: roving focus, type-ahead, keyboard nav, the
-     menu/menuitem ARIA roles, portalling and collision handling on the content.
-     This wrapper only forwards bind:open. -->
+<!-- Bits owns the menu behavior: roving focus, type-ahead, keyboard nav, the menu/menuitem ARIA roles, portalling and
+     collision handling on the content. This wrapper only forwards bind:open. -->
 <DropdownMenu.Root bind:open {...onOpenChange ? { onOpenChange } : {}}>
   {@render children()}
 </DropdownMenu.Root>

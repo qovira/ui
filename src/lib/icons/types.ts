@@ -4,11 +4,10 @@ import type { IconComponentProps } from "phosphor-svelte";
 /** A Phosphor icon component — use the curated re-exports from `@qovira/ui`. */
 export type IconComponent = Component<IconComponentProps>;
 
-// Native svg attributes Icon forwards onto its root, minus the ones it owns:
-// weight/color are brand-locked, size is constrained to 20/24, class is merged
-// via cn(), and every attribute that contributes an accessible name (or hides
-// the element, or changes its role) is excluded — those are driven solely by
-// the label/decorative decision below, so a caller can't quietly bypass it.
+// Native svg attributes Icon forwards onto its root, minus the ones it owns: weight/color are brand-locked, size is
+// constrained to 20/24, class is merged via cn(), and every attribute that contributes an accessible name (or hides the
+// element, or changes its role) is excluded — those are driven solely by the label/decorative decision below, so a
+// caller can't quietly bypass it.
 type ForwardedAttrs = Omit<
   IconComponentProps,
   | "weight"
@@ -24,9 +23,8 @@ type ForwardedAttrs = Omit<
 >;
 
 /**
- * `<Icon>` forces an explicit accessible-name decision: an icon either carries
- * a `label` (meaningful — announced to assistive tech) or is `decorative`
- * (hidden from it). Exactly one is required — never neither, never both.
+ * `<Icon>` forces an explicit accessible-name decision: an icon either carries a `label` (meaningful — announced to
+ * assistive tech) or is `decorative` (hidden from it). Exactly one is required — never neither, never both.
  */
 export type IconProps = {
   /** The Phosphor icon to render (e.g. `CheckIcon`). */

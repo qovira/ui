@@ -12,18 +12,16 @@ const config: StorybookConfig = {
     "@storybook/addon-a11y", // axe, enforced in the test pass (see preview.ts)
     "@storybook/addon-vitest", // runs every story as a Vitest Browser-Mode test
   ],
-  // Same phosphor-svelte fix as vite.config.ts: rewrite barrel imports to direct
-  // sub-path .svelte imports so icons compile on the one Svelte runtime. Without
-  // this, Storybook's dep optimizer prebundles phosphor-svelte against a second
-  // runtime and every <Icon> story crashes on render. `enforce: "post"` runs it
-  // after Svelte/TS compilation so it parses emitted JS, not raw source.
+  // Same phosphor-svelte fix as vite.config.ts: rewrite barrel imports to direct sub-path .svelte imports so icons
+  // compile on the one Svelte runtime. Without this, Storybook's dep optimizer prebundles phosphor-svelte against a
+  // second runtime and every <Icon> story crashes on render. `enforce: "post"` runs it after Svelte/TS compilation so
+  // it parses emitted JS, not raw source.
   viteFinal: (viteConfig) =>
     mergeConfig(viteConfig, {
       plugins: [{ ...sveltePhosphorOptimize(), enforce: "post" as const }],
-      // Keep our Svelte-source deps (phosphor icons, Bits UI primitives) OUT of
-      // the dep optimizer so vite-plugin-svelte compiles them on the project's
-      // Svelte — a prebundled copy ships a second runtime and crashes on render —
-      // and dedupe Svelte for good measure.
+      // Keep our Svelte-source deps (phosphor icons, Bits UI primitives) OUT of the dep optimizer so vite-plugin-svelte
+      // compiles them on the project's Svelte — a prebundled copy ships a second runtime and crashes on render — and
+      // dedupe Svelte for good measure.
       optimizeDeps: { exclude: ["phosphor-svelte", "bits-ui"] },
       resolve: { dedupe: ["svelte"] },
     }),

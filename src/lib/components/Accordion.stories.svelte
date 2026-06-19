@@ -1,13 +1,24 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect, userEvent, waitFor } from "storybook/test";
+  import type { ComponentProps } from "svelte";
   import Accordion from "./Accordion.svelte";
   import type { AccordionItem } from "./nav-types.js";
+
+  type Args = Omit<ComponentProps<typeof Accordion>, "items">;
 
   const { Story } = defineMeta({
     title: "Navigation/Accordion",
     component: Accordion,
     tags: ["autodocs"],
+    // Defaults for the args-driven Playground story; the fixtures hardcode their own props and ignore these.
+    args: { type: "single", disabled: false },
+    argTypes: {
+      type: { control: "inline-radio", options: ["single", "multiple"] },
+      disabled: { control: "boolean" },
+    },
+    // Limit the Controls panel to scalar props — items is a data array, value/section/onValueChange aren't scalars.
+    parameters: { controls: { include: ["type", "disabled"] } },
   });
 
   const items: AccordionItem[] = [
@@ -22,8 +33,22 @@
   let openMany = $state<string | string[]>([]);
 </script>
 
-<!-- Single-open: keyboard expand/collapse with correct heading/button/region
-     ARIA; bind:value round-trips. -->
+<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
+inert; this story spreads `args`, so editing a control live-updates the preview. `items` is a data array and `section`
+is a snippet, so they're supplied here and the playground drives type and disabled. -->
+<Story name="Playground">
+  {#snippet template(args: Args)}
+    <div class="bg-surface text-fg w-96 p-6">
+      <Accordion {items} {...args}>
+        {#snippet section(item)}
+          <p>The {item.title} answer.</p>
+        {/snippet}
+      </Accordion>
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Single-open: keyboard expand/collapse with correct heading/button/region ARIA; bind:value round-trips. -->
 <Story
   name="Single"
   play={async ({ canvas }) => {
@@ -104,6 +129,18 @@
 </Story>
 
 <Story name="Daylight" globals={{ theme: "daylight" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg w-96 p-6">
+      <Accordion {items} value="what">
+        {#snippet section(item)}
+          <p>The {item.title} answer.</p>
+        {/snippet}
+      </Accordion>
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Evening" globals={{ theme: "evening" }}>
   {#snippet template()}
     <div class="bg-surface text-fg w-96 p-6">
       <Accordion {items} value="what">

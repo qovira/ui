@@ -2,13 +2,27 @@
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import { expect, userEvent } from "storybook/test";
   import { CalendarDate, CalendarDateTime } from "@internationalized/date";
+  import type { ComponentProps } from "svelte";
   import DateField from "./DateField.svelte";
   import Field from "./Field.svelte";
+
+  type Args = ComponentProps<typeof DateField>;
 
   const { Story } = defineMeta({
     title: "Forms/DateField",
     component: DateField,
     tags: ["autodocs"],
+    // Defaults for the args-driven Playground story; the fixtures hardcode their own props and ignore these.
+    args: { disabled: false, readonly: false, granularity: "day", hourCycle: 24, locale: "en-GB" },
+    argTypes: {
+      granularity: { control: "select", options: ["day", "hour", "minute", "second"] },
+      hourCycle: { control: "inline-radio", options: [12, 24] },
+      locale: { control: "select", options: ["en-GB", "en-US", "fr-FR", "de-DE", "ja-JP"] },
+      disabled: { control: "boolean" },
+      readonly: { control: "boolean" },
+    },
+    // Limit the Controls panel to props with a clean native control — value and the bounds are DateValue objects.
+    parameters: { controls: { include: ["granularity", "hourCycle", "locale", "disabled", "readonly"] } },
   });
 </script>
 
@@ -20,8 +34,18 @@
   let dateFieldError = $state<string | undefined>("Enter a valid date.");
 </script>
 
-<!-- Segmented entry: each part is a spinbutton; stepping the day segment with
-     the keyboard round-trips bind:value. -->
+<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
+inert; this story spreads `args`, so editing a control live-updates the preview. `value` is a DateValue with no native
+control, so it's left to the fixtures — this playground drives granularity, hourCycle, locale, disabled, and readonly. -->
+<Story name="Playground">
+  {#snippet template(args: Args)}
+    <div class="bg-surface text-fg p-6">
+      <DateField aria-label="Due date" {...args} />
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Segmented entry: each part is a spinbutton; stepping the day segment with the keyboard round-trips bind:value. -->
 <Story
   name="Entry"
   play={async ({ canvas }) => {
@@ -73,8 +97,8 @@
   name="Disabled"
   play={async ({ canvas }) => {
     await expect(canvas.getByRole("spinbutton", { name: /day/i })).toHaveAttribute("aria-disabled", "true");
-    // F18: the input group must be visually dimmed — data-[disabled]:opacity-50 on FIELD_CONTROL_BASE
-    // is what achieves this (CSS :disabled never matches a <div role="group">).
+    // F18: the input group must be visually dimmed — data-[disabled]:opacity-50 on FIELD_CONTROL_BASE is what achieves
+    // this (CSS :disabled never matches a <div role="group">).
     const group = canvas.getByRole("group", { name: /Due date/ });
     await expect(getComputedStyle(group).opacity).toBe("0.5");
   }}
@@ -86,8 +110,8 @@
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the segment group inherits the a11y contract. Stepping any
-     segment fires onValueChange and clears the error. -->
+<!-- Inside a Field, the segment group inherits the a11y contract. Stepping any segment fires onValueChange and clears
+the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
@@ -115,14 +139,6 @@
           }}
         />
       </Field>
-    </div>
-  {/snippet}
-</Story>
-
-<Story name="Daylight" globals={{ theme: "daylight" }}>
-  {#snippet template()}
-    <div class="bg-surface text-fg p-6">
-      <DateField aria-label="Due date" value={new CalendarDate(2026, 6, 15)} />
     </div>
   {/snippet}
 </Story>
@@ -167,6 +183,22 @@
   {#snippet template()}
     <div class="bg-surface text-fg p-6">
       <DateField aria-label="Due date" locale="en-US" value={new CalendarDate(2026, 6, 15)} />
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Daylight" globals={{ theme: "daylight" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg p-6">
+      <DateField aria-label="Due date" value={new CalendarDate(2026, 6, 15)} />
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Evening" globals={{ theme: "evening" }}>
+  {#snippet template()}
+    <div class="bg-surface text-fg p-6">
+      <DateField aria-label="Due date" value={new CalendarDate(2026, 6, 15)} />
     </div>
   {/snippet}
 </Story>
