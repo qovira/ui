@@ -29,9 +29,12 @@
 
   // Shared shape from the theme's Button recipe; `text-button` carries no font-family, so the wrapper pairs Figtree
   // (font-sans) like the type primitives do. `focus-ring` is appended LAST in cn() below (not here) so the consumer's
-  // `class` can never merge it away — the most-enforced a11y rule.
+  // `class` can never merge it away — the most-enforced a11y rule. The transparent border equalizes box geometry across
+  // variants: only `secondary` carries a visible border, and since the button's width is content-driven, that 1px each
+  // side would otherwise make it ~2px wider — a layout jump when toggling to/from secondary. The secondary variant just
+  // recolors this border to `border-divider` (tailwind-merge keeps the later color).
   const BASE =
-    "inline-flex items-center justify-center gap-2 rounded-md font-sans text-button h-10 px-4 " +
+    "inline-flex items-center justify-center gap-2 rounded-md border border-transparent font-sans text-button h-10 px-4 " +
     "select-none transition-[background,box-shadow,transform] duration-micro ease-qovira " +
     "disabled:opacity-50 disabled:pointer-events-none";
 

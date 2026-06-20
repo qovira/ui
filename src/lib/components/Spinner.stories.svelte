@@ -23,9 +23,7 @@
   });
 </script>
 
-<!-- Controls playground: spreads `args`, so editing a control live-updates the preview. The fixtures below hardcode
-their props for deterministic tests, so their Controls panel is inert. Drives size, label, showLabel, tone, and the
-decorative flag. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-10">
@@ -34,10 +32,7 @@ decorative flag. -->
   {/snippet}
 </Story>
 
-<!-- The signature lamp-glow loader, now with accent-colored radiating rings (ripple) that read clearly against both
-     Daylight (cream) and Evening (espresso) backgrounds. Meaning isn't trapped in motion: role="status" announces
-     accessible text (visually hidden by default) and the glow/rings are aria-hidden. Under prefers-reduced-motion the
-     rings are hidden (display: none) for a clean static dot. -->
+<!-- The signature lamp-glow loader, now with accent-colored radiating rings (ripple) that read clearly against both Daylight (cream) and Evening (espresso) backgrounds. Meaning isn't trapped in motion: role="status" announces accessible text (visually hidden by default) and the glow/rings are aria-hidden. Under prefers-reduced-motion the rings are hidden (display: none) for a clean static dot. -->
 <Story
   name="Loading"
   play={async ({ canvas }) => {
@@ -88,9 +83,7 @@ decorative flag. -->
   {/snippet}
 </Story>
 
-<!-- The `current` tone drops the honey fill/halo and inherits the surrounding text color, so the dot and rings stay
-     visible on a colored fill (here honey) where the accent spinner would vanish. This is what Button uses for its
-     loading state; the motion (pulse + ripple) is unchanged. -->
+<!-- The `current` tone drops the honey fill/halo and inherits the surrounding text color, so the dot and rings stay visible on a colored fill (here honey) where the accent spinner would vanish. This is what Button uses for its loading state; the motion (pulse + ripple) is unchanged. -->
 <Story
   name="On a colored fill"
   play={async ({ canvas }) => {

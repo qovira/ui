@@ -65,6 +65,18 @@
   const listboxName = $derived(
     ariaLabel ? { "aria-label": ariaLabel } : aria.labelId ? { "aria-labelledby": aria.labelId } : {},
   );
+
+  // Render the trigger's selected text ourselves from our own items + value. Bits' `Select.Value` resolves labels from
+  // the mounted `Select.Item`s, which unmount when the listbox closes; its persistent value→label fallback (the Root
+  // `items` prop) is single-select only. So for `type="multiple"` it would show the raw committed values once closed
+  // and the labels only while open. Deriving the text here is correct for both types in every open state.
+  const selectedValues = $derived(Array.isArray(value) ? value : typeof value === "string" && value ? [value] : []);
+  const triggerLabel = $derived(
+    items
+      .filter((item) => selectedValues.includes(item.value))
+      .map((item) => item.label)
+      .join(", "),
+  );
 </script>
 
 <!-- Bits owns listbox behavior: roving focus, type-ahead, ARIA, portalling. The wrapper dresses its parts in
@@ -79,7 +91,7 @@
     aria-describedby={aria.ariaDescribedby}
     class={cn(FIELD_CONTROL_BASE, "flex h-10 items-center justify-between gap-2 text-left", klass, "focus-ring")}
   >
-    <Select.Value {placeholder} class="truncate data-placeholder:text-fg-muted" />
+    <span class={cn("truncate", !triggerLabel && "text-fg-muted")}>{triggerLabel || placeholder}</span>
     <CaretUpDownIcon size={18} color="currentColor" aria-hidden="true" class="shrink-0 text-fg-muted" />
   </Select.Trigger>
   <Select.Portal {...portalTo ? { to: portalTo } : {}}>

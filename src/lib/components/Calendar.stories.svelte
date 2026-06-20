@@ -33,9 +33,7 @@
   let calFieldError = $state<string | undefined>("Choose a valid date.");
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. `value` is a DateValue with no native
-control, so it's left to the fixtures — this playground drives type, disabled, weekdayFormat, and locale. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <!-- Remount on any control change: bits-ui's calendar throws on certain in-place prop updates (its month/year
@@ -48,8 +46,7 @@ control, so it's left to the fixtures — this playground drives type, disabled,
   {/snippet}
 </Story>
 
-<!-- A selected date renders aria-selected; clicking another day and keyboard navigation (ArrowRight + Enter) both
-round-trip through bind:value. -->
+<!-- A selected date renders aria-selected; clicking another day and keyboard navigation (ArrowRight + Enter) both round-trip through bind:value. -->
 <Story
   name="Selected"
   play={async ({ canvas }) => {
@@ -72,15 +69,6 @@ round-trip through bind:value. -->
       <p data-testid="value" class="text-small font-sans text-fg-muted">
         {selected?.toString() ?? "none"}
       </p>
-    </div>
-  {/snippet}
-</Story>
-
-<!-- No value: the grid opens on the current month (placeholder defaults to today). -->
-<Story name="Empty">
-  {#snippet template()}
-    <div class="bg-surface text-fg inline-block p-6">
-      <Calendar aria-label="Pick a date" />
     </div>
   {/snippet}
 </Story>
@@ -157,8 +145,7 @@ round-trip through bind:value. -->
   {/snippet}
 </Story>
 
-<!-- Locale default: the standalone Calendar defaults to en-GB, so the week starts on Monday. The first weekday header
-cell must read "Mon", not "Sun". -->
+<!-- Locale default: the standalone Calendar defaults to en-GB, so the week starts on Monday. The first weekday header cell must read "Mon", not "Sun". -->
 <Story
   name="Locale default (Monday-first)"
   play={async ({ canvas }) => {
@@ -175,8 +162,7 @@ cell must read "Mon", not "Sun". -->
   {/snippet}
 </Story>
 
-<!-- Narrow weekday format collapses the headers to single letters (M T W T F S S), several of which repeat — so the
-weekday header row must key by position, not by the non-unique label, else Svelte throws each_key_duplicate. -->
+<!-- Narrow weekday format collapses the headers to single letters (M T W T F S S), several of which repeat — so the weekday header row must key by position, not by the non-unique label, else Svelte throws each_key_duplicate. -->
 <Story
   name="Narrow weekday format"
   play={async ({ canvas }) => {
@@ -193,10 +179,7 @@ weekday header row must key by position, not by the non-unique label, else Svelt
   {/snippet}
 </Story>
 
-<!-- Layout stability: the grid always renders six week-rows (42 day cells), even for a month that naturally fits in
-four. February 2021 starts on a Monday and ends on a Sunday — exactly four weeks — so without fixed weeks it would be
-two rows shorter than its neighbours and the calendar's height would jump as you page through months. The padding days
-come from the adjacent months. -->
+<!-- Layout stability: the grid always renders six week-rows (42 day cells), even for a month that naturally fits in four. February 2021 starts on a Monday and ends on a Sunday — exactly four weeks — so without fixed weeks it would be two rows shorter than its neighbours and the calendar's height would jump as you page through months. The padding days come from the adjacent months. -->
 <Story
   name="Fixed six-week grid"
   play={async ({ canvas }) => {
@@ -211,9 +194,7 @@ come from the adjacent months. -->
   {/snippet}
 </Story>
 
-<!-- Clicking a day from a leading/trailing adjacent month selects it and snaps the view to that month (and year, when
-it crosses a December boundary). June 2026's grid shows 1 July as a trailing outside-month day; clicking it both selects
-it and pages the calendar to July 2026. -->
+<!-- Clicking a day from a leading/trailing adjacent month selects it and snaps the view to that month (and year, when it crosses a December boundary). June 2026's grid shows 1 July as a trailing outside-month day; clicking it both selects it and pages the calendar to July 2026. -->
 <Story
   name="Adjacent-month days navigate"
   play={async ({ canvas }) => {

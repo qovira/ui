@@ -23,9 +23,7 @@
   });
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. An Input is nested as the wrapped
-control (it inherits the contract from context) so the field renders a real, labelled control. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-6">
@@ -36,8 +34,7 @@ control (it inherits the contract from context) so the field renders a real, lab
   {/snippet}
 </Story>
 
-<!-- The Input is nested with NO id/aria props — it inherits the whole contract from Field via context (the "no
-     prop-drilling" requirement). -->
+<!-- The Input is nested with NO id/aria props — it inherits the whole contract from Field via context (the "no prop-drilling" requirement). -->
 <Story
   name="Default"
   play={async ({ canvas }) => {
@@ -79,8 +76,7 @@ control (it inherits the contract from context) so the field renders a real, lab
   {/snippet}
 </Story>
 
-<!-- Error state: aria-invalid + a real message carry the meaning; the red border only reinforces (never color
-     alone). -->
+<!-- Error state: aria-invalid + a real message carry the meaning; the red border only reinforces (never color alone). -->
 <Story
   name="Invalid"
   play={async ({ canvas }) => {

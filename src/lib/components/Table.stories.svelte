@@ -42,9 +42,7 @@
   }
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. TableRoot has no scalar props (it's a
-pure layout shell), so the Controls panel is empty; the structured table content lives in the template. -->
+<!-- Table has no scalar props, so the Controls panel is empty; here for uniformity. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg max-w-2xl p-6">
@@ -78,9 +76,7 @@ pure layout shell), so the Controls panel is empty; the structured table content
   {/snippet}
 </Story>
 
-<!-- A calm, comfortable-density table with correct header semantics (`<th scope="col">`, a `<caption>`), composing
-     Avatar and Badge into cells. The first column offers a minimal sort toggle: aria-sort on the header, a caret, and
-     an onsort callback. -->
+<!-- A calm, comfortable-density table with correct header semantics (`<th scope="col">`, a `<caption>`), composing Avatar and Badge into cells. The first column offers a minimal sort toggle: aria-sort on the header, a caret, and an onsort callback. -->
 <Story
   name="Members"
   play={async ({ canvas }) => {

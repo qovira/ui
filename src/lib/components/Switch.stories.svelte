@@ -29,9 +29,7 @@
   let switchFieldError = $state<string | undefined>("This setting needs review.");
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. The switch is wrapped in a label so axe
-always has an accessible name regardless of the args. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
@@ -66,8 +64,7 @@ always has an accessible name regardless of the args. -->
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the switch inherits the a11y contract without prop-drilling. Toggling the switch on constitutes a
-     valid action — it clears the error. -->
+<!-- Inside a Field, the switch inherits the a11y contract without prop-drilling. Toggling the switch on constitutes a valid action — it clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
@@ -97,10 +94,7 @@ always has an accessible name regardless of the args. -->
   {/snippet}
 </Story>
 
-<!-- TDD geometry guard: renders one unchecked and one controlled-checked switch with no toggling/waiting, so transition
-     timing cannot affect the result. getBoundingClientRect measures the actual rendered gap between the thumb edge and
-     the near track edge in both states; they must be equal within 0.6px. This story FAILS with translate-x-5 (right gap
-     ~4px vs left gap ~2px) and PASSES after translate-x-5.5. -->
+<!-- TDD geometry guard: renders one unchecked and one controlled-checked switch with no toggling/waiting, so transition timing cannot affect the result. getBoundingClientRect measures the actual rendered gap between the thumb edge and the near track edge in both states; they must be equal within 0.6px. This story FAILS with translate-x-5 (right gap ~4px vs left gap ~2px) and PASSES after translate-x-5.5. -->
 <Story
   name="Thumb padding symmetry"
   play={async ({ canvas }) => {
@@ -137,9 +131,7 @@ always has an accessible name regardless of the args. -->
   {/snippet}
 </Story>
 
-<!-- TDD guard: assert the :enabled-gated hover classes are present on the root element. Static Tailwind classes are
-     always in the rendered class attribute, so classList checks are the reliable signal here. These assertions must
-     FAIL before the hover classes are added and PASS after. -->
+<!-- TDD guard: assert the :enabled-gated hover classes are present on the root element. Static Tailwind classes are always in the rendered class attribute, so classList checks are the reliable signal here. These assertions must FAIL before the hover classes are added and PASS after. -->
 <Story
   name="Hover classes"
   play={async ({ canvas }) => {
@@ -168,6 +160,37 @@ always has an accessible name regardless of the args. -->
       </label>
       <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
         <Switch disabled />Disabled
+      </label>
+    </div>
+  {/snippet}
+</Story>
+
+<!-- TDD contrast guard (Evening, the worst case): the off-state thumb sits on the track, and that knob position is the state signal, so it must stay perceivable. WCAG 1.4.11 wants ≥3:1 for non-text UI parts. With a surface thumb on a surface-raised track these are adjacent tiers (~1.2:1) and the knob vanishes; this FAILS before the fg-muted off-thumb and PASSES after. -->
+<Story
+  name="Off-state thumb contrast"
+  globals={{ theme: "evening" }}
+  play={async ({ canvas }) => {
+    const off = canvas.getByRole("switch", { name: "Off" });
+    const thumb = off.querySelector("[data-switch-thumb]") as HTMLElement;
+    const parse = (c: string) => (c.match(/\d+/g) ?? []).map(Number);
+    const lin = (v: number) => {
+      const s = v / 255;
+      return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+    };
+    const lum = ([r, g, b]: number[]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+    const ratio = (a: number[], b: number[]) => {
+      const [hi, lo] = [lum(a), lum(b)].sort((m, n) => n - m);
+      return (hi + 0.05) / (lo + 0.05);
+    };
+    const trackBg = parse(getComputedStyle(off).backgroundColor);
+    const thumbBg = parse(getComputedStyle(thumb).backgroundColor);
+    await expect(ratio(thumbBg, trackBg)).toBeGreaterThanOrEqual(3);
+  }}
+>
+  {#snippet template()}
+    <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
+      <label class="inline-flex items-center gap-2 text-body font-sans text-fg">
+        <Switch />Off
       </label>
     </div>
   {/snippet}

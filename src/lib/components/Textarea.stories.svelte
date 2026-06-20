@@ -25,9 +25,7 @@
   });
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. The textarea is nested in a Field with
-a hardcoded label so axe always has an accessible name regardless of the args. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-6">

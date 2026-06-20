@@ -21,9 +21,7 @@
   const sleep = (ms: number) => new Promise((resolve) => globalThis.setTimeout(resolve, ms));
 </script>
 
-<!-- Controls playground: spreads `args` to stay uniform with the rest of the library, but ToastProvider exposes no
-user-meaningful scalar props, so its Controls panel is empty. Click a button to fire a toast through the imperative API;
-the fixtures below hardcode their props for deterministic tests. -->
+<!-- ToastProvider has no scalar props; click a button to fire a toast. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <ToastProvider portalTo="#toast-host-playground" {...args}>
@@ -37,8 +35,7 @@ the fixtures below hardcode their props for deterministic tests. -->
   {/snippet}
 </Story>
 
-<!-- The imperative API (called from a handler — i.e. outside any component's context) renders toasts through the
-     provider. Left visible so axe checks them (Evening here, Daylight below). -->
+<!-- The imperative API (called from a handler — i.e. outside any component's context) renders toasts through the provider. Left visible so axe checks them (Evening here, Daylight below). -->
 <Story
   name="Variants"
   play={async ({ canvas }) => {

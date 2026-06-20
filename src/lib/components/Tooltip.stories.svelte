@@ -31,9 +31,7 @@
   // the scoped `canvas` sees it.
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. `open` defaults true so the tip shows
-without a hover/focus interaction; the trigger and tip content are snippets, left out of the controls. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div id="tip-host-playground" class="bg-surface text-fg p-12">
@@ -47,9 +45,7 @@ without a hover/focus interaction; the trigger and tip content are snippets, lef
   {/snippet}
 </Story>
 
-<!-- The trigger is a real Button carrying its own label ("Save") — the tooltip only supplements it, never being the
-     lone carrier of meaning. Bits shows the tip on hover AND keyboard focus, and wires the trigger's
-     aria-describedby. -->
+<!-- The trigger is a real Button carrying its own label ("Save") — the tooltip only supplements it, never being the lone carrier of meaning. Bits shows the tip on hover AND keyboard focus, and wires the trigger's aria-describedby. -->
 <Story
   name="Hover and focus"
   play={async ({ canvas }) => {

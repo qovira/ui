@@ -32,9 +32,7 @@
   let radioFieldError = $state<string | undefined>("Choose a plan to continue.");
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. A hardcoded `aria-label` names the
-group (outside the spread) and three RadioItems give it real options to render. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-6">
@@ -71,8 +69,7 @@ group (outside the spread) and three RadioItems give it real options to render. 
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the group names itself from the Field label (aria-labelledby) and inherits invalid/describedby — no
-     prop-drilling. Picking a plan clears the error. -->
+<!-- Inside a Field, the group names itself from the Field label (aria-labelledby) and inherits invalid/describedby — no prop-drilling. Picking a plan clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
@@ -109,9 +106,7 @@ group (outside the spread) and three RadioItems give it real options to render. 
   {/snippet}
 </Story>
 
-<!-- TDD guard: assert the :enabled-gated hover classes are present on the root element. Static Tailwind classes are
-     always in the rendered class attribute, so classList checks are the reliable signal here. These assertions must
-     FAIL before the hover classes are added and PASS after. -->
+<!-- TDD guard: assert the :enabled-gated hover classes are present on the root element. Static Tailwind classes are always in the rendered class attribute, so classList checks are the reliable signal here. These assertions must FAIL before the hover classes are added and PASS after. -->
 <Story
   name="Hover classes"
   play={async ({ canvas }) => {

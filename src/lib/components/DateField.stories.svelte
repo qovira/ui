@@ -34,9 +34,7 @@
   let dateFieldError = $state<string | undefined>("Enter a valid date.");
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. `value` is a DateValue with no native
-control, so it's left to the fixtures — this playground drives granularity, hourCycle, locale, disabled, and readonly. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-6">
@@ -83,15 +81,6 @@ control, so it's left to the fixtures — this playground drives granularity, ho
   {/snippet}
 </Story>
 
-<!-- Empty: placeholder segments render, muted. -->
-<Story name="Empty">
-  {#snippet template()}
-    <div class="bg-surface text-fg p-6">
-      <DateField aria-label="Due date" />
-    </div>
-  {/snippet}
-</Story>
-
 <!-- Disabled: segments aren't editable; group is visually dimmed (opacity-50). -->
 <Story
   name="Disabled"
@@ -110,8 +99,7 @@ control, so it's left to the fixtures — this playground drives granularity, ho
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the segment group inherits the a11y contract. Stepping any segment fires onValueChange and clears
-the error. -->
+<!-- Inside a Field, the segment group inherits the a11y contract. Stepping any segment fires onValueChange and clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {

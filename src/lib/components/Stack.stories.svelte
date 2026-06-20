@@ -20,8 +20,7 @@
   });
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-6">
@@ -47,17 +46,6 @@ inert; this story spreads `args`, so editing a control live-updates the preview.
         <div class="bg-surface-raised border-border rounded-md border p-3">First</div>
         <div class="bg-surface-raised border-border rounded-md border p-3">Second</div>
         <div class="bg-surface-raised border-border rounded-md border p-3">Third</div>
-      </Stack>
-    </div>
-  {/snippet}
-</Story>
-
-<Story name="Tighter rhythm">
-  {#snippet template()}
-    <div class="bg-surface text-fg p-6">
-      <Stack gap={2}>
-        <div class="bg-surface-raised border-border rounded-md border p-3">First</div>
-        <div class="bg-surface-raised border-border rounded-md border p-3">Second</div>
       </Stack>
     </div>
   {/snippet}

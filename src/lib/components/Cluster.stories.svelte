@@ -22,8 +22,7 @@
   });
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-6">
@@ -53,17 +52,6 @@ inert; this story spreads `args`, so editing a control live-updates the preview.
             {item}
           </span>
         {/each}
-      </Cluster>
-    </div>
-  {/snippet}
-</Story>
-
-<Story name="Spaced between">
-  {#snippet template()}
-    <div class="bg-surface text-fg p-6">
-      <Cluster justify="between">
-        <span class="bg-surface-raised border-border rounded-sm border px-2.5 py-1">Left</span>
-        <span class="bg-surface-raised border-border rounded-sm border px-2.5 py-1">Right</span>
       </Cluster>
     </div>
   {/snippet}
