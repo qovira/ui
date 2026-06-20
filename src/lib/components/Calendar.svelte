@@ -1,23 +1,28 @@
 <script lang="ts">
-  import { Calendar } from "bits-ui";
+  import { Calendar, type DateMatcher } from "bits-ui";
   import CaretLeftIcon from "phosphor-svelte/lib/CaretLeftIcon";
   import CaretRightIcon from "phosphor-svelte/lib/CaretRightIcon";
   import type { DateValue } from "@internationalized/date";
   import { cn } from "../internal/cn.js";
   import { CALENDAR_DAY, CALENDAR_NAV_BUTTON, CALENDAR_SELECT } from "../internal/calendar-grid.js";
-  import { getFieldContext, getFieldGroupRegistrar } from "../internal/field-context.js";
+  import { resolveFieldAria, type FieldAriaProps } from "../internal/field-aria.svelte.js";
+  import { getFieldGroupRegistrar } from "../internal/field-context.js";
 
   // Bits doesn't publicly export its calendar snippet-prop type; this covers the shape we read from each month (the
   // Root `children` snippet supplies it).
   type CalendarMonth = { value: DateValue; weeks: DateValue[][] };
 
-  interface Props {
+  interface Props extends FieldAriaProps {
     /** Selected date — a `DateValue` for single, `DateValue[]` for multiple. */
     value?: DateValue | DateValue[] | undefined;
     /** Single selection (default) or multiple. */
     type?: "single" | "multiple";
     minValue?: DateValue;
     maxValue?: DateValue;
+    /** Mark dates unavailable (e.g. a booked slot): struck-through (`data-unavailable`) and not selectable. */
+    isDateUnavailable?: DateMatcher;
+    /** Mark dates disabled: dimmed and non-interactive. (`minValue`/`maxValue` already disable out-of-range dates.) */
+    isDateDisabled?: DateMatcher;
     disabled?: boolean;
     /** How weekday headers are formatted. */
     weekdayFormat?: Intl.DateTimeFormatOptions["weekday"];
@@ -27,9 +32,6 @@
     class?: string;
     /** Fires whenever the selection changes. */
     onValueChange?: (value: DateValue | DateValue[] | undefined) => void;
-    "aria-label"?: string;
-    "aria-invalid"?: boolean | "true" | "false" | undefined;
-    "aria-describedby"?: string | undefined;
   }
 
   let {
@@ -37,6 +39,8 @@
     type = "single",
     minValue,
     maxValue,
+    isDateUnavailable,
+    isDateDisabled,
     disabled = false,
     weekdayFormat = "short",
     locale = "en-GB",
@@ -49,20 +53,18 @@
   }: Props = $props();
 
   // Inherit the Field contract from context; explicit props win (works standalone).
-  const field = getFieldContext();
-  const ctx = $derived(field?.());
-  const resolvedId = $derived(id ?? ctx?.id);
-  const ariaInvalid = $derived(invalidProp ?? (ctx?.invalid ? true : undefined));
-  const ariaDescribedby = $derived(describedbyProp ?? ctx?.describedby);
+  const aria = resolveFieldAria(() => ({ id, invalid: invalidProp, describedby: describedbyProp }));
   // The grid names itself through bits' `calendarLabel` (it builds the root's aria-label as `<calendarLabel> <month
   // year>` and wins the prop merge, so a plain aria-label/aria-labelledby here would be silently overridden). Use the
   // explicit label, else the Field's label text.
-  const calLabel = $derived(ariaLabel ?? ctx?.labelText);
+  const calLabel = $derived(ariaLabel ?? aria.labelText);
   const calName = $derived(calLabel ? { calendarLabel: calLabel } : {});
-  // Optional bounds passed through only when set (exactOptionalPropertyTypes).
+  // Optional bounds/matchers passed through only when set (exactOptionalPropertyTypes).
   const bounds = $derived({
     ...(minValue ? { minValue } : {}),
     ...(maxValue ? { maxValue } : {}),
+    ...(isDateUnavailable ? { isDateUnavailable } : {}),
+    ...(isDateDisabled ? { isDateDisabled } : {}),
   });
 
   // The grid self-labels via calendarLabel, so tell an enclosing Field to drop the `<label for>` it would otherwise
@@ -85,10 +87,10 @@
     // view to its month — see CALENDAR_DAY, which drops the `pointer-events-none` bits' default would otherwise want.
     disableDaysOutsideMonth: false,
     ...bounds,
-    ...(resolvedId ? { id: resolvedId } : {}),
+    ...(aria.resolvedId ? { id: aria.resolvedId } : {}),
     ...calName,
-    "aria-invalid": ariaInvalid,
-    "aria-describedby": ariaDescribedby,
+    "aria-invalid": aria.ariaInvalid,
+    "aria-describedby": aria.ariaDescribedby,
     class: cn("inline-block rounded-xl border border-border bg-surface-raised p-4 text-fg", klass, "focus-ring"),
   });
 </script>
