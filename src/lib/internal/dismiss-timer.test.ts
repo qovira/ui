@@ -84,6 +84,24 @@ describe("createDismissTimer", () => {
     vi.advanceTimersByTime(600);
     expect(onDismiss).toHaveBeenCalledOnce();
   });
+
+  it("treats a non-finite duration as persistent — never arms (else setTimeout clamps it to ~1ms)", () => {
+    const onDismiss = vi.fn();
+    const timer = createDismissTimer(Infinity, onDismiss);
+
+    timer.resume();
+    vi.advanceTimersByTime(10_000_000);
+    expect(onDismiss).not.toHaveBeenCalled();
+  });
+
+  it("treats a duration past the 32-bit setTimeout ceiling as persistent", () => {
+    const onDismiss = vi.fn();
+    const timer = createDismissTimer(3_000_000_000, onDismiss);
+
+    timer.resume();
+    vi.advanceTimersByTime(100);
+    expect(onDismiss).not.toHaveBeenCalled();
+  });
 });
 
 describe("createDismissTimer — progress()", () => {

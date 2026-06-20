@@ -1,5 +1,6 @@
 <script lang="ts">
   import { untrack } from "svelte";
+  import { MediaQuery } from "svelte/reactivity";
   import CheckCircleIcon from "phosphor-svelte/lib/CheckCircleIcon";
   import InfoIcon from "phosphor-svelte/lib/InfoIcon";
   import WarningIcon from "phosphor-svelte/lib/WarningIcon";
@@ -41,6 +42,10 @@
   // Show the bar only for finite, positive-duration toasts.
   const showBar = Number.isFinite(duration) && duration > 0;
 
+  // Reactive prefers-reduced-motion: toggling the OS setting mid-toast re-runs the loop effect below to start/stop it.
+  // (The bar is also CSS-hidden via `motion-reduce:hidden`; skipping the rAF loop just avoids the needless work.)
+  const reducedMotion = new MediaQuery("(prefers-reduced-motion: reduce)");
+
   $effect(() => {
     if (paused) {
       timer.pause();
@@ -58,10 +63,7 @@
     if (!showBar) {
       return;
     }
-    if (typeof window === "undefined") {
-      return;
-    }
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (reducedMotion.current) {
       return;
     }
 

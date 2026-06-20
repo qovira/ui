@@ -20,12 +20,14 @@ export interface ToastData {
  * Verified in `toast-store.svelte.test.ts`.
  */
 export class ToastStore {
-  toasts = $state<ToastData[]>([]);
+  // Replace-only queue of immutable records (no field of a mounted toast is ever mutated in place), so `raw` skips the
+  // per-element deep proxy; `add`/`dismiss` both reassign the array.
+  toasts = $state.raw<ToastData[]>([]);
   #seq = 0;
 
   add(variant: ToastVariant, message: string, options?: ToastOptions): string {
     const id = `toast-${this.#seq++}`;
-    this.toasts.push({ id, variant, message, duration: options?.duration ?? 5000 });
+    this.toasts = [...this.toasts, { id, variant, message, duration: options?.duration ?? 5000 }];
     return id;
   }
 
@@ -43,7 +45,9 @@ export function setToastStore(store: ToastStore): void {
 /** Read the enclosing toast store (for components rendered inside a provider). */
 export function getToastStore(): ToastStore {
   const store = getContext<ToastStore | undefined>(KEY);
-  if (!store) throw new Error("getToastStore() must be called within a <ToastProvider>.");
+  if (!store) {
+    throw new Error("getToastStore() must be called within a <ToastProvider>.");
+  }
   return store;
 }
 
@@ -60,7 +64,9 @@ let active: ToastStore | null = null;
 export function registerActiveToastStore(store: ToastStore): () => void {
   active = store;
   return () => {
-    if (active === store) active = null;
+    if (active === store) {
+      active = null;
+    }
   };
 }
 

@@ -92,8 +92,9 @@
     await userEvent.click(canvas.getByRole("button", { name: "Notify" }));
     const message = await canvas.findByText("Hover to keep me around.");
     await userEvent.hover(message);
-    // Past the 800ms duration, still present because hover paused the timer.
-    await sleep(1200);
+    // Deliberate negative-wait: prove the toast OUTLIVES its duration while hovered. Browser-Mode can't fake-time the
+    // rAF loop, so a real sleep is unavoidable here — kept short (2× the 200ms duration) to minimise wall-clock + flake.
+    await sleep(400);
     await expect(message).toBeInTheDocument();
     // Leaving resumes the timer and it dismisses.
     await userEvent.unhover(message);
@@ -105,7 +106,7 @@
   {#snippet template()}
     <ToastProvider portalTo="#toast-host-pause">
       <div id="toast-host-pause" class="bg-surface text-fg p-6">
-        <Button onclick={() => toast.info("Hover to keep me around.", { duration: 800 })}>Notify</Button>
+        <Button onclick={() => toast.info("Hover to keep me around.", { duration: 200 })}>Notify</Button>
       </div>
     </ToastProvider>
   {/snippet}
