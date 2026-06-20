@@ -31,6 +31,7 @@
   let navSelected = $state<DateValue | undefined>(new CalendarDate(2026, 6, 15));
   let calFieldValue = $state<DateValue | undefined>(undefined);
   let calFieldError = $state<string | undefined>("Choose a valid date.");
+  let unavailValue = $state<DateValue | DateValue[] | undefined>(undefined);
 </script>
 
 <!-- Edit the Controls to drive the component live; the other stories pin their props. -->
@@ -109,6 +110,36 @@
   {#snippet template()}
     <div class="bg-surface text-fg inline-block p-6">
       <Calendar aria-label="Pick a date" disabled value={new CalendarDate(2026, 6, 15)} />
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Unavailable dates (e.g. a booked slot): `isDateUnavailable` marks them with data-unavailable (struck-through) and
+     they reject selection, distinct from out-of-range disabled days. -->
+<Story
+  name="Unavailable dates"
+  play={async ({ canvas }) => {
+    const unavailable = canvas.getByRole("button", { name: /18 June 2026/ });
+    // The matcher drives bits' data-unavailable hook (which CALENDAR_DAY styles struck-through).
+    await expect(unavailable).toHaveAttribute("data-unavailable");
+    // Unavailable days are not selectable — clicking one does not commit it.
+    await userEvent.click(unavailable);
+    await expect(canvas.getByTestId("unavail-value")).toHaveTextContent("none");
+    // A neighbouring available day still selects normally.
+    await userEvent.click(canvas.getByRole("button", { name: /17 June 2026/ }));
+    await expect(canvas.getByTestId("unavail-value")).toHaveTextContent("2026-06-17");
+  }}
+>
+  {#snippet template()}
+    <div class="bg-surface text-fg inline-flex flex-col gap-3 p-6">
+      <Calendar
+        aria-label="Booking date"
+        bind:value={unavailValue}
+        isDateUnavailable={(date) => date.month === 6 && date.day === 18}
+      />
+      <p data-testid="unavail-value" class="text-small font-sans text-fg-muted">
+        {unavailValue?.toString() ?? "none"}
+      </p>
     </div>
   {/snippet}
 </Story>

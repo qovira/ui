@@ -1,17 +1,21 @@
 <script lang="ts">
-  import { DateField } from "bits-ui";
+  import { DateField, type DateMatcher } from "bits-ui";
   import type { DateValue } from "@internationalized/date";
   import { cn } from "../internal/cn.js";
+  import { resolveFieldAria, type FieldAriaProps } from "../internal/field-aria.svelte.js";
   import { FIELD_CONTROL_BASE } from "../internal/field-control.js";
-  import { getFieldContext } from "../internal/field-context.js";
 
   type Granularity = "day" | "hour" | "minute" | "second";
 
-  interface Props {
+  interface Props extends FieldAriaProps {
     /** The entered date/time. */
     value?: DateValue | undefined;
     minValue?: DateValue;
     maxValue?: DateValue;
+    /** Mark dates unavailable (e.g. a booked slot): struck-through (`data-unavailable`) and not selectable. */
+    isDateUnavailable?: DateMatcher;
+    /** Mark dates disabled: dimmed and non-interactive. (`minValue`/`maxValue` already disable out-of-range dates.) */
+    isDateDisabled?: DateMatcher;
     disabled?: boolean;
     readonly?: boolean;
     /** Smallest editable unit — `"day"` (default) through `"second"` for time. */
@@ -25,15 +29,14 @@
     class?: string;
     /** Fires whenever the value changes. */
     onValueChange?: (value: DateValue | undefined) => void;
-    "aria-label"?: string;
-    "aria-invalid"?: boolean | "true" | "false" | undefined;
-    "aria-describedby"?: string | undefined;
   }
 
   let {
     value = $bindable(),
     minValue,
     maxValue,
+    isDateUnavailable,
+    isDateDisabled,
     disabled = false,
     readonly = false,
     granularity,
@@ -49,21 +52,19 @@
   }: Props = $props();
 
   // Inherit the Field contract from context; explicit props win (works standalone).
-  const field = getFieldContext();
-  const ctx = $derived(field?.());
-  const resolvedId = $derived(id ?? ctx?.id);
-  const ariaInvalid = $derived(invalidProp ?? (ctx?.invalid ? true : undefined));
-  const ariaDescribedby = $derived(describedbyProp ?? ctx?.describedby);
+  const aria = resolveFieldAria(() => ({ id, invalid: invalidProp, describedby: describedbyProp }));
   // Optional configuration passed through only when set (exactOptionalPropertyTypes).
   const opts = $derived({
     ...(minValue ? { minValue } : {}),
     ...(maxValue ? { maxValue } : {}),
+    ...(isDateUnavailable ? { isDateUnavailable } : {}),
+    ...(isDateDisabled ? { isDateDisabled } : {}),
     ...(granularity ? { granularity } : {}),
     ...(hourCycle ? { hourCycle } : {}),
   });
   // The segment group needs its own accessible name (it isn't a labelable input).
   const groupName = $derived(
-    ariaLabel ? { "aria-label": ariaLabel } : ctx?.labelId ? { "aria-labelledby": ctx.labelId } : {},
+    ariaLabel ? { "aria-label": ariaLabel } : aria.labelId ? { "aria-labelledby": aria.labelId } : {},
   );
 </script>
 
@@ -84,11 +85,11 @@
   {...opts}
 >
   <DateField.Input
-    {...resolvedId ? { id: resolvedId } : {}}
+    {...aria.resolvedId ? { id: aria.resolvedId } : {}}
     {...groupName}
     {...name ? { name } : {}}
-    aria-invalid={ariaInvalid}
-    aria-describedby={ariaDescribedby}
+    aria-invalid={aria.ariaInvalid}
+    aria-describedby={aria.ariaDescribedby}
     class={cn(FIELD_CONTROL_BASE, "inline-flex h-10 w-auto items-center gap-px", klass)}
   >
     {#snippet children({ segments })}
