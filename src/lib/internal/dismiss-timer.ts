@@ -22,6 +22,10 @@ export interface DismissTimer {
  * state; `onDismiss` is captured here (not read inside that effect), so a sibling toast adding/dismissing can't re-arm
  * an unrelated toast's timer.
  */
+// `setTimeout` coerces any delay past the 32-bit signed-int ceiling (or a non-finite one) to ~1ms, which would fire an
+// intended-persistent toast almost immediately. Durations at/above this are treated as "never auto-dismiss".
+const MAX_TIMEOUT = 2_147_483_647;
+
 export function createDismissTimer(duration: number, onDismiss: () => void): DismissTimer {
   const total = Math.max(0, duration);
   let remaining = total;
@@ -30,7 +34,7 @@ export function createDismissTimer(duration: number, onDismiss: () => void): Dis
 
   return {
     resume() {
-      if (handle !== undefined || remaining <= 0) {
+      if (handle !== undefined || remaining <= 0 || !Number.isFinite(remaining) || remaining > MAX_TIMEOUT) {
         return;
       }
       startedAt = Date.now();
