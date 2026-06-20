@@ -39,6 +39,9 @@ export default tseslint.config(
       globals: { ...globals.browser },
     },
     rules: {
+      // Brace every control-flow body, even one-liners (house TS/Svelte convention), so a later-added second statement
+      // can't silently fall outside the branch.
+      curly: ["error", "all"],
       // Icons MUST be deep-imported (`phosphor-svelte/lib/<Icon>`) so they tree-shake. phosphor-svelte ships no
       // `sideEffects: false`, so a barrel import pulls its entire ~3,000-icon set into the consumer's bundle even
       // though we ship source and set `sideEffects: false`. Type-only imports erase, so they're allowed. See

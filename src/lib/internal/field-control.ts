@@ -5,7 +5,7 @@
  * no font-family, hence `font-sans`.
  *
  * Disabled dimming uses two selectors: `disabled:` covers real form-element consumers (Input, Textarea, Combobox,
- * Select); `data-[disabled]:` covers bits-ui `<div role="group">` controls (DateField, DatePicker) where the CSS
+ * Select); `data-disabled:` covers bits-ui `<div role="group">` controls (DateField, DatePicker) where the CSS
  * `:disabled` pseudo-class never matches.
  */
 export const FIELD_CONTROL_BASE =

@@ -75,7 +75,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     background-color: var(--spinner-ink, var(--color-accent));
     opacity: 0;
     animation: spinner-ripple 1200ms var(--ease-qovira) infinite;
