@@ -58,6 +58,9 @@
     <p id={descId} class="text-small font-sans text-fg-muted">{description}</p>
   {/if}
   {#if error}
-    <p id={errorId} class="text-small font-sans text-fg-error">{error}</p>
+    <!-- `aria-live` announces a validation error that appears after the user has moved past the control (the
+         `aria-describedby` wiring alone only surfaces it on focus). Polite, so it waits for a pause rather than cutting
+         in. -->
+    <p id={errorId} aria-live="polite" class="text-small font-sans text-fg-error">{error}</p>
   {/if}
 </div>
