@@ -177,9 +177,9 @@
       const s = v / 255;
       return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
     };
-    const lum = ([r, g, b]: number[]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+    const lum = ([r = 0, g = 0, b = 0]: number[]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
     const ratio = (a: number[], b: number[]) => {
-      const [hi, lo] = [lum(a), lum(b)].sort((m, n) => n - m);
+      const [hi = 0, lo = 0] = [lum(a), lum(b)].sort((m, n) => n - m);
       return (hi + 0.05) / (lo + 0.05);
     };
     const trackBg = parse(getComputedStyle(off).backgroundColor);
