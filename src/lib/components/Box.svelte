@@ -4,10 +4,10 @@
   import { cn } from "../internal/cn.js";
 
   /**
-   * Smoke component for the build/pack pipeline: a styled surface that exercises the whole shape — `@qovira/theme`
-   * semantic utilities, the `cn()` class merge, `$props` + native-attribute passthrough, and a `children` snippet. It
-   * proves a component authored here renders styled in a consumer. Real primitives supersede it as the library fills
-   * out.
+   * The generic surface primitive: a raised, padded, rounded panel drawn from `@qovira/theme` semantic utilities. Use
+   * it as the base for cards, callouts, and grouped content. Pass a `class` to retune padding/elevation — it merges via
+   * `cn()`, so your class wins conflicts — and any native `<div>` attribute passes through. For directional flow inside
+   * it, compose `Stack`/`Cluster`.
    */
   interface Props extends HTMLAttributes<HTMLDivElement> {
     class?: string;

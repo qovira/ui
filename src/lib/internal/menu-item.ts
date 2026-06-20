@@ -1,5 +1,5 @@
 // Shared base classes for the menu parts, so the matching parts stay visually identical. Internal — not exported from
-// the barrel. Authored only in @qovira/theme utilities; the `data-[highlighted]`/`data-[disabled]` hooks are the
+// the barrel. Authored only in @qovira/theme utilities; the `data-highlighted`/`data-disabled` hooks are the
 // attributes Bits sets as the user navigates with keyboard or pointer.
 
 // The interactive, row-shaped parts (`Menu.Item` and `Menu.SubTrigger`).

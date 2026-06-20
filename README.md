@@ -61,10 +61,15 @@ One barrel import, tree-shaken so unused components drop out of your bundle:
 
 ```svelte
 <script lang="ts">
-  import { Box } from "@qovira/ui";
+  import { Button, Field, Input, Stack } from "@qovira/ui";
 </script>
 
-<Box>Hello from Qovira.</Box>
+<Stack gap={4}>
+  <Field label="Email">
+    <Input type="email" placeholder="you@example.com" />
+  </Field>
+  <Button>Save</Button>
+</Stack>
 ```
 
 ## Develop

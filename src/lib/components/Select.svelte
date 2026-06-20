@@ -70,10 +70,13 @@
   // the mounted `Select.Item`s, which unmount when the listbox closes; its persistent value→label fallback (the Root
   // `items` prop) is single-select only. So for `type="multiple"` it would show the raw committed values once closed
   // and the labels only while open. Deriving the text here is correct for both types in every open state.
-  const selectedValues = $derived(Array.isArray(value) ? value : typeof value === "string" && value ? [value] : []);
+  const selectedValues = $derived(
+    new Set(Array.isArray(value) ? value : typeof value === "string" && value ? [value] : []),
+  );
+  // Keep the labels in `items` order, O(1) membership via the Set (a plain `.includes` here would be O(items × selected)).
   const triggerLabel = $derived(
     items
-      .filter((item) => selectedValues.includes(item.value))
+      .filter((item) => selectedValues.has(item.value))
       .map((item) => item.label)
       .join(", "),
   );
