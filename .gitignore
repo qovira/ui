@@ -12,3 +12,6 @@ coverage/
 # Vitest Browser-Mode failure artifacts.
 .vitest-attachments/
 storybook-static/
+
+# Playwright MCP browser scratch (console logs, page snapshots)
+.playwright-mcp/
