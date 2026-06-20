@@ -69,11 +69,21 @@
   // Typeahead filtering is consumer-owned in Bits — we hold the search term and derive the visible options
   // (case-insensitive substring on the label). The needle is hoisted out of the predicate so it's computed once per
   // keystroke, not once per option. In multiple mode the panel stays open across commits, so the typed filter
-  // intentionally persists until close (bits owns the input value, so clearing `search` alone would desync the visible
-  // text).
+  // intentionally persists until close.
   let search = $state("");
   const query = $derived(search.trim().toLowerCase());
   const filtered = $derived(query ? items.filter((item) => item.label.toLowerCase().includes(query)) : items);
+
+  // Bits never derives the input's text from the committed `value`, and only writes it on user selection/typing — so a
+  // preset single value would render an empty field, and an abandoned filter would leave stale text behind on close.
+  // Bits' own `inputValue` prop can't fix this: it's write-once, ignoring parent updates after Bits first writes it. So
+  // we render the `<input>` ourselves via the `child` snippet and bind its `value` directly: while open it shows the
+  // live filter; while closed it shows the committed single selection's label (empty for multiple, whose picks read out
+  // as tags, not in the input). Bits still owns everything else — ARIA, keyboard nav, handler chaining.
+  const committedLabel = $derived(
+    typeof value === "string" && value ? (items.find((item) => item.value === value)?.label ?? "") : "",
+  );
+  const inputValue = $derived(open ? search : committedLabel);
 
   // Unlike Select (which uses bind:open), Combobox routes the open state through an explicit handler because it must
   // also clear the typed filter on close.
@@ -109,7 +119,13 @@
         }
       }}
       class={cn(FIELD_CONTROL_BASE, "h-10 pr-9", klass, "focus-ring")}
-    />
+    >
+      <!-- Render the input ourselves so its displayed `value` is fully ours (see the `inputValue` note above); Bits'
+           merged `props` carry the role, ARIA, keyboard nav, and chained handlers. -->
+      {#snippet child({ props })}
+        <input {...props} value={inputValue} />
+      {/snippet}
+    </Combobox.Input>
     <Combobox.Trigger
       aria-label="Toggle options"
       class="focus-ring absolute inset-y-0 right-0 flex items-center rounded-md px-2.5 text-fg-muted"

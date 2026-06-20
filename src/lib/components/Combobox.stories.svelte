@@ -40,6 +40,8 @@
   const onOpenChange = fn();
   let comboboxFieldValue = $state<string | undefined>(undefined);
   let comboboxFieldError = $state<string | undefined>("Choose a framework.");
+  let presetSingle = $state<string | string[] | undefined>("svelte");
+  let presetRevert = $state<string | string[] | undefined>("react");
 </script>
 
 <!-- Edit the Controls to drive the component live; the other stories pin their props. -->
@@ -82,6 +84,45 @@
       <p data-testid="value" class="text-small font-sans text-fg-muted">
         {JSON.stringify(single ?? null)}
       </p>
+    </div>
+  {/snippet}
+</Story>
+
+<!-- A committed single value must render its LABEL in the input on mount — bits never derives the input text from an
+     initial `value`, so the wrapper seeds it. -->
+<Story
+  name="Preset value shows its label"
+  play={async ({ canvas }) => {
+    const input = canvas.getByRole("combobox", { name: "Framework" });
+    await expect(input).toHaveValue("Svelte");
+  }}
+>
+  {#snippet template()}
+    <div id="combobox-preset-host" class="bg-surface text-fg p-6">
+      <Combobox aria-label="Framework" items={frameworks} bind:value={presetSingle} portalTo="#combobox-preset-host" />
+    </div>
+  {/snippet}
+</Story>
+
+<!-- Filtering then dismissing WITHOUT selecting must revert the input to the committed selection's label, not leave the
+     abandoned search text stranded. -->
+<Story
+  name="Reverts an abandoned filter on dismiss"
+  play={async ({ canvas }) => {
+    const input = canvas.getByRole("combobox", { name: "Framework" });
+    await expect(input).toHaveValue("React");
+    await userEvent.click(input);
+    await userEvent.type(input, "vu");
+    await expect(input).toHaveValue("vu");
+    // Dismiss without committing a selection.
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() => expect(canvas.queryByRole("listbox")).not.toBeInTheDocument());
+    await expect(input).toHaveValue("React");
+  }}
+>
+  {#snippet template()}
+    <div id="combobox-revert-host" class="bg-surface text-fg p-6">
+      <Combobox aria-label="Framework" items={frameworks} bind:value={presetRevert} portalTo="#combobox-revert-host" />
     </div>
   {/snippet}
 </Story>
