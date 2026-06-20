@@ -85,6 +85,8 @@
     // AC: aria-invalid is set, and aria-describedby points at the message.
     await expect(input).toHaveAttribute("aria-invalid", "true");
     await expect(input).toHaveAttribute("aria-describedby", message.id);
+    // AC: the error is a live region, so a validation error surfaced after blur is announced.
+    await expect(message).toHaveAttribute("aria-live", "polite");
     // AC: the meaning is in the message text, not color alone.
     await expect(message).toBeInTheDocument();
   }}

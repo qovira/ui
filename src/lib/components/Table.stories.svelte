@@ -145,6 +145,51 @@
   {/snippet}
 </Story>
 
+<!-- A table wider than its container becomes a horizontal scroll region — which must be keyboard-focusable and named, so
+     a keyboard-only user can scroll it. A table that fits gets neither (no empty tab stop). -->
+<Story
+  name="Wide table is a keyboard-scrollable region"
+  play={async ({ canvas }) => {
+    // The wrapper turns into a focusable, named region once it overflows (ResizeObserver-driven).
+    await waitFor(() =>
+      expect(canvas.getByRole("region", { name: "Quarterly metrics" })).toHaveAttribute("tabindex", "0"),
+    );
+  }}
+>
+  {#snippet template()}
+    <div class="bg-surface text-fg w-72 p-6">
+      <Table.Root scrollRegionLabel="Quarterly metrics">
+        <Table.Caption>Quarterly metrics by region.</Table.Caption>
+        <Table.Head>
+          <Table.Row>
+            <Table.HeaderCell>Region</Table.HeaderCell>
+            <Table.HeaderCell>Q1 revenue</Table.HeaderCell>
+            <Table.HeaderCell>Q2 revenue</Table.HeaderCell>
+            <Table.HeaderCell>Q3 revenue</Table.HeaderCell>
+            <Table.HeaderCell>Q4 revenue</Table.HeaderCell>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell>North America</Table.Cell>
+            <Table.Cell>$1,200,000</Table.Cell>
+            <Table.Cell>$1,350,000</Table.Cell>
+            <Table.Cell>$1,500,000</Table.Cell>
+            <Table.Cell>$1,720,000</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>Europe</Table.Cell>
+            <Table.Cell>$980,000</Table.Cell>
+            <Table.Cell>$1,040,000</Table.Cell>
+            <Table.Cell>$1,180,000</Table.Cell>
+            <Table.Cell>$1,300,000</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table.Root>
+    </div>
+  {/snippet}
+</Story>
+
 <Story name="Daylight" globals={{ theme: "daylight" }}>
   {#snippet template()}
     <div class="bg-surface text-fg max-w-2xl p-6">
