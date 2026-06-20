@@ -9,6 +9,9 @@
     component: Icon,
     tags: ["autodocs"],
     args: { icon: PlusIcon },
+    // Scope Controls/autodocs to Icon's real API — the prop type spreads in the full forwarded-SVG-attribute surface
+    // (every native svg attr, aria-*, event handler) via ...rest, which Storybook would otherwise list as controls.
+    parameters: { controls: { include: ["icon", "size", "label", "decorative", "class"] } },
   });
 </script>
 

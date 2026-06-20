@@ -41,10 +41,7 @@
   const onOpenChange = fn();
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. `open` defaults true so the dialog
-shows without a click; the dialog body is a snippet, left out of the controls. A ModalTitle supplies the accessible
-name axe requires. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div id="modal-host-playground" class="bg-surface text-fg p-6">
@@ -60,8 +57,7 @@ name axe requires. -->
   {/snippet}
 </Story>
 
-<!-- Shared dialog body; `close` dismisses each story's own instance. A non-destructive confirm keeps the axe pass about
-     the Modal itself (the destructive variant's contrast caveat is covered in the Button stories). -->
+<!-- Shared dialog body; `close` dismisses each story's own instance. A non-destructive confirm keeps the axe pass about the Modal itself (the destructive variant's contrast caveat is covered in the Button stories). -->
 {#snippet body(close: () => void)}
   <ModalTitle>Delete item?</ModalTitle>
   <ModalDescription>This permanently removes the item — you can't undo it.</ModalDescription>
@@ -71,8 +67,7 @@ name axe requires. -->
   </div>
 {/snippet}
 
-<!-- Full lifecycle: bind:open opens it, Bits portals + traps focus + sets the dialog ARIA, Escape closes it and
-     onOpenChange reports the change. -->
+<!-- Full lifecycle: bind:open opens it, Bits portals + traps focus + sets the dialog ARIA, Escape closes it and onOpenChange reports the change. -->
 <Story
   name="Confirm dialog"
   play={async ({ canvas }) => {
@@ -101,8 +96,7 @@ name axe requires. -->
   {/snippet}
 </Story>
 
-<!-- Daylight: open the dialog so axe checks the rendered dialog in the other theme, then close to leave a clean
-     slate. -->
+<!-- Daylight: open the dialog so axe checks the rendered dialog in the other theme, then close to leave a clean slate. -->
 <Story
   name="Daylight"
   globals={{ theme: "daylight" }}

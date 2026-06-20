@@ -32,9 +32,7 @@
   let active = $state("overview");
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. items/panel supply the structured
-content; the playground drives orientation. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-6">
@@ -47,8 +45,7 @@ content; the playground drives orientation. -->
   {/snippet}
 </Story>
 
-<!-- Arrow-key navigation with correct tablist/tab/tabpanel roles; bind:value round-trips. activationMode is automatic,
-     so focusing a tab activates it. -->
+<!-- Arrow-key navigation with correct tablist/tab/tabpanel roles; bind:value round-trips. activationMode is automatic, so focusing a tab activates it. -->
 <Story
   name="Tabbed panels"
   play={async ({ canvas }) => {

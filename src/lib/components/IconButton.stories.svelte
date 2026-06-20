@@ -36,9 +36,7 @@
   </div>
 {/snippet}
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. The icon is a component prop with no
-native control, so it's excluded — this playground drives label, variant, size, loading, and disabled. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-6">
@@ -47,8 +45,7 @@ native control, so it's excluded — this playground drives label, variant, size
   {/snippet}
 </Story>
 
-<!-- All five variants on brand, in both themes (this story + Daylight below) so axe checks each one's contrast in each
-     theme. -->
+<!-- All five variants on brand, in both themes (this story + Daylight below) so axe checks each one's contrast in each theme. -->
 <Story
   name="Variants"
   play={async ({ canvas }) => {
@@ -69,8 +66,7 @@ native control, so it's excluded — this playground drives label, variant, size
   {/snippet}
 </Story>
 
-<!-- The label is the control's only accessible name; the icon is aria-hidden, so the button is reachable by name and
-     the icon adds no duplicate node. -->
+<!-- The label is the control's only accessible name; the icon is aria-hidden, so the button is reachable by name and the icon adds no duplicate node. -->
 <Story
   name="Default"
   args={{ icon: PlusIcon, label: "Add item", onclick: handleClick }}

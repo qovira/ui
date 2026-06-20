@@ -24,9 +24,7 @@
   });
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. `name` is also the accessible label,
-so its arg default satisfies axe; the playground drives name and size (src is an asset URL the fixtures exercise). -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-6">
@@ -35,9 +33,7 @@ so its arg default satisfies axe; the playground drives name and size (src is an
   {/snippet}
 </Story>
 
-<!-- No image: the fallback shows initials derived from the name. The whole avatar is one labelled image, so assistive
-     tech announces the name. Also asserts the edge uses the divider token — border-divider — not the hairline
-     border-border, so the circle is distinguishable on both themes. -->
+<!-- No image: the fallback shows initials derived from the name. The whole avatar is one labelled image, so assistive tech announces the name. Also asserts the edge uses the divider token — border-divider — not the hairline border-border, so the circle is distinguishable on both themes. -->
 <Story
   name="Initials"
   play={async ({ canvas }) => {
@@ -98,8 +94,7 @@ so its arg default satisfies axe; the playground drives name and size (src is an
   {/snippet}
 </Story>
 
-<!-- A name with no letters yields no initials, so the fallback shows the person icon instead — still labelled with the
-     name. -->
+<!-- A name with no letters yields no initials, so the fallback shows the person icon instead — still labelled with the name. -->
 <Story
   name="Icon fallback"
   play={async ({ canvas }) => {
@@ -126,9 +121,7 @@ so its arg default satisfies axe; the playground drives name and size (src is an
   {/snippet}
 </Story>
 
-<!-- Evening: verifies the avatar edge (border-divider) reads against the dark warm-brown page/surface — the fix that
-     motivated the divider-token change. No special play needed; visual review confirms the circle silhouette is
-     distinguishable. -->
+<!-- Evening: verifies the avatar edge (border-divider) reads against the dark warm-brown page/surface — the fix that motivated the divider-token change. No special play needed; visual review confirms the circle silhouette is distinguishable. -->
 <Story name="Evening" globals={{ theme: "evening" }}>
   {#snippet template()}
     <div class="bg-surface text-fg flex items-center gap-4 p-6">

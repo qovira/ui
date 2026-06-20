@@ -35,9 +35,7 @@
   const onOpenChange = fn();
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. `open` defaults true so the panel
-shows without a click; the trigger and panel body are snippets, left out of the controls. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div id="pop-host-playground" class="bg-surface text-fg p-6">
@@ -52,8 +50,7 @@ shows without a click; the trigger and panel body are snippets, left out of the 
   {/snippet}
 </Story>
 
-<!-- Full lifecycle: the trigger delegates to a Button via the `child` snippet, Bits portals the panel and positions
-it with collision handling, Escape closes it, and onOpenChange reports the change. -->
+<!-- Full lifecycle: the trigger delegates to a Button via the `child` snippet, Bits portals the panel and positions it with collision handling, Escape closes it, and onOpenChange reports the change. -->
 <Story
   name="Anchored panel"
   play={async ({ canvas }) => {

@@ -41,9 +41,7 @@
   const onRename = fn();
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. `open` defaults true so the menu shows
-without a click; the compound parts (trigger, items) are markup, left out of the controls. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div id="menu-host-playground" class="bg-surface text-fg p-6">
@@ -64,8 +62,7 @@ without a click; the compound parts (trigger, items) are markup, left out of the
   {/snippet}
 </Story>
 
-<!-- The compound parts render under the `Menu` namespace; Bits supplies the menu/menuitem roles, roving focus,
-     type-ahead, portalling, and collision handling. The trigger delegates to a Button via `child`. -->
+<!-- The compound parts render under the `Menu` namespace; Bits supplies the menu/menuitem roles, roving focus, type-ahead, portalling, and collision handling. The trigger delegates to a Button via `child`. -->
 <Story
   name="Dropdown menu"
   play={async ({ canvas }) => {
@@ -107,8 +104,7 @@ without a click; the compound parts (trigger, items) are markup, left out of the
   {/snippet}
 </Story>
 
-<!-- `child` delegation: a menu item rendered as a router-style `<a>`, keeping the menuitem role and the themed classes
-     (passed through Bits' `props`). -->
+<!-- `child` delegation: a menu item rendered as a router-style `<a>`, keeping the menuitem role and the themed classes (passed through Bits' `props`). -->
 <Story
   name="Router link"
   play={async ({ canvas }) => {
@@ -149,8 +145,7 @@ without a click; the compound parts (trigger, items) are markup, left out of the
   {/snippet}
 </Story>
 
-<!-- Nested submenu (compound `Menu.Sub`), opened from the keyboard. Grouped items carry an accessible group name via
-     `Menu.GroupHeading`. -->
+<!-- Nested submenu (compound `Menu.Sub`), opened from the keyboard. Grouped items carry an accessible group name via `Menu.GroupHeading`. -->
 <Story
   name="Submenu"
   play={async ({ canvas }) => {

@@ -21,8 +21,7 @@
   });
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-6">
@@ -53,11 +52,19 @@ inert; this story spreads `args`, so editing a control live-updates the preview.
   name="Vertical"
   play={async ({ canvas }) => {
     // AC: both orientations with correct ARIA.
-    await expect(canvas.getByRole("separator")).toHaveAttribute("aria-orientation", "vertical");
+    const sep = canvas.getByRole("separator");
+    await expect(sep).toHaveAttribute("aria-orientation", "vertical");
+    // A vertical separator must sit centered on its row, not shifted off the text baseline — its mid-line must line up
+    // with the flanking text's mid-line.
+    const sepBox = sep.getBoundingClientRect();
+    const textBox = canvas.getByText("Left").getBoundingClientRect();
+    const sepCenter = sepBox.top + sepBox.height / 2;
+    const textCenter = textBox.top + textBox.height / 2;
+    await expect(Math.abs(sepCenter - textCenter)).toBeLessThan(1.5);
   }}
 >
   {#snippet template()}
-    <div class="bg-surface text-fg flex h-12 items-center gap-3 p-6">
+    <div class="bg-surface text-fg flex items-center gap-3 p-6">
       <Text>Left</Text>
       <Separator orientation="vertical" />
       <Text>Right</Text>
@@ -65,8 +72,7 @@ inert; this story spreads `args`, so editing a control live-updates the preview.
   {/snippet}
 </Story>
 
-<!-- Regression test: a vertical separator in a plain block container (no flex/grid parent) must have non-zero height.
-     With `self-stretch` alone the height collapses to 0; the `min-h` fallback makes it visible anywhere. -->
+<!-- Regression test: a vertical separator in a plain block container (no flex/grid parent) must have non-zero height. With `self-stretch` alone the height collapses to 0; the `min-h` fallback makes it visible anywhere. -->
 <Story
   name="VerticalInBlock"
   play={async ({ canvas }) => {

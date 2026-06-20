@@ -45,10 +45,7 @@
   let datePickerFieldError = $state<string | undefined>("Pick a reminder date.");
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. `value` is a DateValue with no native
-control, so it's left to the fixtures — this playground drives granularity, hourCycle, weekdayFormat, locale, disabled,
-and readonly. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <!-- Remount on any control change: bits-ui's calendar throws on certain in-place prop updates (its month/year
@@ -61,8 +58,7 @@ and readonly. -->
   {/snippet}
 </Story>
 
-<!-- Open the popover from the trigger, pick a day; the popover portals + handles collisions, and the selection
-     round-trips through bind:value. -->
+<!-- Open the popover from the trigger, pick a day; the popover portals + handles collisions, and the selection round-trips through bind:value. -->
 <Story
   name="Open and select"
   play={async ({ canvas }) => {
@@ -103,8 +99,7 @@ and readonly. -->
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the segment group inherits the a11y contract. Opening the calendar and picking a day fires
-     onValueChange and clears the error. -->
+<!-- Inside a Field, the segment group inherits the a11y contract. Opening the calendar and picking a day fires onValueChange and clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
@@ -197,9 +192,7 @@ and readonly. -->
   {/snippet}
 </Story>
 
-<!-- The popover calendar matches the standalone Calendar: it always renders six week-rows (42 day cells) so its height
-     is constant month to month, and the leading/trailing adjacent-month days are selectable. February 2021 fits in four
-     weeks naturally, so the two trailing rows are March 2021 days; clicking one selects that adjacent date. -->
+<!-- The popover calendar matches the standalone Calendar: it always renders six week-rows (42 day cells) so its height is constant month to month, and the leading/trailing adjacent-month days are selectable. February 2021 fits in four weeks naturally, so the two trailing rows are March 2021 days; clicking one selects that adjacent date. -->
 <Story
   name="Fixed six-week grid"
   play={async ({ canvas }) => {
@@ -225,8 +218,7 @@ and readonly. -->
   {/snippet}
 </Story>
 
-<!-- Daylight: open the popover so axe checks the rendered calendar in the other theme, then close to leave a clean
-     slate. -->
+<!-- Daylight: open the popover so axe checks the rendered calendar in the other theme, then close to leave a clean slate. -->
 <Story
   name="Daylight"
   globals={{ theme: "daylight" }}

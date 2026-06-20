@@ -16,9 +16,7 @@
   });
 </script>
 
-<!-- Controls playground: spreads `args`, so it stays uniform with the rest of the library — but Skeleton exposes no
-scalar props (only `class`/`style`/aria, all excluded), so its Controls panel is empty. The size is fixed
-representative content. -->
+<!-- Skeleton has no scalar props, so the Controls panel is empty; here for uniformity. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg max-w-sm p-6">
@@ -27,9 +25,7 @@ representative content. -->
   {/snippet}
 </Story>
 
-<!-- Loading placeholders on the warm surface. Each is sized via `class`, so it occupies its final footprint immediately
-     — CSS-only, no JS measurement, so it renders identically on server and client and never shifts layout on hydrate.
-     aria-hidden keeps the placeholder out of the a11y tree. -->
+<!-- Loading placeholders on the warm surface. Each is sized via `class`, so it occupies its final footprint immediately — CSS-only, no JS measurement, so it renders identically on server and client and never shifts layout on hydrate. aria-hidden keeps the placeholder out of the a11y tree. -->
 <Story
   name="Loading card"
   play={async ({ canvas }) => {

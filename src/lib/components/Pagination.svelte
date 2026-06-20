@@ -32,10 +32,13 @@
   // Names the navigation landmark; defaults when the consumer doesn't pass one.
   const navLabel = $derived(ariaLabel ?? "Pagination");
 
+  // Hover uses `bg-fg/5` (the ghost-button tint shared with Toast/Chip), not `bg-surface`: `--surface` equals the app
+  // `--bg`, so a surface hover is invisible against the page. The selected page keeps its accent and lifts to honey-600
+  // on hover (mirroring Checkbox/Switch's checked-state hover); non-selected pages take the ghost tint.
   const pageBase =
-    "inline-flex h-9 min-w-9 items-center justify-center rounded-md px-2 text-button font-sans text-fg hover:bg-surface data-[selected]:bg-accent data-[selected]:text-warm-900";
+    "inline-flex h-9 min-w-9 items-center justify-center rounded-md px-2 text-button font-sans text-fg transition-colors duration-micro ease-qovira not-data-[selected]:hover:bg-fg/5 data-[selected]:bg-accent data-[selected]:text-warm-900 data-[selected]:hover:bg-honey-600";
   const navBase =
-    "inline-flex h-9 w-9 items-center justify-center rounded-md text-fg hover:bg-surface disabled:pointer-events-none disabled:opacity-40";
+    "inline-flex h-9 w-9 items-center justify-center rounded-md text-fg transition-colors duration-micro ease-qovira hover:bg-fg/5 disabled:pointer-events-none disabled:opacity-40";
 </script>
 
 <!-- Bits owns behavior: page computation (with ellipses), keyboard navigation, and the current-page

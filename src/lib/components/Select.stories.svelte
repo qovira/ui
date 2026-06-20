@@ -42,9 +42,7 @@
   let selectFieldError = $state<string | undefined>("Pick a provider to continue.");
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. `items` is an option array with no
-native control, so it's supplied here — this playground drives type, placeholder, and disabled. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div id="select-playground-host" class="bg-surface text-fg flex flex-col gap-3 p-6">
@@ -53,8 +51,7 @@ native control, so it's supplied here — this playground drives type, placehold
   {/snippet}
 </Story>
 
-<!-- Single select, driven by the keyboard: focus the trigger, open with Enter, arrow to an option, commit with Enter.
-     Proves listbox keyboard nav, the bind:value round-trip (rendered out), and that both callbacks fire. -->
+<!-- Single select, driven by the keyboard: focus the trigger, open with Enter, arrow to an option, commit with Enter. Proves listbox keyboard nav, the bind:value round-trip (rendered out), and that both callbacks fire. -->
 <Story
   name="Single"
   play={async ({ canvas }) => {
@@ -106,9 +103,7 @@ native control, so it's supplied here — this playground drives type, placehold
   {/snippet}
 </Story>
 
-<!-- Multi-select: clicking options accumulates them without closing the list; the disabled option can't be chosen.
-     Selected options must be visually distinguished in the open list — their computed background-color must differ from
-     unselected ones. -->
+<!-- Multi-select: clicking options accumulates them without closing the list; the disabled option can't be chosen. Selected options must be visually distinguished in the open list — their computed background-color must differ from unselected ones. -->
 <Story
   name="Multiple"
   play={async ({ canvas }) => {
@@ -128,7 +123,14 @@ native control, so it's supplied here — this playground drives type, placehold
     const unselectedBg = getComputedStyle(unselectedOption).backgroundColor;
     await expect(selectedBg).not.toBe(unselectedBg);
     await userEvent.keyboard("{Escape}");
+    await waitFor(() => expect(canvas.queryByRole("listbox")).not.toBeInTheDocument());
     await expect(canvas.getByTestId("multi")).toHaveTextContent('["gpt-5","gemini"]');
+    // While CLOSED, the trigger must keep showing the human labels, not the raw committed values. Bits' Select.Value
+    // resolves labels from the now-unmounted options and its persistent fallback is single-select only, so for multiple
+    // it would regress to the values once the list closes. Labels differ in case from the values, so this catches it.
+    await expect(trigger).toHaveTextContent("GPT-5");
+    await expect(trigger).toHaveTextContent("Gemini");
+    await expect(trigger).not.toHaveTextContent("gpt-5");
   }}
 >
   {#snippet template()}
@@ -162,8 +164,7 @@ native control, so it's supplied here — this playground drives type, placehold
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the trigger inherits the a11y contract without prop-drilling. Picking a provider clears the
-     error. -->
+<!-- Inside a Field, the trigger inherits the a11y contract without prop-drilling. Picking a provider clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
@@ -198,8 +199,7 @@ native control, so it's supplied here — this playground drives type, placehold
   {/snippet}
 </Story>
 
-<!-- Daylight: open the listbox so axe checks the rendered panel in the other theme, then close to leave a clean
-     slate. -->
+<!-- Daylight: open the listbox so axe checks the rendered panel in the other theme, then close to leave a clean slate. -->
 <Story
   name="Daylight"
   globals={{ theme: "daylight" }}

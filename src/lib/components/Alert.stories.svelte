@@ -20,9 +20,7 @@
   });
 </script>
 
-<!-- Controls playground: spreads `args`, so editing a control live-updates the preview. The fixtures below hardcode
-their props for deterministic tests, so their Controls panel is inert. Drives variant and the optional title; the body
-is fixed representative copy. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg max-w-md p-6">
@@ -31,8 +29,7 @@ is fixed representative copy. -->
   {/snippet}
 </Story>
 
-<!-- Every variant carries a glyph and a text message, not color alone; the message uses text-fg (body color) on the
-     semantic tint — an AA-verified pairing. axe enforces contrast in both themes on the real render. -->
+<!-- Every variant carries a glyph and a text message, not color alone; the message uses text-fg (body color) on the semantic tint — an AA-verified pairing. axe enforces contrast in both themes on the real render. -->
 <Story
   name="Variants"
   play={async ({ canvas }) => {

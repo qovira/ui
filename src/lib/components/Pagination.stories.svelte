@@ -27,9 +27,7 @@
   let page = $state(1);
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. The aria-label naming the navigation
-landmark is hardcoded for axe; the playground drives count, perPage, page, and siblingCount. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-6">
@@ -38,10 +36,9 @@ landmark is hardcoded for axe; the playground drives count, perPage, page, and s
   {/snippet}
 </Story>
 
-<!-- Navigates pages and exposes the current page; bind:page round-trips. The wrapper provides a labelled navigation
-     landmark. -->
+<!-- Navigates between pages and round-trips the current page through bind:page; the wrapper provides a labelled navigation landmark. -->
 <Story
-  name="Pages"
+  name="Navigates between pages"
   play={async ({ canvas }) => {
     // AC: a labelled navigation landmark.
     const nav = canvas.getByRole("navigation", { name: "Reminders pages" });

@@ -23,9 +23,7 @@
   });
 </script>
 
-<!-- Controls playground: spreads `args`, so editing a control live-updates the preview. The fixtures below hardcode
-their props for deterministic tests, so their Controls panel is inert. Setting an `href` morphs the chip into a
-navigable link; the label is fixed representative copy. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg flex flex-wrap items-center gap-2 p-6">
@@ -57,8 +55,7 @@ navigable link; the label is fixed representative copy. -->
   {/snippet}
 </Story>
 
-<!-- With `href`, the chip morphs into a navigable link, same look and states. It carries the focus-ring (the static
-span doesn't). -->
+<!-- With `href`, the chip morphs into a navigable link, same look and states. It carries the focus-ring (the static span doesn't). -->
 <Story
   name="As link"
   play={async ({ canvas }) => {

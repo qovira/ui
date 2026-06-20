@@ -16,8 +16,7 @@
   });
 </script>
 
-<!-- Controls playground. Box has no controllable scalar props (only `class`, native attrs, and a children snippet), so
-there are no controls to drive — it's here for uniformity. The fixtures below hardcode props for deterministic tests. -->
+<!-- Box has no scalar props, so the Controls panel is empty; here for uniformity. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-6">
@@ -26,11 +25,7 @@ there are no controls to drive — it's here for uniformity. The fixtures below 
   {/snippet}
 </Story>
 
-<!-- Renders in whichever theme the toolbar selects (Evening by default). -->
-<Story name="Default">Hello from Qovira.</Story>
-
-<!-- Affordance only — cursor + hover border signal interactivity visually. Use Button for real interactive semantics
-     (keyboard activation, role="button"). -->
+<!-- Affordance only — cursor + hover border signal interactivity visually. Use Button for real interactive semantics (keyboard activation, role="button"). -->
 <Story
   name="Clickable"
   args={{ class: "cursor-pointer transition-colors hover:border-accent" }}
@@ -50,11 +45,7 @@ there are no controls to drive — it's here for uniformity. The fixtures below 
   Click me
 </Story>
 
-<!-- Proves that the per-story ThemeWrapper themes its subtree independently of `<html data-theme>`. This is the
-     critical Docs-page correctness test: on the Docs page all story blocks share one document `<html>`, so without a
-     wrapper each block clobbers the previous one (last renderer wins). This story runs under the default "evening"
-     global and forcibly sets `<html>` to "daylight" in the play to simulate the clobbering scenario; the wrapper must
-     still resolve evening tokens from its own `[data-theme="evening"]` attribute. -->
+<!-- Proves that the per-story ThemeWrapper themes its subtree independently of `<html data-theme>`. This is the critical Docs-page correctness test: on the Docs page all story blocks share one document `<html>`, so without a wrapper each block clobbers the previous one (last renderer wins). This story runs under the default "evening" global and forcibly sets `<html>` to "daylight" in the play to simulate the clobbering scenario; the wrapper must still resolve evening tokens from its own `[data-theme="evening"]` attribute. -->
 <Story
   name="Themed independently of the document"
   play={async ({ canvasElement }) => {

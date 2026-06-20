@@ -21,8 +21,7 @@
   });
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-6">
@@ -31,8 +30,7 @@ inert; this story spreads `args`, so editing a control live-updates the preview.
   {/snippet}
 </Story>
 
-<!-- The full scale. font-display (Fraunces) is applied automatically for Display/H1–H3; H4 is Figtree (font-sans) per
-     the brand. -->
+<!-- The full scale. font-display (Fraunces) is applied automatically for Display/H1–H3; H4 is Figtree (font-sans) per the brand. -->
 <Story
   name="Scale"
   play={async ({ canvas }) => {
@@ -49,15 +47,6 @@ inert; this story spreads `args`, so editing a control live-updates the preview.
       <Heading level={2}>Heading 2</Heading>
       <Heading level={3}>Heading 3</Heading>
       <Heading level={4}>Heading 4 — sans</Heading>
-    </div>
-  {/snippet}
-</Story>
-
-<!-- Size is decoupled from semantic level: an `<h2>` shown at the display size. -->
-<Story name="Decoupled size">
-  {#snippet template()}
-    <div class="bg-surface text-fg p-6">
-      <Heading level={2} size="display">An h2, sized as display</Heading>
     </div>
   {/snippet}
 </Story>

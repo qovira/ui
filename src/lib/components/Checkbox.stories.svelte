@@ -31,9 +31,7 @@
   let checkboxFieldError = $state<string | undefined>("Please confirm your choice.");
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. The checkbox is wrapped in a label so
-axe always has an accessible name regardless of the args. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg flex flex-col items-start gap-3 p-6">
@@ -91,8 +89,7 @@ axe always has an accessible name regardless of the args. -->
   {/snippet}
 </Story>
 
-<!-- Inside a Field, the checkbox inherits the a11y contract without prop-drilling. Checking the box is a valid "I
-confirm" action — it clears the error. -->
+<!-- Inside a Field, the checkbox inherits the a11y contract without prop-drilling. Checking the box is a valid "I confirm" action — it clears the error. -->
 <Story
   name="In a field"
   play={async ({ canvas }) => {
@@ -122,9 +119,7 @@ confirm" action — it clears the error. -->
   {/snippet}
 </Story>
 
-<!-- TDD guard: assert the :enabled-gated hover classes are present on the root element. Static Tailwind classes are
-always in the rendered class attribute, so classList checks are the reliable signal here. These assertions must FAIL
-before the hover classes are added and PASS after. -->
+<!-- TDD guard: assert the :enabled-gated hover classes are present on the root element. Static Tailwind classes are always in the rendered class attribute, so classList checks are the reliable signal here. These assertions must FAIL before the hover classes are added and PASS after. -->
 <Story
   name="Hover classes"
   play={async ({ canvas }) => {

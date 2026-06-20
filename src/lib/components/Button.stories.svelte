@@ -28,8 +28,7 @@
   const handleClick = fn();
 </script>
 
-<!-- Controls playground. The fixtures below hardcode their props for deterministic tests, so their Controls panel is
-inert; this story spreads `args`, so editing a control live-updates the preview. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg p-6">
@@ -38,8 +37,7 @@ inert; this story spreads `args`, so editing a control live-updates the preview.
   {/snippet}
 </Story>
 
-<!-- All five variants on brand, in both themes (this story + Daylight below) so axe checks each one's contrast in each
-     theme. -->
+<!-- All five variants on brand, in both themes (this story + Daylight below) so axe checks each one's contrast in each theme. -->
 <Story
   name="Variants"
   play={async ({ canvas }) => {
@@ -59,6 +57,23 @@ inert; this story spreads `args`, so editing a control live-updates the preview.
       <Button variant="secondary">Secondary</Button>
       <Button variant="ghost">Ghost</Button>
       <Button variant="destructive">Delete</Button>
+    </div>
+  {/snippet}
+</Story>
+
+<!-- TDD layout guard: secondary is the only variant with a visible border, and Button's width is content-driven (auto), so under box-border that 1px-each-side border makes the secondary box ~2px wider — the layout jumps when a button toggles to/from secondary. Renders a secondary and a primary button with identical label text and asserts their rendered widths match within 0.5px. FAILS before the equalizing transparent border is added to the other variants and PASSES after. -->
+<Story
+  name="Variant width parity"
+  play={async ({ canvas }) => {
+    const secondary = canvas.getByTestId("btn-secondary").getBoundingClientRect();
+    const primary = canvas.getByTestId("btn-primary").getBoundingClientRect();
+    await expect(Math.abs(secondary.width - primary.width)).toBeLessThan(0.5);
+  }}
+>
+  {#snippet template()}
+    <div class="bg-surface text-fg flex items-center gap-3 p-6">
+      <Button variant="secondary" data-testid="btn-secondary">Save changes</Button>
+      <Button variant="primary" data-testid="btn-primary">Save changes</Button>
     </div>
   {/snippet}
 </Story>
@@ -140,9 +155,7 @@ inert; this story spreads `args`, so editing a control live-updates the preview.
   {/snippet}
 </Story>
 
-<!-- An active link forwards consumer attributes via ...rest: the component's state-coupled a11y attrs
-     (tabindex/aria-busy) are emitted only when they mean something, so they no longer clobber a passed-through
-     value. -->
+<!-- An active link forwards consumer attributes via ...rest: the component's state-coupled a11y attrs (tabindex/aria-busy) are emitted only when they mean something, so they no longer clobber a passed-through value. -->
 <Story
   name="Link forwards native attributes"
   play={async ({ canvas }) => {
@@ -158,8 +171,7 @@ inert; this story spreads `args`, so editing a control live-updates the preview.
   {/snippet}
 </Story>
 
-<!-- Native attributes ride through ...rest; consumer `class` merges via cn(), but it can never strip the focus ring
-     (the most-enforced a11y rule). -->
+<!-- Native attributes ride through ...rest; consumer `class` merges via cn(), but it can never strip the focus ring (the most-enforced a11y rule). -->
 <Story
   name="Native attributes"
   play={async ({ canvas }) => {

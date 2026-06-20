@@ -19,8 +19,7 @@
   });
 </script>
 
-<!-- Controls playground: spreads `args`, so editing the variant control live-updates the preview. The fixtures below
-hardcode their props for deterministic tests, so their Controls panel is inert. The label is fixed representative copy. -->
+<!-- Edit the Controls to drive the component live; the other stories pin their props. -->
 <Story name="Playground">
   {#snippet template(args: Args)}
     <div class="bg-surface text-fg flex flex-wrap items-center gap-2 p-6">
@@ -29,8 +28,7 @@ hardcode their props for deterministic tests, so their Controls panel is inert. 
   {/snippet}
 </Story>
 
-<!-- Compact labels. Neutral is a quiet hairline tag; status variants pair the semantic tint/text with a glyph so
-     meaning is never carried by color alone. -->
+<!-- Compact labels. Neutral is a quiet hairline tag; status variants pair the semantic tint/text with a glyph so meaning is never carried by color alone. -->
 <Story
   name="Variants"
   play={async ({ canvas }) => {
